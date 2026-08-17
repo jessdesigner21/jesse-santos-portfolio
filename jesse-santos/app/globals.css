@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+:root {
+  --off-white: #f3efe9;
+  --ink: #0b0b0a;
+  --graphite: #2a2a28;
+  --skin: #b98d6f;
+  --accent: #2d6bff; /* default, sobrescrito por --project-accent quando um projeto está em foco */
+  --project-accent: var(--accent);
+}
+
+@theme inline {
+  --color-off-white: var(--off-white);
+  --color-ink: var(--ink);
+  --color-graphite: var(--graphite);
+  --color-skin: var(--skin);
+  --color-accent: var(--project-accent);
+  --font-grotesk: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces Variable", ui-serif, Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--off-white);
+  color: var(--ink);
+  font-family: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--project-accent);
+  color: var(--ink);
+}
+
+/* cursor customizado — desligado automaticamente em touch via JS (ver CustomCursor.tsx) */
+.has-custom-cursor {
+  cursor: none;
+}
+
+.has-custom-cursor a,
+.has-custom-cursor button {
+  cursor: none;
+}
+
+.has-custom-cursor .custom-cursor-dot {
+  display: flex;
+}
+
+:focus-visible {
+  outline: 3px solid var(--project-accent);
+  outline-offset: 3px;
+}
+
+.editorial-num {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
