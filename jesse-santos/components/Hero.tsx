@@ -1,63 +1,117 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import {
   motion,
   useMotionValue,
   useSpring,
   useTransform,
+  type MotionValue,
 } from "framer-motion";
-
-import { getFeaturedProjects } from "@/data/projects";
+import Link from "next/link";
+import { getFeaturedProjects, type Project } from "@/data/projects";
 import ProjectCover from "./ProjectCover";
 
-/**
- * QUANDO VOCÊ COLOCAR SUA FOTO:
- *
- * 1. Crie:
- *    public/profile/
- *
- * 2. Coloque sua foto como:
- *    public/profile/jesse.webp
- *
- * 3. Troque null por:
- *    "/profile/jesse.webp"
+type FragmentLayout = {
+  top: string;
+  left: string;
+  w: string;
+  h: string;
+  rotate: number;
+  depth: number;
+};
+
+function HeroFragment({
+  project,
+  layout,
+  sx,
+  sy,
+  index,
+}: {
+  project: Project;
+  layout: FragmentLayout;
+  sx: MotionValue<number>;
+  sy: MotionValue<number>;
+  index: number;
+}) {
+  const tx = useTransform(sx, (v) => v * layout.depth);
+  const ty = useTransform(sy, (v) => v * layout.depth);
+
+  return (
+    <motion.div
+      style={{
+        top: layout.top,
+        left: layout.left,
+        width: layout.w,
+        height: layout.h,
+        rotate: layout.rotate,
+        x: tx,
+        y: ty,
+      }}
+      initial={{ opacity: 0, scale: 0.94 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 1,
+        delay: 0.12 * index,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className="absolute shadow-[0_20px_55px_rgba(0,0,0,0.12)]"
+    >
+      <ProjectCover project={project} className="w-full h-full" />
+    </motion.div>
+  );
+}
+
+const fragments = getFeaturedProjects().slice(0, 3);
+
+/*
+ * Agora usamos somente 3 fragmentos no hero.
+ * Isso reduz a poluição e evita conflito com nome, retrato e textos.
  */
-const PROFILE_IMAGE: string | null = null;
+const layout: FragmentLayout[] = [
+  {
+    top: "13%",
+    left: "6%",
+    w: "27vw",
+    h: "30vh",
+    rotate: -3,
+    depth: 24,
+  },
+  {
+    top: "10%",
+    left: "68%",
+    w: "20vw",
+    h: "22vh",
+    rotate: 3,
+    depth: 42,
+  },
+  {
+    top: "64%",
+    left: "72%",
+    w: "21vw",
+    h: "23vh",
+    rotate: -2,
+    depth: 30,
+  },
+];
 
 export default function Hero() {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
 
   const sx = useSpring(mx, {
     damping: 30,
-    stiffness: 65,
+    stiffness: 60,
   });
 
   const sy = useSpring(my, {
     damping: 30,
-    stiffness: 65,
+    stiffness: 60,
   });
 
-  const imageX = useTransform(sx, (v) => v * 22);
-  const imageY = useTransform(sy, (v) => v * 14);
-
-  const cardX = useTransform(sx, (v) => v * 35);
-  const cardY = useTransform(sy, (v) => v * 22);
-
-  const featured = getFeaturedProjects();
-
-  // Como Falas de Orgulho está em primeiro no projects.ts,
-  // ele será o protagonista.
-  const falas = featured[0];
-  const project2 = featured[1];
-  const project3 = featured[2];
-
-  function handleMove(e: React.MouseEvent<HTMLElement>) {
+  function handleMove(e: React.MouseEvent) {
     const rect = ref.current?.getBoundingClientRect();
 
     if (!rect) return;
@@ -72,359 +126,117 @@ export default function Hero() {
       onMouseMove={handleMove}
       className="
         relative
-        overflow-hidden
-        bg-[#f3efe8]
         min-h-[100svh]
-        pt-28
-        pb-16
-        md:pt-0
-        md:pb-0
+        overflow-hidden
+        pt-28 pb-20
+        md:pt-0 md:pb-0
+        bg-background
       "
     >
       {/* =========================================================
-          DESKTOP
-      ========================================================== */}
+          DESKTOP — FRAGMENTOS DE PROJETOS
+      ========================================================= */}
 
-      <div className="hidden md:block relative min-h-[100svh] px-8 lg:px-10">
-        {/* ---------------------------------------------------------
-            PROJETO FALAS DE ORGULHO
-            imagem real parcialmente atrás do nome
-        ---------------------------------------------------------- */}
-
-        {falas && (
-          <motion.div
-            style={{
-              x: imageX,
-              y: imageY,
-              rotate: -3,
-            }}
-            initial={{
-              opacity: 0,
-              scale: 0.95,
-              y: 30,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.9,
-              delay: 0.15,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="
-              absolute
-              z-[1]
-              top-[14%]
-              left-[6%]
-              w-[29vw]
-              h-[29vh]
-              min-h-[230px]
-              max-h-[340px]
-              shadow-[0_25px_60px_rgba(0,0,0,0.14)]
-            "
-          >
-            <Link
-              href={`/trabalho/${falas.slug}`}
-              data-cursor="ver"
-              className="block w-full h-full"
-            >
-              <ProjectCover
-                project={falas}
-                className="w-full h-full"
-              />
-            </Link>
-
-            <div
-              className="
-                absolute
-                -bottom-7
-                left-0
-                editorial-num
-                text-[10px]
-                uppercase
-                tracking-[0.18em]
-              "
-            >
-              01 / {falas.title}
-            </div>
-          </motion.div>
-        )}
-
-        {/* ---------------------------------------------------------
-            BLOCO VERDE / COMPETÊNCIAS
-        ---------------------------------------------------------- */}
-
-        <motion.div
-          initial={{
-            opacity: 0,
-            rotate: -3,
-            y: -20,
-          }}
-          animate={{
-            opacity: 1,
-            rotate: -1.5,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.8,
-            delay: 0.35,
-          }}
-          className="
-            absolute
-            z-[6]
-            top-[12%]
-            left-[35%]
-            bg-[#c6ff3d]
-            px-5
-            py-5
-            w-[190px]
-            lg:w-[220px]
-            shadow-[0_15px_35px_rgba(0,0,0,0.08)]
-          "
-        >
-          <p
-            className="
-              font-mono
-              uppercase
-              text-[11px]
-              lg:text-xs
-              leading-[1.65]
-              tracking-[0.12em]
-            "
-          >
-            Designer Gráfico
-            <br />
-            Direção Visual
-            <br />
-            Social Media
-            <br />
-            Conteúdo em Movimento
-          </p>
-        </motion.div>
-
-        {/* ---------------------------------------------------------
-            FOTO
-        ---------------------------------------------------------- */}
-
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 30,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
-          transition={{
-            duration: 0.9,
-            delay: 0.25,
-          }}
-          className="
-            absolute
-            z-[3]
-            top-[23%]
-            left-[48%]
-            w-[27vw]
-            max-w-[430px]
-            min-w-[320px]
-            h-[62vh]
-            max-h-[650px]
-            min-h-[480px]
-          "
-        >
-          {/* shape atrás da foto */}
-          <div
-            className="
-              absolute
-              inset-[8%_3%_4%_3%]
-              bg-[#e7cad0]
-              rotate-[3deg]
-              [clip-path:polygon(14%_0%,91%_5%,100%_30%,92%_100%,10%_94%,0_25%)]
-            "
+      <div
+        className="absolute inset-0 hidden md:block pointer-events-none"
+        aria-hidden
+      >
+        {fragments.map((project, index) => (
+          <HeroFragment
+            key={project.slug}
+            project={project}
+            layout={layout[index]}
+            sx={sx}
+            sy={sy}
+            index={index}
           />
+        ))}
+      </div>
 
-          {PROFILE_IMAGE && (
-            <div
-              className="
-                absolute
-                inset-0
-                overflow-hidden
-                [clip-path:polygon(14%_0%,91%_5%,100%_30%,92%_100%,10%_94%,0_25%)]
-              "
-            >
-              <Image
-                src={PROFILE_IMAGE}
-                alt="Jesse Santos"
-                fill
-                priority
-                sizes="30vw"
-                className="object-cover object-center"
-              />
-            </div>
-          )}
+      {/* =========================================================
+          DESKTOP — RETRATO
+          
+          Quando você subir sua foto para:
+          /public/profile/jesse.webp
+          
+          ela aparecerá automaticamente aqui.
+      ========================================================= */}
 
-          {/* detalhe gráfico quando ainda não há foto */}
-          {!PROFILE_IMAGE && (
-            <>
-              <div
-                aria-hidden
-                className="
-                  absolute
-                  top-[18%]
-                  left-[20%]
-                  w-[55%]
-                  h-px
-                  bg-black/20
-                  rotate-[-10deg]
-                "
-              />
-              <div
-                aria-hidden
-                className="
-                  absolute
-                  bottom-[18%]
-                  right-[12%]
-                  w-20
-                  h-20
-                  border
-                  border-black/20
-                  rotate-[8deg]
-                "
-              />
-            </>
-          )}
-        </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 1,
+          delay: 0.25,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="
+          hidden md:block
+          absolute
+          z-[4]
+          left-[45%]
+          top-[22%]
+          w-[25vw]
+          h-[67vh]
+        "
+      >
+        {/* forma editorial atrás da fotografia */}
+        <div
+          className="
+            absolute
+            inset-[6%_-5%_-3%_5%]
+            bg-[#f1d8dc]
+            [clip-path:polygon(14%_0,90%_4%,100%_35%,89%_100%,4%_94%,0_30%)]
+          "
+        />
 
-        {/* ---------------------------------------------------------
-            CARD SUPERIOR DIREITO
-        ---------------------------------------------------------- */}
+        {/* FOTO */}
+        <div
+          className="
+            absolute
+            inset-0
+            bg-center
+            bg-no-repeat
+            bg-contain
+            z-10
+          "
+          style={{
+            backgroundImage: "url('/profile/jesse.webp')",
+          }}
+          aria-label="Retrato de Jesse Santos"
+        />
+      </motion.div>
 
-        {project2 && (
-          <motion.div
-            style={{
-              x: cardX,
-              y: cardY,
-              rotate: 3,
-            }}
-            initial={{
-              opacity: 0,
-              y: -20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.45,
-            }}
-            whileHover={{
-              rotate: 0,
-              scale: 1.025,
-            }}
-            className="
-              absolute
-              z-[4]
-              top-[9%]
-              right-[5%]
-              w-[22vw]
-              h-[22vh]
-              min-h-[180px]
-              max-h-[260px]
-              shadow-[0_20px_45px_rgba(0,0,0,0.12)]
-            "
-          >
-            <Link
-              href={`/trabalho/${project2.slug}`}
-              data-cursor="ver"
-              className="block w-full h-full"
-            >
-              <ProjectCover
-                project={project2}
-                className="w-full h-full"
-              />
-            </Link>
-          </motion.div>
-        )}
+      {/* =========================================================
+          CONTEÚDO PRINCIPAL
+      ========================================================= */}
 
-        {/* ---------------------------------------------------------
-            CARD INFERIOR DIREITO
-        ---------------------------------------------------------- */}
-
-        {project3 && (
-          <motion.div
-            style={{
-              x: imageX,
-              y: imageY,
-              rotate: -2,
-            }}
-            initial={{
-              opacity: 0,
-              y: 25,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.55,
-            }}
-            whileHover={{
-              rotate: 0,
-              scale: 1.025,
-            }}
-            className="
-              absolute
-              z-[5]
-              right-[6%]
-              bottom-[15%]
-              w-[23vw]
-              h-[25vh]
-              min-h-[190px]
-              max-h-[290px]
-              shadow-[0_20px_45px_rgba(0,0,0,0.12)]
-            "
-          >
-            <Link
-              href={`/trabalho/${project3.slug}`}
-              data-cursor="ver"
-              className="block w-full h-full"
-            >
-              <ProjectCover
-                project={project3}
-                className="w-full h-full"
-              />
-            </Link>
-          </motion.div>
-        )}
-
-        {/* ---------------------------------------------------------
-            NOME
-        ---------------------------------------------------------- */}
+      <div
+        className="
+          relative
+          z-10
+          min-h-[calc(100svh-7rem)]
+          md:min-h-[100svh]
+          px-5
+          md:px-8
+        "
+      >
+        {/* NOME */}
 
         <motion.h1
-          initial={{
-            opacity: 0,
-            x: -20,
-          }}
-          animate={{
-            opacity: 1,
-            x: 0,
-          }}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.9,
+            duration: 0.8,
             ease: [0.16, 1, 0.3, 1],
           }}
           className="
-            absolute
-            z-[7]
-            left-[2.5%]
-            top-[28%]
-            leading-[0.72]
-            tracking-[-0.065em]
+            pt-10
+            md:absolute
+            md:left-[2%]
+            md:top-[25%]
+            leading-[0.78]
+            tracking-[-0.055em]
             pointer-events-none
           "
         >
@@ -434,8 +246,8 @@ export default function Hero() {
               font-serif
               italic
               font-light
-              text-[10vw]
-              translate-x-[1vw]
+              text-[19vw]
+              md:text-[10.5vw]
             "
           >
             Jesse
@@ -447,51 +259,44 @@ export default function Hero() {
               font-grotesk
               font-bold
               uppercase
-              text-[10.7vw]
-              tracking-[-0.075em]
+              text-[19vw]
+              md:text-[10.5vw]
+              -mt-[1.5vw]
             "
           >
             Santos
           </span>
         </motion.h1>
 
-        {/* ---------------------------------------------------------
-            DESCRIÇÃO
-        ---------------------------------------------------------- */}
+        {/* TEXTO PRINCIPAL */}
 
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 16,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.7,
-            delay: 0.65,
+            delay: 0.4,
           }}
           className="
-            absolute
-            z-[8]
-            left-[3%]
-            bottom-[13%]
-            max-w-[460px]
+            mt-10
+            md:mt-0
+            md:absolute
+            md:left-[3%]
+            md:top-[67%]
+            md:w-[31vw]
           "
         >
           <p
             className="
               font-serif
               italic
-              text-[1.35rem]
-              lg:text-[1.6rem]
+              text-[1.45rem]
+              md:text-[1.65rem]
               leading-[1.25]
+              max-w-xl
             "
           >
-            Design gráfico, direção visual
-            <br />
-            e conteúdo em movimento.
+            Design gráfico, direção visual e conteúdo em movimento.
           </p>
 
           <p
@@ -499,9 +304,10 @@ export default function Hero() {
               mt-3
               font-grotesk
               text-sm
+              md:text-base
               leading-relaxed
-              max-w-[390px]
-              text-black/65
+              max-w-md
+              text-graphite
             "
           >
             Feito para marcas que precisam ser vistas antes de serem lidas.
@@ -514,256 +320,182 @@ export default function Hero() {
               inline-flex
               items-center
               gap-3
-              mt-7
+              mt-6
               editorial-num
-              uppercase
               border-b
-              border-black
+              border-current
               pb-1
+              transition-[gap]
+              duration-300
               hover:gap-5
-              transition-all
             "
           >
-            Ver trabalhos
+            VER TRABALHOS
             <span>↗</span>
           </Link>
         </motion.div>
 
-        {/* ---------------------------------------------------------
-            MICRO TEXTO À DIREITA
-        ---------------------------------------------------------- */}
+        {/* DISCIPLINAS */}
 
-        <motion.p
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{
-            delay: 0.8,
-            duration: 0.6,
+            delay: 0.65,
+            duration: 0.7,
           }}
           className="
-            absolute
-            z-[6]
-            right-[27%]
-            top-[49%]
+            mt-12
+            md:mt-0
+            md:absolute
+            md:left-[39%]
+            md:bottom-[9%]
             editorial-num
-            uppercase
             leading-[1.65]
-            max-w-[155px]
+            text-graphite
           "
         >
-          Ideia
+          DESIGN GRÁFICO
           <br />
-          imagem
+          DIREÇÃO VISUAL
           <br />
-          ritmo
+          SOCIAL MEDIA
           <br />
-          movimento
-        </motion.p>
+          CONTEÚDO EM MOVIMENTO
+        </motion.div>
 
-        {/* ---------------------------------------------------------
-            RODAPÉ DO HERO
-        ---------------------------------------------------------- */}
+        {/* PEQUENA FRASE EDITORIAL */}
 
-        <div
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            delay: 0.85,
+            duration: 0.7,
+          }}
           className="
+            hidden
+            md:block
             absolute
-            z-[10]
-            left-8
-            right-8
-            bottom-7
-            flex
-            items-end
-            justify-between
-            border-t
-            border-black/25
-            pt-4
+            right-[7%]
+            top-[48%]
+            w-[15vw]
+            font-grotesk
+            text-xs
+            uppercase
+            tracking-[0.14em]
+            leading-[1.8]
           "
         >
-          <p className="editorial-num uppercase">
-            01 — Trabalho selecionado
-          </p>
+          IDEIAS
+          <br />
+          IMAGENS
+          <br />
+          MOVIMENTO
+          <div className="mt-3 h-px w-16 bg-current" />
+        </motion.div>
 
-          <p className="editorial-num uppercase text-black/50">
-            São Paulo / Brasil
-          </p>
-        </div>
-      </div>
+        {/* =====================================================
+            MOBILE — FOTO
+        ===================================================== */}
 
-      {/* =========================================================
-          MOBILE
-      ========================================================== */}
-
-      <div className="md:hidden px-5">
-        <motion.h1
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-          }}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.8,
+            delay: 0.35,
           }}
-          className="leading-[0.78]"
-        >
-          <span
-            className="
-              block
-              font-serif
-              italic
-              text-[21vw]
-            "
-          >
-            Jesse
-          </span>
-
-          <span
-            className="
-              block
-              font-grotesk
-              font-bold
-              uppercase
-              text-[22vw]
-              tracking-[-0.075em]
-            "
-          >
-            Santos
-          </span>
-        </motion.h1>
-
-        <div
           className="
-            mt-8
-            grid
-            grid-cols-[1fr_auto]
-            gap-4
-            items-start
+            md:hidden
+            relative
+            mt-12
+            w-[82vw]
+            max-w-sm
+            aspect-[4/5]
+            ml-auto
           "
         >
-          <p
-            className="
-              font-serif
-              italic
-              text-xl
-              leading-[1.25]
-            "
-          >
-            Design gráfico, direção visual e conteúdo em movimento.
-          </p>
-
-          <p
-            className="
-              editorial-num
-              uppercase
-              leading-[1.5]
-            "
-          >
-            Design
-            <br />
-            Social
-            <br />
-            Motion
-          </p>
-        </div>
-
-        {falas && (
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 24,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.25,
-            }}
-            className="
-              mt-10
-              w-[91%]
-              aspect-[16/10]
-              -rotate-2
-              shadow-[0_18px_40px_rgba(0,0,0,0.15)]
-            "
-          >
-            <Link
-              href={`/trabalho/${falas.slug}`}
-              className="block w-full h-full"
-            >
-              <ProjectCover
-                project={falas}
-                className="w-full h-full"
-              />
-            </Link>
-          </motion.div>
-        )}
-
-        {PROFILE_IMAGE && (
           <div
             className="
-              relative
-              mt-12
-              ml-auto
-              w-[72%]
-              aspect-[4/5]
+              absolute
+              inset-[5%_-4%_-3%_5%]
+              bg-[#f1d8dc]
+              [clip-path:polygon(12%_0,91%_4%,100%_35%,90%_100%,3%_94%,0_28%)]
             "
-          >
-            <div
-              className="
-                absolute
-                inset-2
-                bg-[#e7cad0]
-                rotate-3
-              "
-            />
+          />
 
-            <Image
-              src={PROFILE_IMAGE}
-              alt="Jesse Santos"
-              fill
-              sizes="72vw"
-              className="object-cover relative z-10"
-            />
-          </div>
-        )}
+          <div
+            className="
+              absolute
+              inset-0
+              bg-center
+              bg-no-repeat
+              bg-contain
+            "
+            style={{
+              backgroundImage: "url('/profile/jesse.webp')",
+            }}
+            aria-label="Retrato de Jesse Santos"
+          />
+        </motion.div>
 
-        <p
-          className="
-            mt-10
-            text-sm
-            leading-relaxed
-            max-w-xs
-            text-black/65
-          "
-        >
-          Feito para marcas que precisam ser vistas antes de serem lidas.
-        </p>
+        {/* =====================================================
+            MOBILE — PROJETOS
+        ===================================================== */}
 
-        <Link
-          href="#trabalho"
-          className="
-            inline-flex
-            mt-6
-            items-center
-            gap-3
-            editorial-num
-            uppercase
-            border-b
-            border-black
-            pb-1
-          "
-        >
-          Ver trabalhos ↗
-        </Link>
+        <div className="md:hidden flex gap-4 mt-12 overflow-hidden -mr-5">
+          {fragments.slice(0, 3).map((project, index) => (
+            <motion.div
+              key={project.slug}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                delay: 0.5 + index * 0.1,
+              }}
+              style={{
+                rotate: index % 2 === 0 ? -2 : 2,
+              }}
+              className={`
+                shrink-0
+                shadow-[0_12px_30px_rgba(0,0,0,0.12)]
+                ${
+                  index === 0
+                    ? "w-[58vw] aspect-[16/10]"
+                    : "w-[38vw] aspect-square mt-6"
+                }
+              `}
+            >
+              <ProjectCover project={project} className="w-full h-full" />
+            </motion.div>
+          ))}
+        </div>
       </div>
+
+      {/* INDICAÇÃO DE SCROLL */}
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          delay: 1,
+          duration: 0.6,
+        }}
+        className="
+          hidden
+          md:block
+          absolute
+          bottom-6
+          left-8
+          editorial-num
+          text-graphite
+        "
+      >
+        <Link href="#trabalho" data-cursor="ver">
+          ↓ TRABALHO SELECIONADO
+        </Link>
+      </motion.div>
     </section>
   );
 }
