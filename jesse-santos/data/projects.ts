@@ -80,6 +80,64 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+   {
+  title: "Falas de Orgulho",
+  slug: "falas-de-orgulho",
+  discipline: ["Editorial", "Design Gráfico"],
+  role: "Conceito, direção de arte e design",
+
+  description:
+    "Projeto autoral de comunicação visual que transforma narrativas LGBTQIAPN+ em uma campanha gráfica construída por tipografia, cor, fotografia, ilustração e intervenção urbana.",
+
+  challenge:
+    "Criar uma linguagem visual capaz de amplificar diferentes vozes sem reduzir suas histórias a uma única estética.",
+
+  cover: "/1ec70d211500145.6723e21b19ba8.webp",
+  coverRatio: "16/9",
+
+  images: [
+    {
+      src: "/81592a211500145.6723e21b17142.webp",
+      alt: "Pelo direito de ser — Falas de Orgulho",
+      ratio: "4/5",
+    },
+    {
+      src: "/6e0050211500145.6723e21b18993.webp",
+      alt: "Nosso amor é resistência — Falas de Orgulho",
+      ratio: "4/5",
+    },
+    {
+      src: "/b31634211500145.6723e21b18278.webp",
+      alt: "Quem são os LGBTQIAP+ — Falas de Orgulho",
+      ratio: "4/5",
+    },
+    {
+      src: "/9847f1211500145.6723e21b193b8.webp",
+      alt: "Aplicação urbana da campanha Falas de Orgulho",
+      ratio: "16/9",
+    },
+    {
+      src: "/7d3e4c211500145.6723e21b1767d (1).webp",
+      alt: "Cartazes da campanha Falas de Orgulho em ambiente externo",
+      ratio: "16/9",
+    },
+    {
+      src: "/1ec70d211500145.6723e21b19ba8.webp",
+      alt: "Painel urbano Falas de Orgulho",
+      ratio: "16/9",
+    },
+    {
+      src: "/8be1b5211500145.6723e21b18ec1 (1).webp",
+      alt: "Cartazes Falas de Orgulho aplicados em ambiente urbano",
+      ratio: "16/9",
+    },
+  ],
+
+  accentColor: "#FF4BC8",
+  featured: true,
+  layout: "editorial",
+  coverTreatment: "serif",
+  },
   {
     title: "Apresentação de Vendas",
     slug: "grupo-tattersall",
@@ -118,19 +176,6 @@ export const projects: Project[] = [
       "Identidade e aplicação social para marca de beleza — paleta quente, tipografia suave e fotografia como protagonista.",
     accentColor: "#E8447A",
     layout: "gallery",
-    coverTreatment: "serif",
-  },
-  {
-    title: "Falas de Orgulho",
-    slug: "falas-de-orgulho",
-    discipline: ["Editorial", "Design Gráfico"],
-    role: "Conceito, direção de arte e design",
-    description:
-      "Projeto autoral que dá forma visual a depoimentos e falas dentro do universo LGBTQIAPN+ — tipografia como voz, composição como escuta.",
-    challenge: "Dar peso gráfico a depoimentos reais sem ilustrá-los literalmente — deixar a tipografia carregar a emoção.",
-    accentColor: "#6C4FD1",
-    featured: true,
-    layout: "editorial",
     coverTreatment: "serif",
   },
   {
