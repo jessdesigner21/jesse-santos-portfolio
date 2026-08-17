@@ -1,6 +1,8 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {
   motion,
   useMotionValue,
@@ -8,13 +10,16 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import Link from "next/link";
+
 import { getFeaturedProjects, type Project } from "@/data/projects";
 import ProjectCover from "./ProjectCover";
 
+const PROFILE_IMAGE = "/jesse.jpg.jpeg";
+
 type FragmentLayout = {
   top: string;
-  left: string;
+  left?: string;
+  right?: string;
   w: string;
   h: string;
   rotate: number;
@@ -42,22 +47,67 @@ function HeroFragment({
       style={{
         top: layout.top,
         left: layout.left,
+        right: layout.right,
         width: layout.w,
         height: layout.h,
         rotate: layout.rotate,
         x: tx,
         y: ty,
       }}
-      initial={{ opacity: 0, scale: 0.94 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{
+        opacity: 0,
+        scale: 0.96,
+        y: 18,
+      }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+        y: 0,
+      }}
       transition={{
-        duration: 1,
-        delay: 0.12 * index,
+        duration: 0.9,
+        delay: 0.15 + index * 0.12,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="absolute shadow-[0_20px_55px_rgba(0,0,0,0.12)]"
+      whileHover={{
+        rotate: 0,
+        scale: 1.018,
+        zIndex: 30,
+      }}
+      className="
+        absolute
+        overflow-hidden
+        shadow-[0_18px_45px_rgba(0,0,0,0.10)]
+        pointer-events-auto
+      "
     >
-      <ProjectCover project={project} className="w-full h-full" />
+      <Link
+        href={`/trabalho/${project.slug}`}
+        data-cursor="ver"
+        className="block w-full h-full"
+      >
+        <ProjectCover project={project} className="w-full h-full" />
+
+        <div
+          className="
+            absolute
+            inset-x-0
+            bottom-0
+            px-3
+            py-2
+            bg-black/75
+            text-white
+            opacity-0
+            hover:opacity-100
+            transition-opacity
+            duration-300
+          "
+        >
+          <p className="editorial-num uppercase">
+            0{index + 1} — {project.title}
+          </p>
+        </div>
+      </Link>
     </motion.div>
   );
 }
@@ -65,53 +115,59 @@ function HeroFragment({
 const fragments = getFeaturedProjects().slice(0, 3);
 
 /*
- * Agora usamos somente 3 fragmentos no hero.
- * Isso reduz a poluição e evita conflito com nome, retrato e textos.
+ * A composição fica deliberadamente assimétrica,
+ * mas cada elemento ocupa uma zona própria.
+ *
+ * Isso evita colisão entre:
+ * nome / foto / textos / projetos.
  */
 const layout: FragmentLayout[] = [
   {
     top: "13%",
-    left: "6%",
-    w: "27vw",
-    h: "30vh",
-    rotate: -3,
-    depth: 24,
+    left: "5.5%",
+    w: "26vw",
+    h: "29vh",
+    rotate: -2.5,
+    depth: 22,
   },
   {
     top: "10%",
-    left: "68%",
-    w: "20vw",
-    h: "22vh",
-    rotate: 3,
-    depth: 42,
-  },
-  {
-    top: "64%",
-    left: "72%",
+    right: "5%",
     w: "21vw",
     h: "23vh",
-    rotate: -2,
-    depth: 30,
+    rotate: 2.5,
+    depth: 38,
+  },
+  {
+    top: "62%",
+    right: "5.5%",
+    w: "22vw",
+    h: "24vh",
+    rotate: -1.5,
+    depth: 27,
   },
 ];
 
 export default function Hero() {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
 
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
 
   const sx = useSpring(mx, {
-    damping: 30,
-    stiffness: 60,
+    damping: 32,
+    stiffness: 65,
   });
 
   const sy = useSpring(my, {
-    damping: 30,
-    stiffness: 60,
+    damping: 32,
+    stiffness: 65,
   });
 
-  function handleMove(e: React.MouseEvent) {
+  const portraitX = useTransform(sx, (v) => v * 10);
+  const portraitY = useTransform(sy, (v) => v * 7);
+
+  function handleMove(e: React.MouseEvent<HTMLElement>) {
     const rect = ref.current?.getBoundingClientRect();
 
     if (!rect) return;
@@ -127,116 +183,158 @@ export default function Hero() {
       className="
         relative
         min-h-[100svh]
-        overflow-hidden
-        pt-28 pb-20
-        md:pt-0 md:pb-0
         bg-background
+        overflow-hidden
+        border-b
+        border-black/15
       "
     >
       {/* =========================================================
-          DESKTOP — FRAGMENTOS DE PROJETOS
+          DESKTOP
       ========================================================= */}
 
-      <div
-        className="absolute inset-0 hidden md:block pointer-events-none"
-        aria-hidden
-      >
-        {fragments.map((project, index) => (
-          <HeroFragment
-            key={project.slug}
-            project={project}
-            layout={layout[index]}
-            sx={sx}
-            sy={sy}
-            index={index}
-          />
-        ))}
-      </div>
+      <div className="hidden md:block relative min-h-[100svh]">
+        {/* PROJETOS */}
 
-      {/* =========================================================
-          DESKTOP — RETRATO
-          
-          Quando você subir sua foto para:
-          /public/profile/jesse.webp
-          
-          ela aparecerá automaticamente aqui.
-      ========================================================= */}
+        <div className="absolute inset-0 z-[2]">
+          {fragments.map((project, index) => (
+            <HeroFragment
+              key={project.slug}
+              project={project}
+              layout={layout[index]}
+              sx={sx}
+              sy={sy}
+              index={index}
+            />
+          ))}
+        </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 1,
-          delay: 0.25,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        className="
-          hidden md:block
-          absolute
-          z-[4]
-          left-[45%]
-          top-[22%]
-          w-[25vw]
-          h-[67vh]
-        "
-      >
-        {/* forma editorial atrás da fotografia */}
-        <div
-          className="
-            absolute
-            inset-[6%_-5%_-3%_5%]
-            bg-[#f1d8dc]
-            [clip-path:polygon(14%_0,90%_4%,100%_35%,89%_100%,4%_94%,0_30%)]
-          "
-        />
+        {/* =========================================================
+            FOTO
+        ========================================================= */}
 
-        {/* FOTO */}
-        <div
-          className="
-            absolute
-            inset-0
-            bg-center
-            bg-no-repeat
-            bg-contain
-            z-10
-          "
+        <motion.div
           style={{
-            backgroundImage: "url('/profile/jesse.webp')",
+            x: portraitX,
+            y: portraitY,
           }}
-          aria-label="Retrato de Jesse Santos"
-        />
-      </motion.div>
-
-      {/* =========================================================
-          CONTEÚDO PRINCIPAL
-      ========================================================= */}
-
-      <div
-        className="
-          relative
-          z-10
-          min-h-[calc(100svh-7rem)]
-          md:min-h-[100svh]
-          px-5
-          md:px-8
-        "
-      >
-        {/* NOME */}
-
-        <motion.h1
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            y: 25,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
           transition={{
-            duration: 0.8,
+            duration: 1,
+            delay: 0.3,
             ease: [0.16, 1, 0.3, 1],
           }}
           className="
-            pt-10
-            md:absolute
-            md:left-[2%]
-            md:top-[25%]
-            leading-[0.78]
-            tracking-[-0.055em]
+            absolute
+            z-[5]
+
+            left-[47%]
+            top-[22%]
+
+            w-[27vw]
+            max-w-[430px]
+            min-w-[330px]
+
+            h-[58vh]
+            max-h-[610px]
+            min-h-[450px]
+          "
+        >
+          {/* shape de fundo */}
+
+          <div
+            className="
+              absolute
+              inset-[4%_-5%_-4%_5%]
+              bg-[#ead4d8]
+              rotate-[2deg]
+              [clip-path:polygon(13%_0%,92%_4%,100%_29%,91%_100%,8%_95%,0_26%)]
+            "
+          />
+
+          {/* foto */}
+
+          <div
+            className="
+              absolute
+              inset-0
+              overflow-hidden
+              [clip-path:polygon(13%_0%,92%_4%,100%_29%,91%_100%,8%_95%,0_26%)]
+            "
+          >
+            <Image
+              src={PROFILE_IMAGE}
+              alt="Retrato de Jesse Santos"
+              fill
+              priority
+              sizes="30vw"
+              className="
+                object-cover
+                object-[50%_40%]
+              "
+            />
+          </div>
+
+          {/* pequena legenda */}
+
+          <div
+            className="
+              absolute
+              -right-8
+              bottom-[4%]
+              z-20
+
+              bg-background
+              px-3
+              py-2
+
+              editorial-num
+              uppercase
+              rotate-[-2deg]
+            "
+          >
+            Jesse Santos
+            <br />
+            Designer Gráfico
+          </div>
+        </motion.div>
+
+        {/* =========================================================
+            NOME
+        ========================================================= */}
+
+        <motion.h1
+          initial={{
+            opacity: 0,
+            x: -20,
+          }}
+          animate={{
+            opacity: 1,
+            x: 0,
+          }}
+          transition={{
+            duration: 0.85,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="
+            absolute
+            z-[10]
+
+            left-[2.7%]
+            top-[31%]
+
+            w-[43vw]
+
+            leading-[0.72]
+            tracking-[-0.065em]
+
             pointer-events-none
           "
         >
@@ -246,8 +344,8 @@ export default function Hero() {
               font-serif
               italic
               font-light
-              text-[19vw]
-              md:text-[10.5vw]
+              text-[9.5vw]
+              translate-x-[0.5vw]
             "
           >
             Jesse
@@ -259,54 +357,120 @@ export default function Hero() {
               font-grotesk
               font-bold
               uppercase
-              text-[19vw]
-              md:text-[10.5vw]
-              -mt-[1.5vw]
+              text-[10.4vw]
+              tracking-[-0.075em]
             "
           >
             Santos
           </span>
         </motion.h1>
 
-        {/* TEXTO PRINCIPAL */}
+        {/* =========================================================
+            BLOCO PROFISSIONAL
+        ========================================================= */}
 
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            rotate: -2,
+            y: -12,
+          }}
+          animate={{
+            opacity: 1,
+            rotate: -1,
+            y: 0,
+          }}
           transition={{
             duration: 0.7,
-            delay: 0.4,
+            delay: 0.45,
           }}
           className="
-            mt-10
-            md:mt-0
-            md:absolute
-            md:left-[3%]
-            md:top-[67%]
-            md:w-[31vw]
+            absolute
+            z-[12]
+
+            left-[34%]
+            top-[12%]
+
+            w-[190px]
+
+            bg-[#c6ff3d]
+
+            px-5
+            py-5
+
+            shadow-[0_10px_30px_rgba(0,0,0,0.06)]
+          "
+        >
+          <p
+            className="
+              editorial-num
+              uppercase
+              leading-[1.7]
+            "
+          >
+            Design Gráfico
+            <br />
+            Direção Visual
+            <br />
+            Social Media
+            <br />
+            Motion
+          </p>
+        </motion.div>
+
+        {/* =========================================================
+            TEXTO PRINCIPAL
+        ========================================================= */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 15,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.7,
+            delay: 0.6,
+          }}
+          className="
+            absolute
+            z-[12]
+
+            left-[3%]
+            bottom-[12%]
+
+            w-[32vw]
+            max-w-[470px]
           "
         >
           <p
             className="
               font-serif
               italic
+
               text-[1.45rem]
-              md:text-[1.65rem]
-              leading-[1.25]
-              max-w-xl
+              lg:text-[1.7rem]
+
+              leading-[1.24]
             "
           >
-            Design gráfico, direção visual e conteúdo em movimento.
+            Design gráfico, direção visual
+            <br />
+            e conteúdo em movimento.
           </p>
 
           <p
             className="
               mt-3
+              max-w-[360px]
+
               font-grotesk
               text-sm
-              md:text-base
-              leading-relaxed
-              max-w-md
+              leading-[1.6]
+
               text-graphite
             "
           >
@@ -320,108 +484,288 @@ export default function Hero() {
               inline-flex
               items-center
               gap-3
+
               mt-6
+              pb-1
+
               editorial-num
+              uppercase
+
               border-b
               border-current
-              pb-1
-              transition-[gap]
+
+              transition-all
               duration-300
+
               hover:gap-5
             "
           >
-            VER TRABALHOS
+            Ver trabalhos
             <span>↗</span>
           </Link>
         </motion.div>
 
-        {/* DISCIPLINAS */}
+        {/* =========================================================
+            MICRO TEXTO
+        ========================================================= */}
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
           transition={{
-            delay: 0.65,
-            duration: 0.7,
+            delay: 0.85,
+            duration: 0.6,
           }}
           className="
-            mt-12
-            md:mt-0
-            md:absolute
-            md:left-[39%]
-            md:bottom-[9%]
+            absolute
+            z-[10]
+
+            left-[38%]
+            bottom-[10%]
+
             editorial-num
-            leading-[1.65]
+            uppercase
+            leading-[1.7]
+
             text-graphite
           "
         >
-          DESIGN GRÁFICO
+          Ideia
           <br />
-          DIREÇÃO VISUAL
+          imagem
           <br />
-          SOCIAL MEDIA
+          ritmo
           <br />
-          CONTEÚDO EM MOVIMENTO
+          movimento
         </motion.div>
 
-        {/* PEQUENA FRASE EDITORIAL */}
+        {/* =========================================================
+            BASE DA CAPA
+        ========================================================= */}
+
+        <div
+          className="
+            absolute
+            z-[20]
+
+            left-8
+            right-8
+            bottom-6
+
+            flex
+            justify-between
+            items-end
+
+            pt-4
+
+            border-t
+            border-black/20
+          "
+        >
+          <Link
+            href="#trabalho"
+            data-cursor="ver"
+            className="
+              editorial-num
+              uppercase
+            "
+          >
+            ↓ Trabalho selecionado
+          </Link>
+
+          <p
+            className="
+              editorial-num
+              uppercase
+              text-black/45
+            "
+          >
+            Portfolio / 2026
+          </p>
+        </div>
+      </div>
+
+      {/* =========================================================
+          MOBILE
+      ========================================================= */}
+
+      <div
+        className="
+          md:hidden
+
+          px-5
+          pt-28
+          pb-12
+        "
+      >
+        {/* NOME */}
+
+        <motion.h1
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.8,
+          }}
+          className="
+            leading-[0.76]
+            tracking-[-0.055em]
+          "
+        >
+          <span
+            className="
+              block
+              font-serif
+              italic
+              font-light
+              text-[20vw]
+            "
+          >
+            Jesse
+          </span>
+
+          <span
+            className="
+              block
+              font-grotesk
+              font-bold
+              uppercase
+              text-[21vw]
+              tracking-[-0.075em]
+            "
+          >
+            Santos
+          </span>
+        </motion.h1>
+
+        {/* BLOCO DE ÁREA */}
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{
+            opacity: 0,
+            y: 12,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
           transition={{
-            delay: 0.85,
+            delay: 0.2,
             duration: 0.7,
           }}
           className="
-            hidden
-            md:block
-            absolute
-            right-[7%]
-            top-[48%]
-            w-[15vw]
-            font-grotesk
-            text-xs
-            uppercase
-            tracking-[0.14em]
-            leading-[1.8]
+            mt-8
+            inline-block
+
+            bg-[#c6ff3d]
+
+            px-4
+            py-4
+
+            -rotate-1
           "
         >
-          IDEIAS
-          <br />
-          IMAGENS
-          <br />
-          MOVIMENTO
-          <div className="mt-3 h-px w-16 bg-current" />
+          <p
+            className="
+              editorial-num
+              uppercase
+              leading-[1.65]
+            "
+          >
+            Design Gráfico
+            <br />
+            Direção Visual
+            <br />
+            Social Media
+            <br />
+            Motion
+          </p>
         </motion.div>
 
-        {/* =====================================================
-            MOBILE — FOTO
-        ===================================================== */}
+        {/* PRIMEIRO PROJETO */}
+
+        {fragments[0] && (
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.8,
+              delay: 0.3,
+            }}
+            className="
+              mt-10
+
+              w-[92%]
+              aspect-[16/10]
+
+              -rotate-2
+
+              shadow-[0_16px_35px_rgba(0,0,0,0.12)]
+            "
+          >
+            <Link
+              href={`/trabalho/${fragments[0].slug}`}
+              className="block w-full h-full"
+            >
+              <ProjectCover
+                project={fragments[0]}
+                className="w-full h-full"
+              />
+            </Link>
+          </motion.div>
+        )}
+
+        {/* FOTO */}
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            y: 25,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
           transition={{
             duration: 0.8,
-            delay: 0.35,
+            delay: 0.4,
           }}
           className="
-            md:hidden
             relative
-            mt-12
-            w-[82vw]
-            max-w-sm
-            aspect-[4/5]
+
+            mt-14
             ml-auto
+
+            w-[78vw]
+            max-w-[370px]
+            aspect-[4/5]
           "
         >
           <div
             className="
               absolute
-              inset-[5%_-4%_-3%_5%]
-              bg-[#f1d8dc]
-              [clip-path:polygon(12%_0,91%_4%,100%_35%,90%_100%,3%_94%,0_28%)]
+              inset-[4%_-5%_-4%_5%]
+
+              bg-[#ead4d8]
+
+              rotate-[2deg]
+
+              [clip-path:polygon(12%_0%,92%_4%,100%_30%,91%_100%,7%_95%,0_27%)]
             "
           />
 
@@ -429,73 +773,96 @@ export default function Hero() {
             className="
               absolute
               inset-0
-              bg-center
-              bg-no-repeat
-              bg-contain
+
+              overflow-hidden
+
+              [clip-path:polygon(12%_0%,92%_4%,100%_30%,91%_100%,7%_95%,0_27%)]
             "
-            style={{
-              backgroundImage: "url('/profile/jesse.webp')",
-            }}
-            aria-label="Retrato de Jesse Santos"
-          />
+          >
+            <Image
+              src={PROFILE_IMAGE}
+              alt="Retrato de Jesse Santos"
+              fill
+              sizes="78vw"
+              className="
+                object-cover
+                object-[50%_38%]
+              "
+            />
+          </div>
         </motion.div>
 
-        {/* =====================================================
-            MOBILE — PROJETOS
-        ===================================================== */}
+        {/* DESCRIÇÃO */}
 
-        <div className="md:hidden flex gap-4 mt-12 overflow-hidden -mr-5">
-          {fragments.slice(0, 3).map((project, index) => (
-            <motion.div
-              key={project.slug}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.6,
-                delay: 0.5 + index * 0.1,
-              }}
-              style={{
-                rotate: index % 2 === 0 ? -2 : 2,
-              }}
-              className={`
-                shrink-0
-                shadow-[0_12px_30px_rgba(0,0,0,0.12)]
-                ${
-                  index === 0
-                    ? "w-[58vw] aspect-[16/10]"
-                    : "w-[38vw] aspect-square mt-6"
-                }
-              `}
-            >
-              <ProjectCover project={project} className="w-full h-full" />
-            </motion.div>
-          ))}
-        </div>
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 16,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.7,
+            delay: 0.5,
+          }}
+          className="
+            mt-12
+
+            pt-7
+
+            border-t
+            border-black/20
+          "
+        >
+          <p
+            className="
+              font-serif
+              italic
+
+              text-[1.45rem]
+              leading-[1.25]
+            "
+          >
+            Design gráfico, direção visual e conteúdo em movimento.
+          </p>
+
+          <p
+            className="
+              mt-3
+              max-w-xs
+
+              text-sm
+              leading-[1.6]
+
+              text-graphite
+            "
+          >
+            Feito para marcas que precisam ser vistas antes de serem lidas.
+          </p>
+
+          <Link
+            href="#trabalho"
+            className="
+              inline-flex
+              items-center
+              gap-3
+
+              mt-6
+              pb-1
+
+              editorial-num
+              uppercase
+
+              border-b
+              border-black
+            "
+          >
+            Ver trabalhos ↗
+          </Link>
+        </motion.div>
       </div>
-
-      {/* INDICAÇÃO DE SCROLL */}
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{
-          delay: 1,
-          duration: 0.6,
-        }}
-        className="
-          hidden
-          md:block
-          absolute
-          bottom-6
-          left-8
-          editorial-num
-          text-graphite
-        "
-      >
-        <Link href="#trabalho" data-cursor="ver">
-          ↓ TRABALHO SELECIONADO
-        </Link>
-      </motion.div>
     </section>
   );
 }
