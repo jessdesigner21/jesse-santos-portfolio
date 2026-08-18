@@ -3,7 +3,17 @@
  * CAMADA DE DADOS — PROJETOS
  * ─────────────────────────────────────────────────────────────────────────
  * Este é o ÚNICO arquivo que precisa ser editado para adicionar, remover ou
- * atualizar um projeto no portfólio.
+ * atualizar um projeto no portfólio. Nada na homepage, nas listagens ou nas
+ * páginas de case precisa ser tocado — tudo é gerado a partir deste array.
+ *
+ * COMO ADICIONAR UM PROJETO NOVO
+ * 1. Copie um objeto existente abaixo como modelo.
+ * 2. Preencha os campos. Campos opcionais podem ser omitidos.
+ * 3. Coloque os assets (imagens/vídeos) em /public/work/<slug>/ e aponte
+ *    os campos `cover`, `images`, `videos` e `poster` para esses caminhos
+ *    (ou para URLs externas, ex. CDN).
+ * 4. Se ainda não houver imagem real, NÃO invente um caminho falso — deixe
+ *    `cover` como `undefined`.
  */
 
 export type Discipline =
@@ -112,7 +122,7 @@ export const projects: Project[] = [
         ratio: "16/9",
       },
       {
-        src: "/8be1b521150145.6723e21b18ec1 (1).webp",
+        src: "/8be1b5211500145.6723e21b18ec1 (1).webp",
         alt: "Cartazes Falas de Orgulho aplicados em ambiente urbano",
         ratio: "16/9",
       },
@@ -160,6 +170,7 @@ export const projects: Project[] = [
 
   /* =========================================================
      03 — SOCIAL MEDIA / BELEZA
+     Continua no portfólio, mas sai da capa.
   ========================================================= */
 
   {
@@ -178,7 +189,7 @@ export const projects: Project[] = [
 
     accentColor: "#E8447A",
 
-    featured: true,
+    featured: false,
 
     layout: "gallery",
 
@@ -233,6 +244,7 @@ export const projects: Project[] = [
 
   /* =========================================================
      06 — CANTIM DO VIN
+     Destaque na homepage.
   ========================================================= */
 
   {
