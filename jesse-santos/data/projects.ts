@@ -117,8 +117,11 @@ export const projects: Project[] = [
     ],
 
     accentColor: "#FF4BC8",
+
     featured: true,
+
     layout: "editorial",
+
     coverTreatment: "serif",
   },
 
@@ -129,6 +132,7 @@ export const projects: Project[] = [
   {
     title: "Apresentação de Vendas",
     slug: "grupo-tattersall",
+
     client: "Grupo Tattersall",
 
     discipline: ["Apresentações", "Direção Visual"],
@@ -142,8 +146,11 @@ export const projects: Project[] = [
       "Traduzir um discurso comercial denso em uma sequência visual que sustenta atenção slide após slide.",
 
     accentColor: "#2D6BFF",
+
     featured: true,
+
     layout: "presentation",
+
     coverTreatment: "grotesk",
 
     behanceUrl: "https://www.behance.net/jessesantos1",
@@ -151,7 +158,6 @@ export const projects: Project[] = [
 
   /* =========================================================
      03 — SOCIAL MEDIA / BELEZA
-     Continua no portfólio, mas NÃO ocupa a capa.
   ========================================================= */
 
   {
@@ -173,6 +179,7 @@ export const projects: Project[] = [
     featured: false,
 
     layout: "gallery",
+
     coverTreatment: "serif",
   },
 
@@ -183,6 +190,7 @@ export const projects: Project[] = [
   {
     title: "Glow Beauty",
     slug: "glow-beauty",
+
     client: "Glow Beauty",
 
     discipline: ["Identidade Visual", "Social Media"],
@@ -195,6 +203,7 @@ export const projects: Project[] = [
     accentColor: "#E8447A",
 
     layout: "gallery",
+
     coverTreatment: "serif",
   },
 
@@ -216,17 +225,18 @@ export const projects: Project[] = [
     accentColor: "#B23A2E",
 
     layout: "gallery",
+
     coverTreatment: "grotesk",
   },
 
   /* =========================================================
      06 — CANTIM DO VIN
-     É o terceiro projeto em destaque na capa.
   ========================================================= */
 
   {
     title: "Cantim do Vin",
     slug: "cantim-do-vin",
+
     client: "Cantim do Vin",
 
     discipline: [
@@ -284,6 +294,7 @@ export const projects: Project[] = [
     featured: true,
 
     layout: "gallery",
+
     coverTreatment: "serif",
   },
 
@@ -294,6 +305,7 @@ export const projects: Project[] = [
   {
     title: "Amarelo",
     slug: "amarelo",
+
     client: "Amarelo",
 
     discipline: ["Identidade Visual"],
@@ -306,30 +318,131 @@ export const projects: Project[] = [
     accentColor: "#F2B705",
 
     layout: "gallery",
+
     coverTreatment: "mono-grid",
   },
 
   /* =========================================================
      08 — FLASH FOOD
+     IMPORTANTE:
+     As imagens foram criadas como uma narrativa contínua.
+     Manter SEMPRE a sequência 01 → 08.
   ========================================================= */
 
   {
     title: "Flash Food",
     slug: "flash-food",
+
     client: "Flash Food",
 
-    discipline: ["Identidade Visual", "Design Gráfico"],
+    discipline: [
+      "Identidade Visual",
+      "Design Gráfico",
+      "Direção Visual",
+    ],
 
-    role: "Identidade visual completa",
+    role: "Identidade visual, direção de arte e aplicações",
 
     description:
-      "Marca para food service rápido — velocidade traduzida em forma: ângulos, tipografia condensada e cor ácida.",
+      "Identidade visual criada para um food truck com linguagem vibrante, espontânea e direta — combinando lettering expressivo, ilustração e aplicações para construir uma marca com energia e personalidade.",
 
-    accentColor: "#C6FF3D",
+    challenge:
+      "Construir uma identidade que traduzisse rapidez e experiência gastronômica sem cair nos códigos visuais genéricos do fast-food.",
+
+    /*
+     * A própria primeira prancha funciona como capa.
+     */
+    cover: "/BEHANCE_01.png",
+
+    coverRatio: "16/9",
+
+    /*
+     * NÃO ALTERAR A ORDEM.
+     *
+     * As pranchas se conectam visualmente.
+     * O case deve ser lido verticalmente:
+     *
+     * 01
+     * ↓
+     * 02
+     * ↓
+     * 03
+     * ↓
+     * 04
+     * ↓
+     * 05
+     * ↓
+     * 06
+     * ↓
+     * 07
+     * ↓
+     * 08
+     */
+
+    images: [
+      {
+        src: "/BEHANCE_01.png",
+        alt: "Abertura da identidade visual Flash Food",
+        ratio: "16/9",
+      },
+
+      {
+        src: "/BEHANCE_02 (1).png",
+        alt: "Conceito da marca Flash Food e início da aplicação no food truck",
+        ratio: "16/9",
+      },
+
+      {
+        src: "/BEHANCE_03 (1).png",
+        alt: "Continuação da aplicação da identidade Flash Food no food truck",
+        ratio: "16/9",
+      },
+
+      {
+        src: "/BEHANCE_04 (1).png",
+        alt: "Aplicação da identidade Flash Food em materiais gráficos",
+        ratio: "16/9",
+      },
+
+      {
+        src: "/BEHANCE_05 (1).png",
+        alt: "Sistema de ilustração e aplicação digital da identidade Flash Food",
+        ratio: "16/9",
+      },
+
+      {
+        src: "/BEHANCE_06 (1).png",
+        alt: "Aplicação mobile e elementos gráficos da marca Flash Food",
+        ratio: "16/9",
+      },
+
+      {
+        src: "/BEHANCE_07 (1).png",
+        alt: "Aplicação da identidade Flash Food em vestuário",
+        ratio: "16/9",
+      },
+
+      {
+        src: "/BEHANCE_08 (1).png",
+        alt: "Encerramento do projeto de identidade visual Flash Food",
+        ratio: "16/9",
+      },
+    ],
+
+    /*
+     * Laranja é a cor dominante real do projeto.
+     */
+    accentColor: "#F05A00",
 
     featured: true,
 
-    layout: "gallery",
+    /*
+     * Usamos presentation porque esse projeto funciona como
+     * uma sequência de pranchas conectadas verticalmente,
+     * e não como uma galeria de cards independentes.
+     */
+    layout: "presentation",
+
     coverTreatment: "grotesk",
   },
 
@@ -351,18 +464,23 @@ export const projects: Project[] = [
     accentColor: "#B98D6F",
 
     layout: "gallery",
+
     coverTreatment: "serif",
   },
 
   /* =========================================================
-     10 — FOTOGRAFIA EDITORIAL
+     10 — IDENTIDADE FOTOGRÁFICA EDITORIAL
   ========================================================= */
 
   {
     title: "Identidade Fotográfica Editorial",
     slug: "identidade-fotografica-editorial",
 
-    discipline: ["Fotografia", "Editorial", "Direção Visual"],
+    discipline: [
+      "Fotografia",
+      "Editorial",
+      "Direção Visual",
+    ],
 
     role: "Fotografia e direção de arte",
 
@@ -372,6 +490,7 @@ export const projects: Project[] = [
     accentColor: "#0B0B0A",
 
     layout: "editorial",
+
     coverTreatment: "mono-grid",
   },
 ];
@@ -397,14 +516,20 @@ export const disciplines: Discipline[] = [
 ========================================================= */
 
 export function getProjectBySlug(slug: string) {
-  return projects.find((project) => project.slug === slug);
+  return projects.find(
+    (project) => project.slug === slug
+  );
 }
 
 export function getFeaturedProjects() {
-  return projects.filter((project) => project.featured);
+  return projects.filter(
+    (project) => project.featured
+  );
 }
 
-export function getProjectsByDiscipline(discipline: Discipline) {
+export function getProjectsByDiscipline(
+  discipline: Discipline
+) {
   return projects.filter((project) =>
     project.discipline.includes(discipline)
   );
