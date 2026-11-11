@@ -127,22 +127,16 @@ export const projects: Project[] = [
 
   /* =========================================================
      02 — ARQUIVO VIVO | RECORTES EM DIFERENTES FORMATOS
-     Primeiro recorte: Agroriego Tattersall (somente páginas 1–5).
-     Espaço preparado para receber depois impressos, pendones,
-     vídeos avulsos e outras peças de autoria de Jesse.
   ========================================================= */
 
   {
     title: "Arquivo Vivo",
     slug: "grupo-tattersall", // Mantém o endereço existente para não quebrar links.
-    discipline: ["Design Gráfico", "Direção Visual"],
-    role: "Seleção de projetos e peças em diferentes formatos",
+    discipline: ["Design Gráfico", "Apresentações", "Vídeo"],
     description:
-      "Uma coleção em crescimento de trabalhos que atravessam formatos e contextos: apresentações, peças gráficas, impressos e conteúdo em movimento. O primeiro recorte é a apresentação Agroriego Tattersall, exibida somente nas cinco páginas de minha autoria.",
-    challenge:
-      "Nem toda ideia nasce para caber em uma única moldura. Alguns trabalhos merecem ser vistos como fragmentos de um arquivo em constante construção.",
-    cover: "/projects/agroriego/agro-01.jpg",
-    coverRatio: "16/9",
+      "Uma seleção de trabalhos em diferentes formatos, do design de apresentações e peças impressas à edição de vídeos para marcas.",
+    cover: "/projects/arquivo-vivo/capa.webp",
+    coverRatio: "8/5",
     accentColor: "#A88735",
     featured: true,
     layout: "editorial",

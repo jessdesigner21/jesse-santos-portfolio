@@ -6,7 +6,7 @@ import { projects, getProjectBySlug } from "@/data/projects";
 import ProjectCover from "@/components/ProjectCover";
 import ProjectAccentSetter from "@/components/ProjectAccentSetter";
 import ProjectGallery from "@/components/ProjectGallery";
-import AgroriegoShowcase from "@/components/AgroriegoShowcase";
+import ArchiveShowcase from "@/components/ArchiveShowcase";
 import VideoPlayer from "@/components/VideoPlayer";
 
 export function generateStaticParams() {
@@ -39,7 +39,7 @@ export default async function ProjectPage({
   const index = projects.findIndex((p) => p.slug === project.slug);
   const next = projects[(index + 1) % projects.length];
   const isPride = project.slug === "falas-de-orgulho";
-  const isAgroriego = project.slug === "grupo-tattersall";
+  const isArchive = project.slug === "grupo-tattersall";
 
   return (
     <article className="pt-28 md:pt-36 pb-24">
@@ -50,9 +50,9 @@ export default async function ProjectPage({
           {String(index + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
         </p>
         <h1
-          style={isPride ? { fontFamily: '"hey-eloise", cursive' } : undefined}
+          style={isPride || isArchive ? { fontFamily: '"hey-eloise", cursive' } : undefined}
           className={
-            isPride
+            isPride || isArchive
               ? "text-[#AC871C] font-normal leading-[1] tracking-normal text-[clamp(3.4rem,9vw,9rem)]"
               : "font-serif italic font-light leading-[0.88] text-[13vw] md:text-[7vw]"
           }
@@ -74,8 +74,8 @@ export default async function ProjectPage({
         )}
       </header>
 
-      {isAgroriego ? (
-        <AgroriegoShowcase />
+      {isArchive && project.cover ? (
+        <ArchiveShowcase cover={project.cover} description={project.description} />
       ) : (
         <>
         <div className={isPride ? "mt-16 px-5 md:px-8" : "mt-16"}>
