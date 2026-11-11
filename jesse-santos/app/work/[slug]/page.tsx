@@ -41,6 +41,7 @@ export default async function ProjectPage({
   const next = publishedProjects[(index + 1) % publishedProjects.length];
   const isPride = project.slug === "falas-de-orgulho";
   const isArchive = project.slug === archiveSlug;
+  const isBurgerCase = project.slug === "social-media-hamburgueria";
   const isContinuousCase = Boolean(project.images?.length) && (Boolean(project.behanceUrl) || project.layout === "presentation");
 
   return (
@@ -102,8 +103,8 @@ export default async function ProjectPage({
                 />
               </div>
             ) : project.behanceUrl && project.cover ? (
-              <div className="relative mx-auto max-w-4xl" style={{ aspectRatio: project.coverRatio }}>
-                <Image src={project.cover} alt={project.title} fill sizes="(max-width: 768px) 90vw, 896px" className="object-contain" />
+              <div className={`relative mx-auto ${isBurgerCase ? "max-w-[620px]" : "max-w-4xl"}`} style={{ aspectRatio: project.coverRatio }}>
+                <Image src={project.cover} alt={project.title} fill sizes={isBurgerCase ? "(max-width: 768px) 90vw, 620px" : "(max-width: 768px) 90vw, 896px"} className="object-contain" />
               </div>
             ) : (
               <ProjectCover
