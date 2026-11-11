@@ -8,11 +8,9 @@ type Slide = { src: string; alt: string };
 export default function ArchiveCarousel({
   title,
   slides,
-  banners = false,
 }: {
   title: string;
   slides: Slide[];
-  banners?: boolean;
 }) {
   const [active, setActive] = useState(0);
   const current = slides[active];
@@ -23,16 +21,8 @@ export default function ArchiveCarousel({
 
   return (
     <div role="region" aria-roledescription="carrossel" aria-label={title}>
-      <div
-        className={`relative grid place-items-center overflow-hidden bg-[#e9dfcd] ${banners ? "h-[clamp(23rem,50vw,36rem)]" : "aspect-[4/3]"}`}
-      >
-        {banners ? (
-          <div className="relative h-[85%] max-w-[85%] aspect-[2/5] border-b-4 border-[#584d3e] shadow-[9px_12px_24px_#43351b38]">
-            <Image key={current.src} src={current.src} alt={current.alt} fill sizes="(max-width: 640px) 34vw, 256px" className="archive-slide object-contain" />
-          </div>
-        ) : (
-          <Image key={current.src} src={current.src} alt={current.alt} fill sizes="(max-width: 768px) 95vw, 55vw" className="archive-slide object-contain p-4 md:p-8" />
-        )}
+      <div className="relative aspect-[4/3] overflow-hidden">
+        <Image key={current.src} src={current.src} alt={current.alt} fill sizes="(max-width: 768px) 92vw, 60vw" className="archive-slide object-cover" />
       </div>
       <div className="mt-4 flex items-center justify-between gap-4">
         <p className="text-sm text-[#655b4c]" aria-live="polite">

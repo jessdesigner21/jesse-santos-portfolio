@@ -4,16 +4,28 @@ import ArchiveCarousel from "./ArchiveCarousel";
 
 const media = "/projects/arquivo-vivo";
 
-const reels = [
-  "DZNcmiZkSBU",
-  "DY724_CEquI",
-  "DXPzOPiipUf",
-  "DWHtNLACdC-",
-  "DV1si4uDX40",
-  "DUbl9FuDJI_",
-  "DSm0yquky--",
-  "DfVC6BzDLlr",
-  "DfmxjDxSUnq",
+const reelSeries = [
+  {
+    title: "Centro Luminus",
+    account: "centroluminus",
+    reels: [
+      { id: "DZNcmiZkSBU", title: "Quando a mente não para" },
+      { id: "DY724_CEquI", title: "A síndrome da boazinha" },
+      { id: "DXPzOPiipUf", title: "Aprender a colocar limites" },
+      { id: "DWHtNLACdC-", title: "Quando considerar a terapia de casal" },
+      { id: "DV1si4uDX40", title: "Quando começar a terapia" },
+      { id: "DUbl9FuDJI_", title: "O que é gaslighting?" },
+      { id: "DSm0yquky--", title: "Uma mensagem de fim de ano" },
+    ],
+  },
+  {
+    title: "Fabrimetal",
+    account: "fabrimetalsa",
+    reels: [
+      { id: "DfVC6BzDLlr", title: "A nova identidade da Fabrimetal" },
+      { id: "DfmxjDxSUnq", title: "48 anos de Fabrimetal" },
+    ],
+  },
 ];
 
 const printProjects = [
@@ -21,7 +33,6 @@ const printProjects = [
     id: "alpha-ados",
     title: "¿En qué estás pensando?",
     category: "Alpha/ADOs · Campanha no Chile",
-    banners: true,
     slides: [
       { src: `${media}/alpha-1.webp`, alt: "Pendão com fotografia" },
       { src: `${media}/alpha-2.webp`, alt: "Pendão ilustrado" },
@@ -42,7 +53,6 @@ const printProjects = [
     id: "salud-laboral",
     title: "Salud Laboral Petrínovic",
     category: "Comunicação impressa · Pendões",
-    banners: true,
     slides: [
       { src: `${media}/petrinovic-01.webp`, alt: "Pendão com profissional e estetoscópio" },
       { src: `${media}/petrinovic-02.webp`, alt: "Pendão com equipe de saúde" },
@@ -51,9 +61,9 @@ const printProjects = [
 ];
 
 const videos = [
+  { slug: "petrinovic-hall", title: "Petrínovic", caption: "Vídeo institucional para o hall de entrada.", landscape: true },
   { slug: "go-marketing", title: "Go Marketing", caption: "Depoimento de cliente para a agência." },
   { slug: "nueva-identidad", title: "Nueva Identidad", caption: "Vídeo de apresentação de uma nova identidade visual." },
-  { slug: "petrinovic-hall", title: "Petrínovic", caption: "Vídeo institucional para o hall de entrada." },
 ];
 
 export default function ArchiveShowcase({ cover, description }: { cover: string; description: string }) {
@@ -63,7 +73,7 @@ export default function ArchiveShowcase({ cover, description }: { cover: string;
         <div className="relative aspect-[8/5] overflow-hidden bg-[#E9DFCD]">
           <Image src={cover} alt="Pendões da campanha Alpha/ADOs ao lado de um mockup dos pins Biogreen" fill preload sizes="(max-width: 1440px) 96vw, 1376px" />
         </div>
-        <div className="mt-6 flex flex-wrap items-end justify-between gap-5">
+        <div className="mt-8 flex flex-wrap items-end justify-between gap-6 md:mt-12">
           <p className="max-w-2xl font-serif text-xl italic leading-snug md:text-3xl">{description}</p>
           <nav aria-label="Seções do Arquivo Vivo" className="flex flex-wrap gap-x-5 gap-y-3">
             <a href="#agroriego-recorte" className="archive-link">Apresentação</a>
@@ -77,36 +87,26 @@ export default function ArchiveShowcase({ cover, description }: { cover: string;
       <AgroriegoShowcase />
 
       <div className="mx-auto max-w-[1440px] px-5 md:px-8">
-        {printProjects.map((project) => (
-          <section key={project.id} id={project.id} aria-labelledby={`${project.id}-title`} className="archive-section grid gap-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
-            <header>
-              <p className="editorial-num text-[#655b4c]">{project.category}</p>
-              <h2 id={`${project.id}-title`} className="archive-heading">{project.title}</h2>
-            </header>
-            <ArchiveCarousel title={project.title} slides={project.slides} banners={project.banners} />
-          </section>
-        ))}
-
         <section id="arquivo-video" aria-labelledby="arquivo-video-title" className="archive-section">
-          <h2 id="arquivo-video-title" className="archive-heading">Vídeos</h2>
-          <div className="mt-8 grid gap-x-6 gap-y-10 md:grid-cols-3">
-            {videos.map(({ slug, title, caption }) => (
-              <figure key={slug}>
-                <div className="relative aspect-[4/5] bg-[#241f19]">
-                  <video
-                    controls
-                    playsInline
-                    preload="none"
-                    poster={`${media}/${slug}.jpg`}
-                    aria-label={`Vídeo de ${title}`}
-                    className="absolute inset-0 h-full w-full object-contain"
-                  >
-                    <source src={`${media}/${slug}.mp4`} type="video/mp4" />
-                    <a href={`${media}/${slug}.mp4`}>Abrir vídeo de {title}</a>
-                  </video>
-                </div>
+          <h2 id="arquivo-video-title" className="archive-heading">Em movimento</h2>
+          <div className="archive-videos">
+            {videos.map(({ slug, title, caption, landscape }) => (
+              <figure key={slug} className={landscape ? "archive-video-lead" : "archive-video-portrait"}>
+                <video
+                  controls
+                  playsInline
+                  preload="none"
+                  poster={`${media}/${slug}.jpg`}
+                  aria-label={`Vídeo de ${title}`}
+                  width={landscape ? 1280 : 720}
+                  height={landscape ? 720 : 1280}
+                  className={`block w-full ${landscape ? "aspect-video" : "aspect-[9/16]"}`}
+                >
+                  <source src={`${media}/${slug}.mp4`} type="video/mp4" />
+                  <a href={`${media}/${slug}.mp4`}>Abrir vídeo de {title}</a>
+                </video>
                 <figcaption className="mt-4">
-                  <h3 className="font-serif text-2xl italic">{title}</h3>
+                  <h3 className="font-serif text-[clamp(1.6rem,3vw,2.8rem)] italic leading-tight">{title}</h3>
                   <p className="mt-1 text-sm text-[#655b4c]">{caption}</p>
                 </figcaption>
               </figure>
@@ -114,25 +114,60 @@ export default function ArchiveShowcase({ cover, description }: { cover: string;
           </div>
         </section>
 
+        <div className="archive-prints">
+          {printProjects.map((project) => (
+            <section key={project.id} id={project.id} aria-labelledby={`${project.id}-title`} className="archive-print">
+              <header>
+                <p className="editorial-num text-[#655b4c]">{project.category}</p>
+                <h2 id={`${project.id}-title`} className="archive-heading">{project.title}</h2>
+              </header>
+              {project.id === "biogreen" ? (
+                <ArchiveCarousel title={project.title} slides={project.slides} />
+              ) : (
+                <div className="archive-diptych">
+                  {project.slides.map((slide) => (
+                    <Image key={slide.src} src={slide.src} alt={slide.alt} width={720} height={1800} sizes="(max-width: 768px) 41vw, 280px" className="h-auto w-full" />
+                  ))}
+                </div>
+              )}
+            </section>
+          ))}
+        </div>
+
         <section id="arquivo-reels" aria-labelledby="arquivo-reels-title" className="archive-section">
-          <h2 id="arquivo-reels-title" className="archive-heading">Reels para terapeutas</h2>
-          <p className="mt-4 max-w-xl text-[#655b4c]">Edição de vídeo por Jesse Santos. Os Reels abrem no Instagram.</p>
-          <ul className="mt-8 grid gap-px bg-[#cfc2a7] p-px sm:grid-cols-2 lg:grid-cols-3">
-            {reels.map((id, index) => (
-              <li key={id} className="bg-[#F7F4EB]">
-                <a
-                  href={`https://www.instagram.com/reel/${id}/`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Assistir ao Reel ${index + 1} no Instagram (nova aba)`}
-                  className="flex min-h-20 items-center justify-between gap-4 p-5 transition-colors hover:bg-[#E9DFCD] focus-visible:outline-offset-[-4px]"
-                >
-                  <span className="font-serif text-xl italic">Reel {String(index + 1).padStart(2, "0")}</span>
-                  <span className="editorial-num text-[#655b4c]" aria-hidden="true">Instagram ↗</span>
-                </a>
-              </li>
-            ))}
-          </ul>
+          <h2 id="arquivo-reels-title" className="archive-heading">Reels</h2>
+          <p className="mt-3 text-[#655b4c]">Edição por Jesse Santos · Assista no Instagram</p>
+          {reelSeries.map(({ title, account, reels }) => (
+            <div key={account} className="mt-9 md:mt-12">
+              <h3 className="font-serif text-2xl italic md:text-3xl">{title}</h3>
+              <ul className="archive-reels">
+                {reels.map(({ id, title: reelTitle }) => (
+                  <li key={id}>
+                    <a
+                      href={`https://www.instagram.com/${account}/reel/${id}/`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${reelTitle} · Assistir no Instagram (nova aba)`}
+                      className="archive-reel"
+                    >
+                      <span className="archive-reel-cover">
+                        <Image
+                          src={`${media}/reel-${id}.webp`}
+                          alt=""
+                          fill
+                          sizes="(max-width: 640px) 44vw, (max-width: 1000px) 30vw, 22vw"
+                          className="object-cover"
+                        />
+                      </span>
+                      <span className="mt-2 block font-serif text-base italic leading-snug md:text-lg">
+                        {reelTitle} <span aria-hidden="true">↗</span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </section>
       </div>
     </div>
