@@ -249,6 +249,33 @@ export const projects: Project[] = [
   },
 
   /* =========================================================
+     FLOS — EMBALAGENS E IDENTIDADE DE SABORES
+  ========================================================= */
+  {
+    title: "FLOS — Embalagens",
+    slug: "flos-embalagens",
+    client: "FLOS",
+    discipline: ["Identidade Visual", "Design Gráfico", "Direção Visual"],
+    role: "Design de embalagens, identidade e mockups",
+    description:
+      "Uma coleção de latas que transforma sabores em um sistema visual. Menta, mirtilo, laranja, morango e abacaxi ganham cores próprias, imagens de frutas e tipografia vertical, enquanto o desenho das embalagens mantém toda a linha conectada.",
+    challenge:
+      "Dar personalidade a cada sabor sem perder a unidade da marca — um encontro entre cor, produto e comunicação.",
+    cover: "/projects/owner/flos/capa.jpg",
+    coverRatio: "16/9",
+    images: [
+      { src: "/projects/owner/flos/menta-card.jpg", alt: "FLOS — embalagem verde de menta" },
+      { src: "/projects/owner/flos/mirtilo-card.jpg", alt: "FLOS — embalagem azul de mirtilo" },
+      { src: "/projects/owner/flos/laranja-card.jpg", alt: "FLOS — embalagem laranja" },
+      { src: "/projects/owner/flos/morango-card.jpg", alt: "FLOS — embalagem rosa de morango" },
+      { src: "/projects/owner/flos/abacaxi-card.jpg", alt: "FLOS — embalagem clara de abacaxi" },
+    ],
+    accentColor: "#9AC6A5",
+    layout: "gallery",
+    coverTreatment: "grotesk",
+  },
+
+  /* =========================================================
      MONKEY CAFÉ — IDENTIDADE E APLICAÇÕES
   ========================================================= */
   {
