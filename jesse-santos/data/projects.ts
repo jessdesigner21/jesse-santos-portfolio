@@ -126,25 +126,26 @@ export const projects: Project[] = [
   },
 
   /* =========================================================
-     02 — AGRORIEGO TATTERSALL | APRESENTAÇÃO INSTITUCIONAL
-     Somente páginas 1–5 são de autoria de Jesse.
+     02 — ARQUIVO VIVO | RECORTES EM DIFERENTES FORMATOS
+     Primeiro recorte: Agroriego Tattersall (somente páginas 1–5).
+     Espaço preparado para receber depois impressos, pendones,
+     vídeos avulsos e outras peças de autoria de Jesse.
   ========================================================= */
 
   {
-    title: "Agroriego — Apresentação Institucional",
-    slug: "grupo-tattersall",
-    client: "Agroriego Tattersall",
-    discipline: ["Apresentações", "Direção Visual"],
-    role: "Design e diagramação das páginas 1 a 5",
+    title: "Arquivo Vivo",
+    slug: "grupo-tattersall", // Mantém o endereço existente para não quebrar links.
+    discipline: ["Design Gráfico", "Direção Visual"],
+    role: "Seleção de projetos e peças em diferentes formatos",
     description:
-      "Recorte autoral de cinco páginas de uma apresentação institucional sobre soluções de irrigação, engenharia e sustentabilidade hídrica. Organização de conteúdo, hierarquia tipográfica, fotografia e comunicação visual corporativa.",
+      "Uma coleção em crescimento de trabalhos que atravessam formatos e contextos: apresentações, peças gráficas, impressos e conteúdo em movimento. O primeiro recorte é a apresentação Agroriego Tattersall, exibida somente nas cinco páginas de minha autoria.",
     challenge:
-      "Organizar informações técnicas e institucionais em slides claros, com unidade visual e leitura fluida. Neste portfólio, apresento exclusivamente as cinco primeiras páginas que desenvolvi.",
+      "Nem toda ideia nasce para caber em uma única moldura. Alguns trabalhos merecem ser vistos como fragmentos de um arquivo em constante construção.",
     cover: "/projects/agroriego/agro-01.jpg",
     coverRatio: "16/9",
     accentColor: "#A88735",
     featured: true,
-    layout: "presentation",
+    layout: "editorial",
     coverTreatment: "grotesk",
   },
 
