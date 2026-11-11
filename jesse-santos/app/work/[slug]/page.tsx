@@ -41,6 +41,7 @@ export default async function ProjectPage({
   const next = publishedProjects[(index + 1) % publishedProjects.length];
   const isPride = project.slug === "falas-de-orgulho";
   const isArchive = project.slug === archiveSlug;
+  const isContinuousCase = Boolean(project.images?.length) && (Boolean(project.behanceUrl) || project.layout === "presentation");
 
   return (
     <article className={`pt-24 md:pt-36 pb-16 md:pb-24 ${isArchive ? "paper-surface bg-[#F7F4EB]" : ""}`}>
@@ -85,30 +86,34 @@ export default async function ProjectPage({
         <ArchiveShowcase cover={project.cover} />
       ) : (
         <>
-        <div className={isPride || project.behanceUrl ? "mt-8 px-5 md:mt-16 md:px-8" : "mt-8 md:mt-16"}>
-          {isPride && project.cover ? (
-            <div className="relative mx-auto max-w-[1440px] aspect-[16/9] bg-[#EEE8DC]">
-              <Image
-                src={project.cover}
-                alt={`Imagem de abertura do projeto ${project.title}`}
-                fill
+        {/* Projetos em pranchas contínuas começam direto na sequência original;
+            a capa de miniatura não é repetida nem separada do conteúdo. */}
+        {!isContinuousCase && (
+          <div className={isPride || project.behanceUrl ? "mt-8 px-5 md:mt-16 md:px-8" : "mt-8 md:mt-16"}>
+            {isPride && project.cover ? (
+              <div className="relative mx-auto max-w-[1440px] aspect-[16/9] bg-[#EEE8DC]">
+                <Image
+                  src={project.cover}
+                  alt={`Imagem de abertura do projeto ${project.title}`}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 95vw"
+                  className="object-contain"
+                />
+              </div>
+            ) : project.behanceUrl && project.cover ? (
+              <div className="relative mx-auto max-w-4xl" style={{ aspectRatio: project.coverRatio }}>
+                <Image src={project.cover} alt={project.title} fill sizes="(max-width: 768px) 90vw, 896px" className="object-contain" />
+              </div>
+            ) : (
+              <ProjectCover
+                project={project}
                 priority
-                sizes="(max-width: 768px) 100vw, 95vw"
-                className="object-contain"
+                className="w-full aspect-[16/10] md:aspect-[21/9]"
               />
-            </div>
-          ) : project.behanceUrl && project.cover ? (
-            <div className="relative mx-auto max-w-4xl" style={{ aspectRatio: project.coverRatio }}>
-              <Image src={project.cover} alt={project.title} fill sizes="(max-width: 768px) 90vw, 896px" className="object-contain" />
-            </div>
-          ) : (
-            <ProjectCover
-              project={project}
-              priority
-              className="w-full aspect-[16/10] md:aspect-[21/9]"
-            />
-          )}
-        </div>
+            )}
+          </div>
+        )}
   
         <div className="px-5 md:px-8 mt-8 md:mt-16 grid md:grid-cols-12 gap-4">
           <p className="md:col-span-6 md:col-start-4 text-lg md:text-xl leading-relaxed">
@@ -116,6 +121,17 @@ export default async function ProjectPage({
           </p>
         </div>
   
+
+
+        {/* Galeria editorial: formatos reais, sem recortes e com movimento suave */}
+        {project.images && project.images.length > 0 && (
+          <ProjectGallery
+            images={project.images}
+            presentation={isContinuousCase}
+          />
+        )}
+
+        {/* O link externo aparece depois da leitura completa das pranchas. */}
         {project.behanceUrl && (
           <div className="px-5 pt-5 md:px-8">
             <a href={project.behanceUrl} target="_blank" rel="noreferrer" className="marker-underline">
@@ -123,16 +139,6 @@ export default async function ProjectPage({
             </a>
           </div>
         )}
-
-        {/* Galeria editorial: formatos reais, sem recortes e com movimento suave */}
-        {project.images && project.images.length > 0 && (
-          <ProjectGallery
-            images={project.images}
-            presentation={project.layout === "presentation"}
-          />
-        )}
-  
-  
         </>
       )}
 
