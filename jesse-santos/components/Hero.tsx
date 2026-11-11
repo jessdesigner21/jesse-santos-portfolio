@@ -61,7 +61,7 @@ export default function Hero() {
       ref={sectionRef}
       id="inicio"
       className="
-        relative isolate
+        hero-grain relative isolate
         min-h-[100svh]
         overflow-hidden
         bg-[#FFF9C7]
@@ -181,7 +181,7 @@ export default function Hero() {
               className="
                 editorial-num uppercase
                 tracking-widest
-                border-b border-black
+                marker-underline
                 pb-2
                 transition-all duration-500
                 hover:opacity-50
@@ -348,7 +348,7 @@ export default function Hero() {
               className="
                 editorial-num uppercase
                 tracking-widest
-                border-b border-black
+                marker-underline
                 pb-2
               "
             >

@@ -29,7 +29,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
   const selected = await getCollection(params);
 
   return (
-    <article className="archive-showcase bg-[#F7F4EB] px-5 pb-24 pt-28 text-[#24221F] md:px-8 md:pt-36">
+    <article className="paper-surface bg-[#F7F4EB] px-5 pb-24 pt-28 text-[#24221F] md:px-8 md:pt-36">
       <div className="mx-auto max-w-[1376px]">
         <header className="archive-collection-header">
           <Link href={archivePath} className="editorial-num inline-block text-[#655b4c]">

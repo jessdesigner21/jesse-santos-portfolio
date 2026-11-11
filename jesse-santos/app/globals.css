@@ -2,6 +2,7 @@
 
 :root {
   --off-white: #f3efe9;
+  --portfolio-yellow: #ffe009;
   --ink: #0b0b0a;
   --graphite: #2a2a28;
   --skin: #b98d6f;
@@ -105,14 +106,6 @@ body {
   .animate-marquee {
     animation: none;
   }
-}
-
-.archive-showcase {
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent 0 3px,
-    rgba(92, 78, 59, 0.045) 4px
-  );
 }
 
 .archive-heading {
@@ -293,7 +286,7 @@ body {
 
 .archive-index-link:hover,
 .archive-index-link:focus-visible {
-  background-color: #a8873512;
+  background-color: color-mix(in srgb, var(--portfolio-yellow) 18%, transparent);
 }
 
 .archive-work-title,
@@ -359,7 +352,7 @@ body {
   left: 41%;
   width: 18%;
   height: 1.4rem;
-  background: #af8d4180;
+  background: color-mix(in srgb, var(--portfolio-yellow) 62%, transparent);
   transform: rotate(6deg);
   content: "";
   pointer-events: none;
@@ -371,4 +364,159 @@ body {
   font-size: clamp(1.2rem, 2vw, 1.8rem);
   line-height: 1;
   color: #655b4c;
+}
+
+.paper-surface {
+  background-image: url("/paper-grain.webp");
+  background-blend-mode: soft-light;
+  background-size: 192px 192px;
+}
+
+.hero-grain::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: url("/paper-grain.webp") repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.45;
+  pointer-events: none;
+  content: "";
+}
+
+.marker-underline,
+.nav-marker {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 0.18em;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color 200ms ease;
+}
+
+.marker-underline,
+.nav-marker:hover,
+.nav-marker:focus-visible {
+  text-decoration-color: var(--portfolio-yellow);
+}
+
+.archive-index-arrow {
+  display: grid;
+  width: 2.15rem;
+  aspect-ratio: 1;
+  flex: none;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--portfolio-yellow);
+  color: var(--ink);
+}
+
+.work-cutouts {
+  display: grid;
+  align-items: start;
+  gap: clamp(2.75rem, 6vw, 6rem);
+  border-top: 1px solid #a8873545;
+  padding: clamp(2.5rem, 6vw, 6rem) clamp(0.5rem, 2vw, 1.75rem) 0;
+}
+
+.work-cutout-paper {
+  position: relative;
+  padding: clamp(0.45rem, 1vw, 0.85rem);
+  background: #fcf9f1;
+  box-shadow: 0 9px 24px #40331720;
+  transform: rotate(-1.75deg);
+  transition: transform 350ms ease;
+}
+
+.work-cutout:nth-child(even) .work-cutout-paper {
+  transform: rotate(2deg);
+}
+
+.work-cutout-paper::after {
+  position: absolute;
+  top: -0.6rem;
+  left: 15%;
+  width: 19%;
+  height: 1.35rem;
+  background: color-mix(in srgb, var(--portfolio-yellow) 75%, transparent);
+  transform: rotate(-7deg);
+  pointer-events: none;
+  content: "";
+}
+
+.work-cutout .group:hover .work-cutout-paper,
+.work-cutout .group:focus-visible .work-cutout-paper {
+  transform: rotate(0deg) translateY(-3px);
+}
+
+.work-cutout-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.15rem;
+}
+
+.work-text-index {
+  max-width: 54rem;
+  margin: clamp(3.5rem, 8vw, 8rem) auto 0;
+}
+
+.work-text-index li {
+  border-top: 1px solid #a8873545;
+}
+
+.work-text-index li:last-child {
+  border-bottom: 1px solid #a8873545;
+}
+
+.work-text-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.15rem 1rem;
+  padding: 0.8rem 0.35rem;
+  transition: background-color 250ms ease;
+}
+
+.work-text-link span:nth-child(2) {
+  grid-column: 1;
+}
+
+.work-text-link span:last-child {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.work-text-link:hover,
+.work-text-link:focus-visible {
+  background-color: color-mix(in srgb, var(--portfolio-yellow) 22%, transparent);
+}
+
+@media (min-width: 56rem) {
+  .work-cutouts {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 3rem clamp(1rem, 4vw, 4.5rem);
+  }
+
+  .work-cutout:nth-child(3n + 1) {
+    grid-column: 1 / span 7;
+  }
+
+  .work-cutout:nth-child(3n + 2) {
+    grid-column: 8 / -1;
+    margin-top: clamp(2rem, 8vw, 8rem);
+  }
+
+  .work-cutout:nth-child(3n + 3) {
+    grid-column: 4 / span 7;
+  }
+
+  .work-text-link {
+    grid-template-columns: minmax(0, 1fr) 10rem auto;
+  }
+
+  .work-text-link span:nth-child(2),
+  .work-text-link span:last-child {
+    grid-column: auto;
+    grid-row: auto;
+  }
 }

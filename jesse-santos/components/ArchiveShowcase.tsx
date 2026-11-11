@@ -81,7 +81,7 @@ type Collection = (typeof archiveCollections)[number]["slug"];
 
 export default function ArchiveShowcase({ cover }: { cover: string }) {
   return (
-    <div className="archive-showcase mx-auto mt-8 grid max-w-[1440px] items-start gap-8 px-5 md:mt-12 md:px-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,5fr)] lg:gap-14">
+    <div className="mx-auto mt-8 grid max-w-[1440px] items-start gap-8 px-5 md:mt-12 md:px-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,5fr)] lg:gap-14">
       <nav aria-label="Coleções do Arquivo Vivo">
         <ul className="archive-index">
           {archiveCollections.map(({ slug, title, subtitle, anchor }) => (
@@ -91,7 +91,7 @@ export default function ArchiveShowcase({ cover }: { cover: string }) {
                   <span className="archive-work-title block">{title}</span>
                   <span className="mt-1 block text-sm text-[#655b4c]">{subtitle}</span>
                 </span>
-                <span className="text-2xl text-[#806324]" aria-hidden="true">↗</span>
+                <span className="archive-index-arrow text-xl" aria-hidden="true">↗</span>
               </Link>
             </li>
           ))}

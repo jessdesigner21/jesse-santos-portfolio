@@ -27,7 +27,7 @@ export default function ContactSection() {
       >
         Tem uma ideia?
         <br />
-        <span className="font-serif italic font-light normal-case">Me conta.</span>
+        <span className="font-serif italic font-light normal-case text-[var(--portfolio-yellow)]">Me conta.</span>
       </motion.h2>
 
       {CONTACT.email ? (
@@ -38,7 +38,7 @@ export default function ContactSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="block mt-10 md:mt-16 font-serif italic break-words text-[8vw] md:text-[4vw] hover:text-accent transition-colors"
+          className="block mt-10 md:mt-16 font-serif italic break-words text-[8vw] md:text-[4vw] hover:text-[var(--portfolio-yellow)] transition-colors"
         >
           {CONTACT.email}
         </motion.a>

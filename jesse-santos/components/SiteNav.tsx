@@ -42,7 +42,7 @@ export default function SiteNav() {
             <Link
               key={l.label}
               href={l.href}
-              className="hover:text-accent transition-colors"
+              className="nav-marker"
             >
               {l.label}
             </Link>

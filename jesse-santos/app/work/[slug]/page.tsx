@@ -42,7 +42,7 @@ export default async function ProjectPage({
   const isArchive = project.slug === archiveSlug;
 
   return (
-    <article className="pt-28 md:pt-36 pb-24">
+    <article className={`pt-28 md:pt-36 pb-24 ${isArchive ? "paper-surface bg-[#F7F4EB]" : ""}`}>
       <ProjectAccentSetter color={project.accentColor} />
 
       <header className={isArchive ? "mx-auto max-w-[1440px] px-5 md:px-8" : "px-5 md:px-8"}>

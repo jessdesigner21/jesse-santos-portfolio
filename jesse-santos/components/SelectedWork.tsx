@@ -26,37 +26,11 @@ const PROJECT_COVERS: Record<string, string> = {
   "falas-de-orgulho": "/sem%20precisar%20se%20explicar.jpg",
 };
 
-/*
- * Palavras editoriais atrás de cada projeto.
- * Podemos alterar individualmente depois.
- */
-
-const PROJECT_WORDS: Record<string, string> = {
-  "falas-de-orgulho": "AFETO",
-  "grupo-tattersall": "RECORTES",
-  "social-media-beleza": "BELEZA",
-  "glow-beauty": "BRILHO",
-  "social-media-hamburgueria": "SABOR",
-  "cantim-do-vin": "ENCONTRO",
-  "amarelo": "COR",
-  "flash-food": "ENERGIA",
-  "cafeteria": "PAUSA",
-  "identidade-fotografica-editorial": "OLHAR",
-};
-
 const handwritten = {
   fontFamily: '"hey-eloise", cursive',
   fontWeight: 400,
   fontStyle: "normal" as const,
 };
-
-function Num({ n }: { n: number }) {
-  return (
-    <span className="editorial-num text-[#756D62]">
-      {String(n).padStart(2, "0")}
-    </span>
-  );
-}
 
 function Meta({ project }: { project: Project }) {
   return (
@@ -186,144 +160,34 @@ function SketchBorder() {
   );
 }
 
-/*
- * Cards dos demais projetos.
- */
-
-function WorkCard({
-  project,
-  index,
-  wide = false,
-}: {
-  project: Project;
-  index: number;
-  wide?: boolean;
-}) {
+function WorkCutout({ project }: { project: Project }) {
   const reduceMotion = useReducedMotion();
-
-  const word = PROJECT_WORDS[project.slug] ?? "CRIAR";
 
   return (
     <motion.article
-      initial={
-        reduceMotion
-          ? false
-          : { opacity: 0, y: 45 }
-      }
+      initial={reduceMotion ? false : { opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.12 }}
-      transition={{
-        duration: 0.85,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      onMouseEnter={() => setAccent(project.accentColor)}
-      onMouseLeave={() => setAccent(null)}
-      className={`
-        relative min-w-0
-        ${wide ? "md:col-span-12" : "md:col-span-6"}
-      `}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+      className="work-cutout"
     >
-      <div className="relative pt-10 md:pt-14">
-
-        {/* Palavra grande ao fundo */}
-
-        <span
-          aria-hidden="true"
-          className="
-            pointer-events-none absolute
-            left-0 top-0 z-0
-            max-w-full overflow-hidden
-            whitespace-nowrap
-            font-grotesk font-bold
-            text-[clamp(3.5rem,9vw,11rem)]
-            leading-none tracking-[-0.09em]
-            text-[#D9CFB9]
-            select-none
-          "
-        >
-          {word}
-        </span>
-
-        {/* Identificação */}
-
-        <div
-          className="
-            relative z-10 mb-4
-            flex items-center
-            justify-between gap-4
-          "
-        >
-          <Num n={index + 1} />
-
-          <span className="editorial-num uppercase text-black/45">
-            {project.discipline[0]}
-          </span>
+      <Link href={`/work/${project.slug}`} data-cursor="ver" className="group block">
+        <div className="work-cutout-paper">
+          <WorkCover project={project} className="w-full aspect-[8/5]" />
         </div>
-
-        {/* Capa */}
-
-        <Link
-          href={`/work/${project.slug}`}
-          data-cursor="ver"
-          className="
-            group relative z-10
-            block overflow-hidden
-            transition-transform duration-500
-            hover:-translate-y-1
-          "
-        >
-          <WorkCover
-            project={project}
-            className="w-full aspect-[16/10]"
-          />
-        </Link>
-
-        {/* Informações */}
-
-        <div
-          className={`
-            relative z-10 mt-6
-            ${wide ? "md:max-w-[850px]" : ""}
-          `}
-        >
-          <h3
-            className="
-              font-serif italic
-              text-3xl leading-[1.08]
-              tracking-[-0.04em]
-              md:text-5xl
-            "
-          >
-            <Link href={`/work/${project.slug}`}>
+        <div className="work-cutout-label">
+          <div>
+            <h3 style={handwritten} className="text-[clamp(2.15rem,4.4vw,4.5rem)] leading-none">
               {project.title}
-            </Link>
-          </h3>
-
-          <Meta project={project} />
-
-          <Link
-            href={`/work/${project.slug}`}
-            data-cursor="abrir"
-            className="
-              editorial-num
-              mt-7 inline-flex
-              border-b border-black/70
-              pb-2 uppercase
-              transition-all duration-300
-              hover:tracking-widest
-            "
-          >
-            Abrir projeto ↗
-          </Link>
+            </h3>
+            <p className="mt-2 text-sm text-[#655b4c]">{project.discipline.join(" · ")}</p>
+          </div>
+          <span className="archive-index-arrow text-xl" aria-hidden="true">↗</span>
         </div>
-      </div>
+      </Link>
     </motion.article>
   );
 }
-
-/*
- * SEÇÃO PRINCIPAL
- */
 
 export default function SelectedWork() {
   const reduceMotion = useReducedMotion();
@@ -332,36 +196,22 @@ export default function SelectedWork() {
     (project) => project.slug === "falas-de-orgulho"
   );
 
-  const otherProjects = projects.filter(
-    (project) => project.slug !== "falas-de-orgulho"
-  );
+  const otherProjects = projects.filter((project) => project !== featured);
+  const illustrated = otherProjects.filter((project) => project.cover);
+  const textProjects = otherProjects.filter((project) => !project.cover);
 
   return (
     <section
       id="trabalho"
       aria-labelledby="trabalhos-titulo"
       className="
-        relative isolate overflow-hidden
+        paper-surface relative isolate overflow-hidden
         bg-[#F7F4EB]
         px-5 py-24
         text-[#24221F]
         md:px-10 md:py-36
       "
     >
-      {/* Textura de papel */}
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none absolute
-          inset-0 opacity-20
-        "
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(92,78,59,0.045) 4px)",
-        }}
-      />
-
       <div className="relative mx-auto max-w-[1440px]">
 
         {/* Cabeçalho editorial */}
@@ -400,7 +250,7 @@ export default function SelectedWork() {
                 id="trabalhos-titulo"
                 className="font-grotesk font-bold uppercase text-[clamp(3rem,7.2vw,8.4rem)] leading-[0.94] tracking-[-0.075em]"
               >
-                Trabalhos<span className="text-[#A88735]">.</span>
+                Trabalhos<span className="text-[var(--portfolio-yellow)]">.</span>
               </h2>
               <p className="mt-7 max-w-md font-serif italic text-lg leading-[1.4] md:text-2xl">
                 Cada projeto carrega um pouco do caminho até chegar aqui.
@@ -580,77 +430,28 @@ export default function SelectedWork() {
           </motion.article>
         )}
 
-        {/* OUTROS TRABALHOS */}
-
-        <div
-          className="
-            flex flex-wrap
-            items-end justify-between
-            gap-5
-            border-t border-black/20
-            pt-7
-          "
-        >
-          <p className="editorial-num uppercase tracking-widest">
-            Outros caminhos criativos
-          </p>
-
-          <p className="editorial-num uppercase text-black/45">
-            02 — {String(projects.length).padStart(2, "0")}
-          </p>
+        <div className="work-cutouts">
+          {illustrated.map((project) => <WorkCutout key={project.slug} project={project} />)}
         </div>
 
-        <div
-          className="
-            mt-16 grid grid-cols-1
-            gap-x-10 gap-y-24
-            md:grid-cols-12
-            md:gap-y-36
-          "
-        >
-          {otherProjects.map((project, index) => (
-            <WorkCard
-              key={project.slug}
-              project={project}
-              index={index + 1}
-              wide={index === 2 || index === 5}
-            />
-          ))}
-        </div>
-
-        {/* Encerramento */}
-
-        <div
-          className="
-            mt-28 flex flex-wrap
-            items-end justify-between
-            gap-8
-            border-t border-black/20
-            pt-8 md:mt-40
-          "
-        >
-          <p
-            className="
-              max-w-lg font-serif italic
-              text-2xl leading-[1.2]
-              md:text-4xl
-            "
-          >
-            O trabalho continua.
-            <br />
-            A textura também.
-          </p>
-
-          <span
-            style={handwritten}
-            className="
-              text-3xl text-[#A88735]
-              md:text-5xl
-            "
-          >
-            em construção.
-          </span>
-        </div>
+        {textProjects.length > 0 && (
+          <section className="work-text-index" aria-labelledby="mais-projetos">
+            <h3 id="mais-projetos" style={handwritten} className="text-4xl md:text-6xl">
+              Mais projetos
+            </h3>
+            <ul className="mt-5">
+              {textProjects.map((project) => (
+                <li key={project.slug}>
+                  <Link href={`/work/${project.slug}`} className="work-text-link">
+                    <span className="font-serif text-xl italic md:text-3xl">{project.title}</span>
+                    <span className="text-sm text-[#655b4c]">{project.discipline[0]}</span>
+                    <span aria-hidden="true">↗</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
       </div>
     </section>
