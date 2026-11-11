@@ -661,3 +661,7 @@ body {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+.work-cutout:not(:first-child) .work-cutout-paper::after {
+  display: none;
+}

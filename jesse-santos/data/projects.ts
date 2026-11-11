@@ -498,6 +498,8 @@ export const disciplines: Discipline[] = [
   "Editorial",
 ];
 
+export const publishedProjects = projects.filter((project) => project.cover);
+
 /* =========================================================
    FUNÇÕES AUXILIARES
 ========================================================= */

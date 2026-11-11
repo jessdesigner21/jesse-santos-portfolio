@@ -4,7 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { projects, type Project } from "@/data/projects";
+import { publishedProjects, type Project } from "@/data/projects";
 import ProjectCover from "./ProjectCover";
 import { setAccent } from "@/lib/accent";
 
@@ -192,12 +192,11 @@ function WorkCutout({ project }: { project: Project }) {
 export default function SelectedWork() {
   const reduceMotion = useReducedMotion();
 
-  const featured = projects.find(
+  const featured = publishedProjects.find(
     (project) => project.slug === "falas-de-orgulho"
   );
 
-  const otherProjects = projects.filter((project) => project !== featured);
-  const illustrated = otherProjects.filter((project) => project.cover);
+  const illustrated = publishedProjects.filter((project) => project !== featured);
 
   return (
     <section
@@ -413,18 +412,7 @@ export default function SelectedWork() {
                 </div>
               </div>
 
-              {/* Pequena anotação editorial */}
 
-              <p
-                className="
-                  mt-12 text-right
-                  font-serif italic
-                  text-lg text-[#74665B]
-                  md:mr-[8%] md:text-2xl
-                "
-              >
-                Há muitas formas de existir.
-              </p>
             </div>
           </motion.article>
         )}
@@ -433,11 +421,6 @@ export default function SelectedWork() {
           {illustrated.map((project) => <WorkCutout key={project.slug} project={project} />)}
         </div>
 
-        <div className="mt-14 border-t border-black/15 pt-6 md:mt-24">
-          <Link href="/work" className="marker-underline">
-            Todos os trabalhos ↗
-          </Link>
-        </div>
 
       </div>
     </section>

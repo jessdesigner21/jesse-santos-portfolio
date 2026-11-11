@@ -12,11 +12,7 @@ const reelSeries = [
     account: "centroluminus",
     reels: [
       { id: "DZNcmiZkSBU", title: "Quando a mente não para" },
-      { id: "DY724_CEquI", title: "A síndrome da boazinha" },
-      { id: "DXPzOPiipUf", title: "Aprender a colocar limites" },
       { id: "DWHtNLACdC-", title: "Quando considerar a terapia de casal" },
-      { id: "DV1si4uDX40", title: "Quando começar a terapia" },
-      { id: "DUbl9FuDJI_", title: "O que é gaslighting?" },
       { id: "DSm0yquky--", title: "Uma mensagem de fim de ano" },
     ],
   },

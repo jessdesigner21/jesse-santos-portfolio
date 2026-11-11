@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { agency, clients, type Client } from "@/data/clients";
+import { publishedProjects } from "@/data/projects";
 
 const sectors = [
   "Energia, mineração e indústria",
@@ -50,7 +51,8 @@ function ClientList({ entries }: { entries: Client[] }) {
   return (
     <ul className="clients-list">
       {entries.map((client) => {
-        const href = client.workHref ?? (client.projectSlugs[0] ? `/work/${client.projectSlugs[0]}` : undefined);
+        const project = publishedProjects.find(({ slug }) => client.projectSlugs.includes(slug));
+        const href = client.workHref ?? (project ? `/work/${project.slug}` : undefined);
         const content = (
           <>
             {client.logo && (

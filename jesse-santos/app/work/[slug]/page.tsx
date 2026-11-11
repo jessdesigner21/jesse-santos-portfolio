@@ -1,8 +1,8 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { projects, getProjectBySlug } from "@/data/projects";
+import { publishedProjects, getProjectBySlug } from "@/data/projects";
 import ProjectCover from "@/components/ProjectCover";
 import ProjectAccentSetter from "@/components/ProjectAccentSetter";
 import ProjectGallery from "@/components/ProjectGallery";
@@ -10,7 +10,7 @@ import ArchiveShowcase, { archiveSlug } from "@/components/ArchiveShowcase";
 import VideoPlayer from "@/components/VideoPlayer";
 
 export function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
+  return publishedProjects.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
@@ -35,9 +35,10 @@ export default async function ProjectPage({
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) notFound();
+  if (!project.cover) redirect("/#trabalho");
 
-  const index = projects.findIndex((p) => p.slug === project.slug);
-  const next = projects[(index + 1) % projects.length];
+  const index = publishedProjects.findIndex((p) => p.slug === project.slug);
+  const next = publishedProjects[(index + 1) % publishedProjects.length];
   const isPride = project.slug === "falas-de-orgulho";
   const isArchive = project.slug === archiveSlug;
 
@@ -48,7 +49,7 @@ export default async function ProjectPage({
       <header className={isArchive ? "mx-auto max-w-[1440px] px-5 md:px-8" : "px-5 md:px-8"}>
         {!isArchive && (
           <p className="editorial-num text-graphite mb-4">
-            {String(index + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+            {String(index + 1).padStart(2, "0")} / {String(publishedProjects.length).padStart(2, "0")}
           </p>
         )}
         <h1
@@ -148,7 +149,7 @@ export default async function ProjectPage({
       )}
 
       <div className="px-5 md:px-8 mt-24 pt-10 border-t border-ink/10 flex items-center justify-between">
-        <Link href="/work" className="editorial-num border-b border-ink/40 pb-1">
+        <Link href="/#trabalho" className="editorial-num border-b border-ink/40 pb-1">
           ← Todos os trabalhos
         </Link>
         <Link
