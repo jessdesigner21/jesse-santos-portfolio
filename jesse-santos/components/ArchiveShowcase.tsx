@@ -97,9 +97,12 @@ export default function ArchiveShowcase({ cover }: { cover: string }) {
           ))}
         </ul>
       </nav>
-      <div className="relative aspect-[8/5] bg-[#E9DFCD]">
-        <Image src={cover} alt="Pendões da campanha Alpha/ADOs ao lado de um mockup dos pins Biogreen" fill preload sizes="(max-width: 1024px) 94vw, 50vw" />
-      </div>
+      <figure className="archive-index-cover">
+        <div className="relative aspect-[8/5] bg-[#E9DFCD]">
+          <Image src={cover} alt="Pendões da campanha Alpha/ADOs ao lado de um mockup dos pins Biogreen" fill preload sizes="(max-width: 1024px) 94vw, 50vw" />
+        </div>
+        <figcaption>Alpha/ADOs e Biogreen</figcaption>
+      </figure>
     </div>
   );
 }
