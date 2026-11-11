@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const links = [
@@ -14,6 +15,8 @@ const links = [
 export default function SiteNav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -25,7 +28,11 @@ export default function SiteNav() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-        scrolled ? "bg-off-white/90 backdrop-blur-md" : "bg-[#fcf9f1] md:bg-transparent"
+        scrolled
+          ? "bg-[#FCF9F1]/95 backdrop-blur-sm md:bg-off-white/90"
+          : isHome
+            ? "bg-[#FCFAF4]/95 md:bg-transparent"
+            : "bg-[#FCF9F1]/95 md:bg-transparent"
       }`}
     >
       <div className="flex items-center justify-between px-5 md:px-8 py-4">
