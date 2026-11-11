@@ -50,7 +50,7 @@ export default function ArchiveVideo({
           className="archive-video-cover paper-surface"
           aria-label={`Assistir: ${title}`}
         >
-          <span className="editorial-num">{category}</span>
+          <span className="archive-video-cover-kind editorial-num">{category}</span>
           <span className="archive-video-cover-title">{title}</span>
           <span className="archive-video-cover-play"><span aria-hidden="true">▶</span> Assistir</span>
         </button>

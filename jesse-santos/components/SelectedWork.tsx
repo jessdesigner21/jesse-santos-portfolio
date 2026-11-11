@@ -4,7 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { publishedProjects, type Project } from "@/data/projects";
+import { selectedProjects, type Project } from "@/data/projects";
 import ProjectCover from "./ProjectCover";
 import { setAccent } from "@/lib/accent";
 
@@ -192,11 +192,11 @@ function WorkCutout({ project }: { project: Project }) {
 export default function SelectedWork() {
   const reduceMotion = useReducedMotion();
 
-  const featured = publishedProjects.find(
+  const featured = selectedProjects.find(
     (project) => project.slug === "falas-de-orgulho"
   );
 
-  const illustrated = publishedProjects.filter((project) => project !== featured);
+  const illustrated = selectedProjects.filter((project) => project !== featured);
 
   return (
     <section
@@ -205,7 +205,7 @@ export default function SelectedWork() {
       className="
         paper-surface relative isolate overflow-hidden
         bg-[#F7F4EB]
-        px-5 py-24
+        px-5 py-12
         text-[#24221F]
         md:px-10 md:py-36
       "
@@ -216,7 +216,7 @@ export default function SelectedWork() {
 
         <div
           className="
-            flex flex-wrap items-center
+            hidden md:flex flex-wrap items-center
             justify-between gap-4
             border-b border-black/20 pb-5
           "
@@ -239,7 +239,7 @@ export default function SelectedWork() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
-          className="relative py-12 md:py-16"
+          className="relative pb-7 md:py-16"
         >
 
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-12">
@@ -250,13 +250,13 @@ export default function SelectedWork() {
               >
                 Trabalhos<span className="text-[var(--portfolio-yellow)]">.</span>
               </h2>
-              <p className="mt-7 max-w-md font-serif italic text-lg leading-[1.4] md:text-2xl">
+              <p className="mt-4 hidden max-w-md font-serif italic text-lg leading-[1.4] md:block md:text-2xl">
                 Cada projeto carrega um pouco do caminho até chegar aqui.
               </p>
             </div>
             <p
               style={handwritten}
-              className="text-[#A88735] text-2xl md:mb-2 md:shrink-0 md:text-4xl md:-rotate-3"
+              className="hidden text-[#A88735] text-2xl md:block md:mb-2 md:shrink-0 md:text-4xl md:-rotate-3"
             >
               com textura.
             </p>
@@ -282,9 +282,9 @@ export default function SelectedWork() {
               setAccent(featured.accentColor)
             }
             onMouseLeave={() => setAccent(null)}
-            className="relative py-16 md:py-24"
+            className="relative pb-10 pt-3 md:py-24"
           >
-            <div className="mb-12 flex flex-wrap items-center justify-between gap-4">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3 md:mb-12">
               <span className="editorial-num uppercase">
                 01 / Projeto autoral
               </span>
@@ -301,7 +301,7 @@ export default function SelectedWork() {
               <span
                 aria-hidden="true"
                 className="
-                  pointer-events-none absolute
+                  pointer-events-none absolute hidden md:block
                   -top-12 left-0
                   z-0 select-none
                   font-grotesk font-bold
@@ -318,7 +318,7 @@ export default function SelectedWork() {
                 className="
                   relative z-10
                   grid items-center
-                  gap-12 md:grid-cols-12
+                  gap-5 md:grid-cols-12
                   md:gap-10
                 "
               >
@@ -362,7 +362,7 @@ export default function SelectedWork() {
                   <p
                     style={handwritten}
                     className="
-                      mb-5 text-[#A88735]
+                      mb-5 hidden text-[#A88735] md:block
                       text-3xl md:text-5xl
                       -rotate-3
                     "
@@ -373,7 +373,7 @@ export default function SelectedWork() {
                   <h3
                     className="
                       font-serif italic
-                      text-5xl leading-[0.98]
+                      text-4xl leading-[0.98]
                       tracking-[-0.055em]
                       md:text-[clamp(3.5rem,5vw,6rem)]
                     "
@@ -383,7 +383,7 @@ export default function SelectedWork() {
 
                   <p
                     className="
-                      mt-7 max-w-md
+                      mt-3 max-w-md md:mt-7
                       font-grotesk
                       text-base leading-[1.8]
                       text-[#645F58]
@@ -399,7 +399,7 @@ export default function SelectedWork() {
                     data-cursor="abrir"
                     className="
                       editorial-num
-                      mt-9 inline-flex
+                      mt-4 inline-flex md:mt-9
                       items-center gap-3
                       border-b border-black
                       pb-2 uppercase
@@ -422,6 +422,11 @@ export default function SelectedWork() {
         </div>
 
 
+        <div className="mt-8 border-t border-black/15 pt-5 md:mt-14">
+          <Link href="/work" className="marker-underline inline-flex min-h-11 items-center">
+            Mais trabalhos ↗
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -25,7 +25,7 @@ export default function SiteNav() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-        scrolled ? "bg-off-white/80 backdrop-blur-md" : "bg-transparent"
+        scrolled ? "bg-off-white/90 backdrop-blur-md" : "bg-[#fcf9f1] md:bg-transparent"
       }`}
     >
       <div className="flex items-center justify-between px-5 md:px-8 py-4">
@@ -51,7 +51,7 @@ export default function SiteNav() {
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="md:hidden editorial-num border border-ink px-3 py-2"
+          className="md:hidden editorial-num min-h-11 border border-ink/40 px-3 py-2"
           aria-expanded={open}
           aria-controls="mobile-menu"
         >
@@ -69,7 +69,7 @@ export default function SiteNav() {
               key={l.label}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="font-serif text-3xl"
+              className="font-serif text-2xl min-h-11 flex items-center"
             >
               {l.label}
             </Link>

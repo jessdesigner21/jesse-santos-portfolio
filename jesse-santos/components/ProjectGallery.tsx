@@ -31,13 +31,13 @@ export default function ProjectGallery({
   return (
     <section
       aria-label="Imagens do projeto"
-      className="mt-20 px-5 md:px-8 md:mt-28"
+      className="mt-10 px-5 md:px-8 md:mt-28"
     >
       <div
         className={
           presentation
             ? "mx-auto max-w-[1440px] flex flex-col gap-0"
-            : "mx-auto max-w-[1440px] grid grid-cols-1 gap-y-12 md:grid-cols-12 md:gap-x-8 md:gap-y-20"
+            : "mx-auto max-w-[1440px] grid grid-cols-1 gap-y-6 md:grid-cols-12 md:gap-x-8 md:gap-y-20"
         }
       >
         {images.map((item, index) => (

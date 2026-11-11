@@ -220,142 +220,26 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* MOBILE */}
-
-      <div
-        className="
-          relative flex
-          min-h-[100svh]
-          flex-col
-          px-5 pb-10 pt-24
-          md:hidden
-        "
-      >
-        <div className="flex justify-between gap-4">
-          <p className="editorial-num uppercase">
-            Jesse Santos
-          </p>
-
-          <p className="editorial-num uppercase">
-            Portfolio / 2026
-          </p>
+      <div className="mobile-hero md:hidden">
+        <h1 className="mobile-hero-title">
+          Portfólio <span className="font-serif font-normal italic">do Jess</span>
+        </h1>
+        <div className="mobile-hero-art">
+          <Image
+            src={COVER_IMAGE}
+            alt="Retrato de Jesse Santos com o letreiro amarelo Designer Gráfico"
+            fill
+            loading="eager"
+            sizes="(max-width: 767px) 85vw, 1px"
+            className="object-cover"
+          />
         </div>
-
-        {/* Imagem mobile */}
-
-        <motion.div
-          initial={
-            reduceMotion
-              ? false
-              : { opacity: 0, y: 25 }
-          }
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 1,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className="
-            relative mt-8
-            w-full aspect-[4/5]
-            overflow-hidden
-          "
-        >
-          <motion.div
-            className="absolute inset-0"
-            style={
-              reduceMotion
-                ? undefined
-                : { scale: imageScale }
-            }
-          >
-            <Image
-              src={COVER_IMAGE}
-              alt="Capa do portfólio de Jesse Santos"
-              fill
-              priority
-              unoptimized
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-          </motion.div>
-        </motion.div>
-
-        {/* Título mobile */}
-
-        <motion.h1
-          initial={
-            reduceMotion
-              ? false
-              : { opacity: 0, y: 25 }
-          }
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.2,
-            duration: 0.9,
-          }}
-          className="
-            mt-8
-            font-grotesk
-            text-[15vw]
-            font-bold
-            leading-[0.9]
-            tracking-[-0.075em]
-          "
-        >
-          Portfólio
-
-          <span
-            className="
-              mt-3 block
-              font-serif font-normal italic
-              text-[1.15em]
-            "
-          >
-            do Jess
-          </span>
-        </motion.h1>
-
-        {/* ASSINATURA MOBILE HEY ELOISE */}
-
-        <motion.p
-          initial={
-            reduceMotion
-              ? false
-              : { opacity: 0, y: 18 }
-          }
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 0.4,
-            duration: 0.9,
-          }}
-          style={SIGNATURE_STYLE}
-          className="
-            mt-6
-            text-[clamp(1.8rem,8vw,3rem)]
-            leading-[1.15]
-            tracking-normal
-          "
-        >
+        <p style={SIGNATURE_STYLE} className="text-[clamp(1.6rem,7vw,2.4rem)] leading-none">
           uma vida com textura.
-        </motion.p>
-
-        {/* Navegação */}
-
-        <div className="mt-auto pt-10">
-          <div className="border-t border-black/25 pt-5">
-            <Link
-              href="#trabalho"
-              className="
-                editorial-num uppercase
-                tracking-widest
-                marker-underline
-                pb-2
-              "
-            >
-              ↓ Explorar trabalhos
-            </Link>
-          </div>
-        </div>
+        </p>
+        <Link href="#trabalho" className="mobile-hero-link marker-underline">
+          Explorar trabalhos ↓
+        </Link>
       </div>
     </section>
   );

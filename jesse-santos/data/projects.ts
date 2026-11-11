@@ -168,6 +168,13 @@ export const projects: Project[] = [
     layout: "gallery",
 
     coverTreatment: "serif",
+    cover: "/projects/behance/social-media-beleza-capa.webp",
+    coverRatio: "800 / 626",
+    behanceUrl: "https://www.behance.net/gallery/216736893/Social-Media-Beleza",
+    images: [
+      { src: "/projects/behance/social-media-beleza-01.webp", alt: "Prancha 1 de Social Media — Beleza" },
+      { src: "/projects/behance/social-media-beleza-02.webp", alt: "Prancha 2 de Social Media — Beleza" },
+    ],
   },
 
   /* =========================================================
@@ -192,6 +199,14 @@ export const projects: Project[] = [
     layout: "gallery",
 
     coverTreatment: "serif",
+    cover: "/projects/behance/glow-beauty-capa.webp",
+    coverRatio: "800 / 626",
+    behanceUrl: "https://www.behance.net/gallery/216726705/Glow-Beauty",
+    images: [
+      { src: "/projects/behance/glow-beauty-01.webp", alt: "Prancha 1 de Glow Beauty" },
+      { src: "/projects/behance/glow-beauty-02.webp", alt: "Prancha 2 de Glow Beauty" },
+      { src: "/projects/behance/glow-beauty-03.webp", alt: "Prancha 3 de Glow Beauty" },
+    ],
   },
 
   /* =========================================================
@@ -214,6 +229,10 @@ export const projects: Project[] = [
     layout: "gallery",
 
     coverTreatment: "grotesk",
+    cover: "/projects/behance/social-media-hamburgueria-capa.webp",
+    coverRatio: "800 / 626",
+    behanceUrl: "https://www.behance.net/gallery/204358135/SOCIAL-MEDIA-HAMBURGUERIA",
+
   },
 
   /* =========================================================
@@ -307,6 +326,14 @@ export const projects: Project[] = [
     layout: "gallery",
 
     coverTreatment: "mono-grid",
+    cover: "/projects/behance/amarelo-capa.webp",
+    coverRatio: "800 / 626",
+    behanceUrl: "https://www.behance.net/gallery/203669763/IDENTIDADE-VISUAL-AMARELO",
+    images: [
+      { src: "/projects/behance/amarelo-01.webp", alt: "Prancha 1 de Amarelo" },
+      { src: "/projects/behance/amarelo-02.webp", alt: "Prancha 2 de Amarelo" },
+      { src: "/projects/behance/amarelo-03.webp", alt: "Prancha 3 de Amarelo" },
+    ],
   },
 
   /* =========================================================
@@ -453,6 +480,13 @@ export const projects: Project[] = [
     layout: "gallery",
 
     coverTreatment: "serif",
+    cover: "/projects/behance/cafeteria-capa.webp",
+    coverRatio: "800 / 626",
+    behanceUrl: "https://www.behance.net/gallery/203501555/IDENTIDADE-VISUAL-CAFETERIA",
+    images: [
+      { src: "/projects/behance/cafeteria-01.webp", alt: "Prancha 1 de Cafeteria" },
+      { src: "/projects/behance/cafeteria-02.webp", alt: "Prancha 2 de Cafeteria" },
+    ],
   },
 
   /* =========================================================
@@ -479,6 +513,26 @@ export const projects: Project[] = [
     layout: "editorial",
 
     coverTreatment: "mono-grid",
+    cover: "/projects/behance/identidade-fotografica-editorial-capa.webp",
+    coverRatio: "800 / 626",
+    behanceUrl: "https://www.behance.net/gallery/202347019/PROJETO-IDENTIDADE-FOTOGRAFA-EDITORIAL",
+    images: [
+      { src: "/projects/behance/identidade-fotografica-editorial-01.webp", alt: "Prancha 1 de Identidade Fotográfica Editorial" },
+    ],
+  },
+  {
+    title: "Identidade Visual para Marca",
+    slug: "identidade-visual-para-marca",
+    discipline: ["Identidade Visual"],
+    description: "Projeto de identidade visual apresentado por Jesse Santos no Behance.",
+    accentColor: "#A88735",
+    layout: "presentation",
+    cover: "/projects/behance/identidade-visual-para-marca-capa.webp",
+    coverRatio: "800 / 626",
+    behanceUrl: "https://www.behance.net/gallery/202330001/Identidade-Visual-para-Marca",
+    images: [
+      { src: "/projects/behance/identidade-visual-para-marca-01.webp", alt: "Prancha 1 de Identidade Visual para Marca" },
+    ],
   },
 ];
 
@@ -498,7 +552,15 @@ export const disciplines: Discipline[] = [
   "Editorial",
 ];
 
-export const publishedProjects = projects.filter((project) => project.cover);
+const selectedSlugs = ["falas-de-orgulho", "grupo-tattersall", "cantim-do-vin", "flash-food"];
+
+export const selectedProjects = selectedSlugs.flatMap((slug) => {
+  const project = projects.find((entry) => entry.slug === slug);
+  return project ? [project] : [];
+});
+
+export const additionalProjects = projects.filter((project) => project.cover && project.behanceUrl && !selectedSlugs.includes(project.slug));
+export const publishedProjects = [...selectedProjects, ...additionalProjects];
 
 /* =========================================================
    FUNÇÕES AUXILIARES

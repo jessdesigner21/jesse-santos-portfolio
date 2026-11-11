@@ -485,44 +485,68 @@ body {
 .archive-video-cover {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.65rem;
-  padding: clamp(1rem, 5vw, 3.75rem);
-  background-color: var(--portfolio-yellow);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: start;
+  align-items: center;
+  gap: 0.6rem;
+  padding: clamp(0.9rem, 4vw, 3rem);
+  background-color: #f3e9c4;
   color: var(--ink);
   text-align: left;
   cursor: pointer;
 }
 
+.archive-video-portrait:nth-child(2) .archive-video-cover {
+  background-color: #ede3d6;
+}
+
+.archive-video-portrait:nth-child(3) .archive-video-cover {
+  background-color: #f3eddb;
+}
+
+.archive-video-cover-kind {
+  width: 100%;
+  border-bottom: 1px solid #7768404d;
+  padding-bottom: 0.45rem;
+  color: #574a32;
+}
+
 .archive-video-cover-title {
   font-family: "hey-eloise", var(--font-serif);
-  font-size: clamp(2.6rem, 8vw, 7.5rem);
+  font-size: clamp(2.4rem, 8vw, 7.5rem);
   font-weight: 400;
   line-height: 0.91;
+  color: #302b20;
 }
 
 .archive-video-portrait .archive-video-cover-title {
-  font-size: clamp(2.4rem, 5vw, 5.25rem);
+  font-size: clamp(2.2rem, 5vw, 5.25rem);
 }
 
 .archive-video-cover-play {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  border-radius: 2rem;
-  background: var(--ink);
-  padding: 0.45rem 0.8rem;
-  color: var(--off-white);
+  gap: 0.55rem;
+  color: #342a1a;
   font-size: 0.83rem;
-  transition: transform 200ms ease;
 }
 
-.archive-video-cover:hover .archive-video-cover-play,
-.archive-video-cover:focus-visible .archive-video-cover-play {
-  transform: translateX(0.3rem);
+.archive-video-cover-play > span {
+  display: grid;
+  width: 2rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid #77684060;
+  border-radius: 50%;
+  background: #f8f2df;
+  font-size: 0.7rem;
+  transition: background-color 200ms ease;
+}
+
+.archive-video-cover:hover .archive-video-cover-play > span,
+.archive-video-cover:focus-visible .archive-video-cover-play > span {
+  background: #ecda92;
 }
 
 .motion-program-header {
@@ -664,4 +688,65 @@ body {
 
 .work-cutout:not(:first-child) .work-cutout-paper::after {
   display: none;
+}
+
+#trabalho,
+#contato {
+  scroll-margin-top: 4.1rem;
+}
+
+.mobile-hero {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+  padding: 5.15rem 1.25rem 1.65rem;
+  background: #fcf9f1;
+}
+
+.mobile-hero-title {
+  font-size: clamp(2.35rem, 10vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.065em;
+  line-height: 0.98;
+}
+
+.mobile-hero-art {
+  position: relative;
+  width: min(100%, 25rem);
+  height: clamp(14.5rem, 48svh, 21rem);
+  justify-self: center;
+  overflow: hidden;
+}
+
+.mobile-hero-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+@media (min-width: 48rem) {
+  .mobile-hero {
+    display: none;
+  }
+}
+
+@media (max-width: 47.999rem) {
+  #inicio {
+    min-height: auto;
+  }
+
+  .work-cutout-paper,
+  .work-cutout:nth-child(even) .work-cutout-paper {
+    transform: none;
+  }
+
+  .work-cutout-label {
+    margin-top: 0.9rem;
+  }
+
+  .archive-collection-title {
+    overflow-wrap: anywhere;
+  }
 }
