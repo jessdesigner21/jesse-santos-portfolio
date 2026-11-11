@@ -6,6 +6,7 @@ import { projects, getProjectBySlug } from "@/data/projects";
 import ProjectCover from "@/components/ProjectCover";
 import ProjectAccentSetter from "@/components/ProjectAccentSetter";
 import ProjectGallery from "@/components/ProjectGallery";
+import AgroriegoShowcase from "@/components/AgroriegoShowcase";
 import VideoPlayer from "@/components/VideoPlayer";
 
 export function generateStaticParams() {
@@ -38,6 +39,7 @@ export default async function ProjectPage({
   const index = projects.findIndex((p) => p.slug === project.slug);
   const next = projects[(index + 1) % projects.length];
   const isPride = project.slug === "falas-de-orgulho";
+  const isAgroriego = project.slug === "grupo-tattersall";
 
   return (
     <article className="pt-28 md:pt-36 pb-24">
@@ -72,39 +74,47 @@ export default async function ProjectPage({
         )}
       </header>
 
-      <div className={isPride ? "mt-16 px-5 md:px-8" : "mt-16"}>
-        {isPride && project.cover ? (
-          <div className="relative mx-auto max-w-[1440px] aspect-[16/9] bg-[#EEE8DC]">
-            <Image
-              src={project.cover}
-              alt={`Imagem de abertura do projeto ${project.title}`}
-              fill
+      {isAgroriego ? (
+        <AgroriegoShowcase />
+      ) : (
+        <>
+        <div className={isPride ? "mt-16 px-5 md:px-8" : "mt-16"}>
+          {isPride && project.cover ? (
+            <div className="relative mx-auto max-w-[1440px] aspect-[16/9] bg-[#EEE8DC]">
+              <Image
+                src={project.cover}
+                alt={`Imagem de abertura do projeto ${project.title}`}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 95vw"
+                className="object-contain"
+              />
+            </div>
+          ) : (
+            <ProjectCover
+              project={project}
               priority
-              sizes="(max-width: 768px) 100vw, 95vw"
-              className="object-contain"
+              className="w-full aspect-[16/10] md:aspect-[21/9]"
             />
-          </div>
-        ) : (
-          <ProjectCover
-            project={project}
-            priority
-            className="w-full aspect-[16/10] md:aspect-[21/9]"
+          )}
+        </div>
+  
+        <div className="px-5 md:px-8 mt-16 grid md:grid-cols-12 gap-8">
+          <p className="md:col-span-6 md:col-start-4 text-lg md:text-xl leading-relaxed">
+            {project.description}
+          </p>
+        </div>
+  
+        {/* Galeria editorial: formatos reais, sem recortes e com movimento suave */}
+        {project.images && project.images.length > 0 && (
+          <ProjectGallery
+            images={project.images}
+            presentation={project.layout === "presentation"}
           />
         )}
-      </div>
-
-      <div className="px-5 md:px-8 mt-16 grid md:grid-cols-12 gap-8">
-        <p className="md:col-span-6 md:col-start-4 text-lg md:text-xl leading-relaxed">
-          {project.description}
-        </p>
-      </div>
-
-      {/* Galeria editorial: formatos reais, sem recortes e com movimento suave */}
-      {project.images && project.images.length > 0 && (
-        <ProjectGallery
-          images={project.images}
-          presentation={project.layout === "presentation"}
-        />
+  
+  
+        </>
       )}
 
       {/* vídeos do case — aparece automaticamente quando `videos` for preenchido */}
