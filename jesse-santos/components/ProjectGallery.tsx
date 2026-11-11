@@ -22,9 +22,11 @@ const layout = [
 export default function ProjectGallery({
   images,
   presentation = false,
+  compactPresentation = false,
 }: {
   images: MediaItem[];
   presentation?: boolean;
+  compactPresentation?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
 
@@ -33,7 +35,7 @@ export default function ProjectGallery({
   if (presentation) {
     return (
       <section aria-label="Pranchas completas do projeto" className="mt-10 md:mt-16">
-        <div className="mx-auto w-full max-w-[1000px]">
+        <div className={`mx-auto w-full ${compactPresentation ? "max-w-[820px]" : "max-w-[1000px]"}`}>
           {images.map((item, index) => (
             <a
               key={item.src + index}
