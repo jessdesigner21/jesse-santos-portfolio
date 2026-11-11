@@ -61,6 +61,26 @@ const files = [
   {
     "path": "monkey-cafe/capa.jpg",
     "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/b9c432b5-a908-4fa5-b05a-15472e9c30e9.jpg"
+  },
+  {
+    "path": "flos/menta.png",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/5a4e83c2-10fd-473f-a000-7c9692c8faa5.png"
+  },
+  {
+    "path": "flos/mirtilo.png",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/435b45f2-53d9-4816-b407-a6826c9acf93.png"
+  },
+  {
+    "path": "flos/laranja.png",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/5f8d1e0a-ef9e-41ec-8530-3454f79231c6.png"
+  },
+  {
+    "path": "flos/morango.png",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/0c4fbb7b-8dda-46d0-8a98-e7ae6a6cc224.png"
+  },
+  {
+    "path": "flos/abacaxi.png",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/862471d5-ad0f-462b-a44a-8a4ae301a51c.png"
   }
 ];
 const outputDir=path.join(process.cwd(),"jesse-santos/public/projects/owner");
