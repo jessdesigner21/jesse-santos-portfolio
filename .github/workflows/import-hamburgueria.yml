@@ -21,6 +21,10 @@ jobs:
           node-version: "22"
       - name: Importar arquivos originais enviados pelo criador
         run: node scripts/import-hamburgueria.cjs
+      - name: Gerar apresentações das latas FLOS
+        run: |
+          python3 -m pip install --break-system-packages pillow
+          python3 scripts/generate-flos-gallery.py
       - name: Verificar build Next.js
         working-directory: jesse-santos
         run: |
