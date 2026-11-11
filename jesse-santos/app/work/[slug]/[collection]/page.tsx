@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ArchiveCollection, archiveCollections, archivePath, archiveSlug } from "@/components/ArchiveShowcase";
 
 type CollectionPageProps = {
@@ -14,6 +14,7 @@ export function generateStaticParams() {
 async function getCollection(params: CollectionPageProps["params"]) {
   const { slug, collection } = await params;
   if (slug !== archiveSlug) notFound();
+  if (collection === "videos" || collection === "reels") redirect(`/movimento#${collection}`);
 
   const selected = archiveCollections.find((entry) => entry.slug === collection);
   if (!selected) notFound();
@@ -36,6 +37,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
             ← Arquivo Vivo
           </Link>
           <h1 className="archive-collection-title">{selected.title}</h1>
+          <Link href="/clientes" className="mt-3 inline-block text-sm text-[#655b4c]">Via Go Marketing Group ↗</Link>
         </header>
         <ArchiveCollection collection={selected.slug} />
         <nav aria-label="Outras coleções" className="archive-collection-nav">
@@ -44,6 +46,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
               {title} <span aria-hidden="true">↗</span>
             </Link>
           ))}
+          <Link href="/movimento" className="archive-collection-link">Movimento ↗</Link>
         </nav>
       </div>
     </article>

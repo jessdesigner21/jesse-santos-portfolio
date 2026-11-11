@@ -198,7 +198,6 @@ export default function SelectedWork() {
 
   const otherProjects = projects.filter((project) => project !== featured);
   const illustrated = otherProjects.filter((project) => project.cover);
-  const textProjects = otherProjects.filter((project) => !project.cover);
 
   return (
     <section
@@ -434,24 +433,11 @@ export default function SelectedWork() {
           {illustrated.map((project) => <WorkCutout key={project.slug} project={project} />)}
         </div>
 
-        {textProjects.length > 0 && (
-          <section className="work-text-index" aria-labelledby="mais-projetos">
-            <h3 id="mais-projetos" style={handwritten} className="text-4xl md:text-6xl">
-              Mais projetos
-            </h3>
-            <ul className="mt-5">
-              {textProjects.map((project) => (
-                <li key={project.slug}>
-                  <Link href={`/work/${project.slug}`} className="work-text-link">
-                    <span className="font-serif text-xl italic md:text-3xl">{project.title}</span>
-                    <span className="text-sm text-[#655b4c]">{project.discipline[0]}</span>
-                    <span aria-hidden="true">↗</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
+        <div className="mt-14 border-t border-black/15 pt-6 md:mt-24">
+          <Link href="/work" className="marker-underline">
+            Todos os trabalhos ↗
+          </Link>
+        </div>
 
       </div>
     </section>

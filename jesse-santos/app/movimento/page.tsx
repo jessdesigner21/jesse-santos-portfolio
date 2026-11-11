@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { motionPieces } from "@/data/videos";
 import { ArchiveReels, ArchiveVideos } from "@/components/ArchiveShowcase";
 import MotionReveal from "@/components/MotionReveal";
@@ -13,7 +14,10 @@ export default function MovimentoPage() {
     <article className="paper-surface bg-[#F7F4EB] px-5 pb-24 pt-28 md:px-8 md:pt-36">
       <div className="motion-program mx-auto max-w-[1376px]">
         <header className="motion-program-header">
-          <h1 className="archive-collection-title">Em movimento<span className="text-[var(--portfolio-yellow)]">.</span></h1>
+          <div>
+            <h1 className="archive-collection-title">Em movimento<span className="text-[var(--portfolio-yellow)]">.</span></h1>
+            <Link href="/clientes" className="mt-3 inline-block text-sm text-[#655b4c]">Trabalhos via Go Marketing Group ↗</Link>
+          </div>
           <nav aria-label="Seções de Movimento" className="flex flex-wrap gap-5">
             <a href="#videos" className="marker-underline">Vídeos ↓</a>
             <a href="#reels" className="marker-underline">Reels ↓</a>

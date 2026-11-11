@@ -13,7 +13,7 @@ export default function ClientesPage() {
           Clientes<span className="text-[var(--portfolio-yellow)]">.</span>
         </h1>
       </header>
-      <ClientsSection showLabel={false} />
+      <ClientsSection />
     </article>
   );
 }

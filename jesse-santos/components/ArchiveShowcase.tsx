@@ -74,8 +74,6 @@ export const archivePath = `/work/${archiveSlug}`;
 export const archiveCollections = [
   { slug: "apresentacao", title: "Apresentação", subtitle: "Agroriego Tattersall", anchor: "agroriego-recorte" },
   { slug: "pecas-graficas", title: "Peças gráficas", subtitle: "Pendões e pins", anchor: "alpha-ados" },
-  { slug: "videos", title: "Vídeos", subtitle: "Institucional, depoimento e identidade", anchor: "arquivo-video" },
-  { slug: "reels", title: "Reels", subtitle: "Centro Luminus e Fabrimetal", anchor: "arquivo-reels" },
 ] as const;
 
 type Collection = (typeof archiveCollections)[number]["slug"];
@@ -96,6 +94,15 @@ export default function ArchiveShowcase({ cover }: { cover: string }) {
               </Link>
             </li>
           ))}
+          <li id="arquivo-video">
+            <Link href="/movimento" className="archive-index-link">
+              <span>
+                <span className="archive-work-title block">Movimento</span>
+                <span id="arquivo-reels" className="mt-1 block text-sm text-[#655b4c]">Vídeos e Reels</span>
+              </span>
+              <span className="archive-index-arrow text-xl" aria-hidden="true">↗</span>
+            </Link>
+          </li>
         </ul>
       </nav>
       <figure className="archive-index-cover">
@@ -114,10 +121,6 @@ export function ArchiveCollection({ collection }: { collection: Collection }) {
       return <AgroriegoShowcase />;
     case "pecas-graficas":
       return <Prints />;
-    case "videos":
-      return <ArchiveVideos />;
-    case "reels":
-      return <ArchiveReels />;
   }
 }
 
