@@ -93,7 +93,7 @@ function WorkCover({
 
   if (customCover) {
     return (
-      <div className={`relative overflow-hidden ${className}`}>
+      <div className={`relative overflow-hidden bg-[#EEE8DC] ${className}`}>
         <Image
           src={customCover}
           alt={`Capa do projeto ${project.title}`}
@@ -101,7 +101,7 @@ function WorkCover({
           priority={priority}
           sizes="(max-width: 768px) 100vw, 80vw"
           className="
-            object-cover
+            object-contain
             transition-transform duration-700
             group-hover:scale-[1.025]
           "
@@ -391,51 +391,28 @@ export default function SelectedWork() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
-          className="
-            relative border-b border-black/20
-            py-16 md:py-24
-          "
+          className="relative py-12 md:py-16"
         >
-          <h2
-            id="trabalhos-titulo"
-            className="
-              font-grotesk font-bold
-              text-[clamp(4rem,13vw,14rem)]
-              leading-[0.78]
-              tracking-[-0.09em]
-              uppercase
-            "
-          >
-            Traba
-            <br />
-            lhos
-            <span className="text-[#A88735]">.</span>
-          </h2>
 
-          <p
-            style={handwritten}
-            className="
-              mt-6 text-[#A88735]
-              text-3xl md:text-6xl
-              md:absolute md:right-[5%]
-              md:bottom-[18%]
-              md:-rotate-6
-            "
-          >
-            com textura.
-          </p>
-
-          <p
-            className="
-              mt-10 max-w-sm
-              font-serif italic
-              text-xl leading-[1.4]
-              md:text-2xl
-            "
-          >
-            Cada projeto carrega um pouco
-            do caminho até chegar aqui.
-          </p>
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-12">
+            <div className="min-w-0">
+              <h2
+                id="trabalhos-titulo"
+                className="font-grotesk font-bold uppercase text-[clamp(3rem,7.2vw,8.4rem)] leading-[0.94] tracking-[-0.075em]"
+              >
+                Trabalhos<span className="text-[#A88735]">.</span>
+              </h2>
+              <p className="mt-7 max-w-md font-serif italic text-lg leading-[1.4] md:text-2xl">
+                Cada projeto carrega um pouco do caminho até chegar aqui.
+              </p>
+            </div>
+            <p
+              style={handwritten}
+              className="text-[#A88735] text-2xl md:mb-2 md:shrink-0 md:text-4xl md:-rotate-3"
+            >
+              com textura.
+            </p>
+          </div>
         </motion.div>
 
         {/* PROJETO 01 - FALAS DE ORGULHO */}
@@ -457,10 +434,7 @@ export default function SelectedWork() {
               setAccent(featured.accentColor)
             }
             onMouseLeave={() => setAccent(null)}
-            className="
-              relative py-24
-              md:py-36
-            "
+            className="relative py-16 md:py-24"
           >
             <div className="mb-12 flex flex-wrap items-center justify-between gap-4">
               <span className="editorial-num uppercase">
