@@ -1,95 +1,82 @@
-/* One-off import of Jesse Santos's own publicly published Behance project.
-   Runs only in the isolated GitHub import branch. */
+// Store only assets explicitly supplied by the portfolio owner.
 const fs = require("node:fs");
 const path = require("node:path");
-const { chromium } = require("playwright");
-const PROJECT_ID = "204358135";
-const PROJECT_URL = "https://www.behance.net/gallery/204358135/SOCIAL-MEDIA-HAMBURGUERIA";
-const DIR = path.join(process.cwd(), "jesse-santos/public/projects/behance");
-const DATA = path.join(process.cwd(), "jesse-santos/data/projects.ts");
-const COVER = "/projects/behance/social-media-hamburgueria-capa.webp";
-const fromUrl = (str) => {
-  if (!str || !str.includes("project_modules")) return null;
-  try { return new URL(str.replace(/&amp;/g,"&"), PROJECT_URL).href; } catch { return null; }
-};
-(async () => {
-  const browser = await chromium.launch({ headless: true, args: ["--disable-blink-features=AutomationControlled"] });
-  const context = await browser.newContext({
-    viewport: {width: 1440, height: 900},
-    locale: "pt-BR",
-    userAgent: "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-  });
-  const page = await context.newPage();
-  const captured = [];
-  page.on("response", res => {
-    const url = fromUrl(res.url());
-    if(url) captured.push(url);
-  });
-  try {
-    const res = await page.goto(PROJECT_URL, {waitUntil:"domcontentloaded", timeout: 60000});
-    console.log("Behance status:", res?.status(), "title:", await page.title());
-    for (let i=0; i<26; i++) {
-      await page.mouse.wheel(0, 1150);
-      await page.waitForTimeout(250);
-    }
-    const dom = await page.evaluate(() => {
-      const collected = [];
-      document.querySelectorAll("img, source").forEach(el => {
-        for(const a of ["src","data-src","data-original","srcset","data-srcset"])
-          if(el.getAttribute(a)) collected.push(el.getAttribute(a));
-      });
-      const html = document.documentElement.outerHTML;
-      const matches = html.match(/https?:\\?\\?\/\\?\\?\/[^"<>\\s]+?project_modules[^"<>\\s]+/g) || [];
-      return [...collected, ...matches];
-    });
-    for(const x of dom) {
-      for (const portion of x.split(",").map(v=>v.trim().split(" ")[0])) {
-        const uri=fromUrl(portion.replace(/\\\//g,"/"));
-        if(uri) captured.push(uri);
-      }
-    }
-    const seen = new Set();
-    const choices = [];
-    for(const url of captured) {
-      const id = url.split("?")[0].split("/").at(-1);
-      if(seen.has(id)) continue;
-      seen.add(id);
-      choices.push(url);
-    }
-    console.log("Total candidate module images:", choices.length);
-    for(const u of choices) console.log("CANDIDATE",u);
-    if(choices.length === 0) throw new Error("Behance did not provide individual project module images. Nothing will be committed.");
-
-    const saved = [];
-    for (const url of choices.slice(0,40)) {
-      try {
-        const res=await context.request.get(url, {timeout:30000,headers:{"Referer":"https://www.behance.net/"}});
-        const ct=res.headers()["content-type"]||"";
-        const bytes=await res.body();
-        if(!res.ok() || !ct.startsWith("image/") || bytes.length<15000) {
-          console.log("SKIP",res.status(),ct,bytes.length,url);
-          continue;
-        }
-        const ext=ct.includes("webp")?"webp":ct.includes("png")?"png":ct.includes("jpeg")?"jpg":null;
-        if(!ext)continue;
-        const fname="social-media-hamburgueria-"+String(saved.length+1).padStart(2,"0")+"."+ext;
-        fs.writeFileSync(path.join(DIR,fname),bytes);
-        saved.push({src:"/projects/behance/"+fname,alt:"Peça "+(saved.length+1)+" da identidade visual Social Media — Hamburgueria"});
-        console.log("SAVED",fname,bytes.length);
-      } catch(e) {console.log("DOWNLOAD ERROR",String(e).slice(0,180));}
-    }
-    if(!saved.length) throw new Error("No original assets could be downloaded. Project data left unchanged.");
-    let data=fs.readFileSync(DATA,"utf8");
-    const before=data.indexOf('    slug: "social-media-hamburgueria",');
-    const after=data.indexOf("  /* =========================================================",before);
-    if(before<0 || after<0)throw new Error("Could not locate target project block");
-    const block=data.slice(before,after);
-    const anchor='    behanceUrl: "https://www.behance.net/gallery/204358135/SOCIAL-MEDIA-HAMBURGUERIA",';
-    if(!block.includes(anchor))throw new Error("Target project Behance URL changed");
-    const all=[{src:COVER,alt:"Onion Rings — capa da identidade visual da hamburgueria"},...saved];
-    const line=anchor+"\n    images: [\n"+all.map(a=>'      { src: '+JSON.stringify(a.src)+', alt: '+JSON.stringify(a.alt)+' },').join("\n")+"\n    ],";
-    data=data.slice(0,before)+block.replace(anchor,line)+data.slice(after);
-    fs.writeFileSync(DATA,data);
-    console.log("Import complete:", saved.length, "original modules plus cover.");
-  } finally {await browser.close();}
-})().catch(e=>{console.error(e);process.exit(1)});
+const files = [
+  {
+    "path": "hamburgueria/01.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/6773e7ca-034f-4b59-87cd-720e482da56a.jpg"
+  },
+  {
+    "path": "hamburgueria/02.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/d7a34e69-f46e-4185-9ee5-c242687f7675.jpg"
+  },
+  {
+    "path": "hamburgueria/03.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/c71cbf7c-4d36-4bdd-9ee6-215271cfd4ae.jpg"
+  },
+  {
+    "path": "hamburgueria/04.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/30ed38be-3b90-4a57-be26-c0e4639838d6.jpg"
+  },
+  {
+    "path": "hamburgueria/05.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/ec2758c1-2752-4ee9-ae09-fd18806074c7.jpg"
+  },
+  {
+    "path": "hamburgueria/10.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/c3d313cb-2827-4725-86fc-73105d88e16f.jpg"
+  },
+  {
+    "path": "hamburgueria/11.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/b9c0cda5-a7e3-43fd-963a-392e1d5c2cba.jpg"
+  },
+  {
+    "path": "hamburgueria/12.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/70c5fb66-2370-45fb-8ab2-3c0be904f963.jpg"
+  },
+  {
+    "path": "hamburgueria/13.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/1aea395e-0979-4617-8d8a-3878d3e16d76.jpg"
+  },
+  {
+    "path": "hamburgueria/14.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/bdaf0e87-107f-47f8-b695-3f50a6e440c1.jpg"
+  },
+  {
+    "path": "monkey-cafe/menu.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/4ec3af6a-90b2-4d3a-9f14-ade40dcbb323.jpg"
+  },
+  {
+    "path": "monkey-cafe/camiseta.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/e6d4c4bb-a72b-4716-b5ca-abce8a5eecc3.jpg"
+  },
+  {
+    "path": "monkey-cafe/caixas.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/3f92f752-ac11-407b-a289-1c32ef52c968.jpg"
+  },
+  {
+    "path": "monkey-cafe/graos.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/765e0e35-f5aa-41a0-a4eb-259df8b31d12.jpg"
+  },
+  {
+    "path": "monkey-cafe/capa.jpg",
+    "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3A5I6Cy7Vi77FSx9aDoV418OWGY/b9c432b5-a908-4fa5-b05a-15472e9c30e9.jpg"
+  }
+];
+const outputDir=path.join(process.cwd(),"jesse-santos/public/projects/owner");
+async function main(){
+  for(const file of files){
+    const res=await fetch(file.url,{headers:{"User-Agent":"JessePortfolioAssetImporter/1.0"}});
+    if(!res.ok())throw new Error("Image "+file.path+" download failed with "+res.status);
+    const type=res.headers.get("content-type")||"";
+    if(!type.startsWith("image/"))throw new Error("Unexpected response content-type "+type);
+    const bytes=Buffer.from(await res.arrayBuffer());
+    if(bytes.length<10000)throw new Error("File too small "+file.path+" "+bytes.length);
+    const dest=path.join(outputDir,file.path);
+    fs.mkdirSync(path.dirname(dest),{recursive:true});
+    fs.writeFileSync(dest,bytes);
+    console.log("SAVED",file.path,bytes.length,type);
+  }
+  console.log("IMPORTED",files.length,"owner-provided original images");
+}
+main().catch(e=>{console.error(e);process.exit(1)});
