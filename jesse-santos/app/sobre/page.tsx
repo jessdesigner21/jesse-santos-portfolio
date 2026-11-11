@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import AboutSection from "@/components/AboutSection";
-import { disciplines } from "@/data/projects";
 
 export const metadata: Metadata = {
   title: "Sobre — Jesse Santos",
@@ -18,16 +17,7 @@ export default function SobrePage() {
         </h1>
       </div>
       <AboutSection />
-      <div className="px-5 md:px-8 mt-8 border-t border-ink/10 pt-12">
-        <p className="editorial-num mb-6">Ferramentas & processo</p>
-        <div className="flex flex-wrap gap-x-10 gap-y-3">
-          {disciplines.map((d) => (
-            <span key={d} className="font-grotesk text-lg">
-              {d}
-            </span>
-          ))}
-        </div>
-      </div>
+
     </div>
   );
 }
