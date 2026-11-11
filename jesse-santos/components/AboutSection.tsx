@@ -6,16 +6,6 @@ import { motion, useReducedMotion } from "framer-motion";
 
 const AUDIO_SRC = "/sobre%20mim%20por%20mim%20.opus";
 
-const skills = [
-  "Design Gráfico",
-  "Identidade Visual",
-  "Direção Visual",
-  "Social Media",
-  "Fotografia",
-  "Apresentações",
-  "Vídeo & Motion",
-  "Edição",
-];
 
 const handwritten = {
   fontFamily: '"hey-eloise", cursive',
@@ -853,69 +843,7 @@ export default function AboutSection() {
           </p>
         </motion.div>
 
-        {/* Competências */}
 
-        <div
-          className="
-            grid gap-8 pt-12
-            md:grid-cols-12 md:pt-16
-          "
-        >
-          <motion.div
-            {...reveal(0)}
-            className="md:col-span-4"
-          >
-            <p
-              className="
-                editorial-num uppercase
-                text-black/50
-              "
-            >
-              O que faço
-            </p>
-
-            <h3
-              className="
-                mt-4 font-serif italic
-                text-3xl md:text-4xl
-                tracking-[-0.04em]
-              "
-            >
-              Ferramentas de expressão.
-            </h3>
-          </motion.div>
-
-          <motion.div
-            {...reveal(0.15)}
-            className="
-              flex flex-wrap content-start
-              gap-2 md:col-span-7
-              md:col-start-6
-            "
-          >
-            {skills.map((skill, index) => (
-              <span
-                key={skill}
-                className={`
-                  inline-flex items-center
-                  border border-black/25
-                  px-4 py-3
-                  font-grotesk text-sm
-                  transition-colors duration-300
-                  hover:bg-[#E9D795]
-                  md:text-base
-                  ${
-                    index === 0
-                      ? "bg-[#E9D795]"
-                      : "bg-transparent"
-                  }
-                `}
-              >
-                {skill}
-              </span>
-            ))}
-          </motion.div>
-        </div>
       </div>
     </section>
   );
