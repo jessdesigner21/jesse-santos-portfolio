@@ -1,0 +1,33 @@
+name: Import originals from own Behance project
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/import-hamburgueria.cjs"
+      - ".github/workflows/import-hamburgueria.yml"
+permissions:
+  contents: write
+jobs:
+  import-assets:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install --no-save --no-package-lock playwright@1.56.1
+      - run: npx playwright install --with-deps chromium
+      - name: Retrieve images owned by Jesse Santos
+        run: node scripts/import-hamburgueria.cjs
+      - name: Commit imported assets only if successful
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add jesse-santos/public/projects/behance/social-media-hamburgueria-* jesse-santos/data/projects.ts
+          git diff --cached --quiet && exit 0
+          git commit -m "Importar peças originais da hamburgueria do Behance"
+          git push
