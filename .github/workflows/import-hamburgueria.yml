@@ -1,4 +1,4 @@
-name: Importar imagens originais do portfólio
+name: Importar imagens originais do portfólio # validar FLOS
 on:
   pull_request:
     branches: [main]
