@@ -520,3 +520,51 @@ body {
     grid-row: auto;
   }
 }
+
+.archive-video-stage {
+  position: relative;
+  background: var(--ink);
+}
+
+.archive-video-cover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: clamp(1rem, 5vw, 3.75rem);
+  background-color: var(--portfolio-yellow);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.archive-video-cover-title {
+  font-family: "hey-eloise", var(--font-serif);
+  font-size: clamp(2.6rem, 8vw, 7.5rem);
+  font-weight: 400;
+  line-height: 0.91;
+}
+
+.archive-video-portrait .archive-video-cover-title {
+  font-size: clamp(2.4rem, 5vw, 5.25rem);
+}
+
+.archive-video-cover-play {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: 2rem;
+  background: var(--ink);
+  padding: 0.45rem 0.8rem;
+  color: var(--off-white);
+  font-size: 0.83rem;
+  transition: transform 200ms ease;
+}
+
+.archive-video-cover:hover .archive-video-cover-play,
+.archive-video-cover:focus-visible .archive-video-cover-play {
+  transform: translateX(0.3rem);
+}

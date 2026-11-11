@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AgroriegoShowcase from "./AgroriegoShowcase";
 import ArchiveCarousel from "./ArchiveCarousel";
+import ArchiveVideo from "./ArchiveVideo";
 
 const media = "/projects/arquivo-vivo";
 
@@ -62,9 +63,9 @@ const printProjects = [
 ];
 
 const videos = [
-  { slug: "petrinovic-hall", title: "Petrínovic", caption: "Vídeo institucional para o hall de entrada.", landscape: true },
-  { slug: "go-marketing", title: "Go Marketing", caption: "Depoimento de cliente para a agência." },
-  { slug: "nueva-identidad", title: "Nueva Identidad", caption: "Vídeo de apresentação de uma nova identidade visual." },
+  { slug: "petrinovic-hall", title: "Petrínovic", category: "Vídeo institucional", caption: "Vídeo institucional para o hall de entrada.", landscape: true },
+  { slug: "go-marketing", title: "Go Marketing", category: "Depoimento", caption: "Depoimento de cliente para a agência." },
+  { slug: "nueva-identidad", title: "Nueva Identidad", category: "Identidade visual", caption: "Vídeo de apresentação de uma nova identidade visual." },
 ];
 
 export const archiveSlug = "grupo-tattersall";
@@ -124,21 +125,9 @@ function Videos() {
   return (
     <section aria-label="Vídeos do Arquivo Vivo">
       <div className="archive-videos">
-        {videos.map(({ slug, title, caption, landscape }) => (
+        {videos.map(({ slug, title, category, caption, landscape }) => (
           <figure key={slug} className={landscape ? "archive-video-lead" : "archive-video-portrait"}>
-            <video
-              controls
-              playsInline
-              preload="none"
-              poster={`${media}/${slug}.jpg`}
-              aria-label={`Vídeo de ${title}`}
-              width={landscape ? 1280 : 720}
-              height={landscape ? 720 : 1280}
-              className={`block w-full ${landscape ? "aspect-video" : "aspect-[9/16]"}`}
-            >
-              <source src={`${media}/${slug}.mp4`} type="video/mp4" />
-              <a href={`${media}/${slug}.mp4`}>Abrir vídeo de {title}</a>
-            </video>
+            <ArchiveVideo title={title} category={category} src={`${media}/${slug}.mp4`} landscape={landscape} />
             <figcaption className="mt-4">
               <h2 className="archive-work-title">{title}</h2>
               <p className="mt-1 text-sm text-[#655b4c]">{caption}</p>
