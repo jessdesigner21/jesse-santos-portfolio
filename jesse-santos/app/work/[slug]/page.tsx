@@ -116,6 +116,49 @@ export default async function ProjectPage({
           </div>
         )}
   
+        {/* Prévia oficial da publicação de Jesse Santos no Behance.
+            Não substitui os originais locais: disponibiliza acesso ao
+            projeto completo enquanto as artes não estiverem no repositório. */}
+        {isBurgerCase && project.behanceUrl && (
+          <section
+            aria-labelledby="hamburgueria-projeto-completo"
+            className="mx-auto mt-10 max-w-[680px] px-5 md:mt-14 md:px-8"
+          >
+            <div className="mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-black/15 pb-4">
+              <div>
+                <p className="editorial-num text-[#756D62]">Projeto original / Behance</p>
+                <h2
+                  id="hamburgueria-projeto-completo"
+                  className="mt-2 font-serif text-2xl italic md:text-3xl"
+                >
+                  Todas as peças, na fonte.
+                </h2>
+              </div>
+              <a
+                href={project.behanceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="marker-underline inline-flex min-h-11 items-center text-sm"
+              >
+                Abrir projeto completo ↗
+              </a>
+            </div>
+            <div className="relative aspect-[4/3] overflow-hidden bg-[#F7F4EB]">
+              <iframe
+                title="Prévia oficial do projeto Social Media — Hamburgueria de Jesse Santos no Behance"
+                src="https://www.behance.net/embed/project/204358135?ilo0=1"
+                loading="lazy"
+                className="absolute inset-0 h-full w-full border-0"
+                allowFullScreen
+              />
+            </div>
+            <p className="mt-3 text-sm leading-relaxed text-[#756D62]">
+              Prévia oficial do Behance. Para explorar todas as artes em resolução original,
+              abra a apresentação completa.
+            </p>
+          </section>
+        )}
+
         <div className="px-5 md:px-8 mt-8 md:mt-16 grid md:grid-cols-12 gap-4">
           <p className="md:col-span-6 md:col-start-4 text-lg md:text-xl leading-relaxed">
             {project.description}
