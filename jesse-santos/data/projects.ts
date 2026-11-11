@@ -244,20 +244,7 @@ export const projects: Project[] = [
       { src: "/projects/owner/hamburgueria/13.jpg", alt: "Depoimento ilustrado sobre a hamburgueria" },
       { src: "/projects/owner/hamburgueria/14.jpg", alt: "Batatas fritas e ilustração sorridente" },
     ],
-    images: [
-      { src: "/projects/behance/social-media-hamburgueria-capa.webp", alt: "Onion Rings — capa da identidade visual da hamburgueria" },
-      { src: "/projects/behance/social-media-hamburgueria-01.webp", alt: "Peça 1 da identidade visual Social Media — Hamburgueria" },
-      { src: "/projects/behance/social-media-hamburgueria-02.webp", alt: "Peça 2 da identidade visual Social Media — Hamburgueria" },
-      { src: "/projects/behance/social-media-hamburgueria-03.webp", alt: "Peça 3 da identidade visual Social Media — Hamburgueria" },
-      { src: "/projects/behance/social-media-hamburgueria-04.webp", alt: "Peça 4 da identidade visual Social Media — Hamburgueria" },
-      { src: "/projects/behance/social-media-hamburgueria-05.webp", alt: "Peça 5 da identidade visual Social Media — Hamburgueria" },
-      { src: "/projects/behance/social-media-hamburgueria-06.webp", alt: "Peça 6 da identidade visual Social Media — Hamburgueria" },
-      { src: "/projects/behance/social-media-hamburgueria-07.webp", alt: "Peça 7 da identidade visual Social Media — Hamburgueria" },
-      { src: "/projects/behance/social-media-hamburgueria-08.webp", alt: "Peça 8 da identidade visual Social Media — Hamburgueria" },
-      { src: "/projects/behance/social-media-hamburgueria-09.webp", alt: "Peça 9 da identidade visual Social Media — Hamburgueria" },
-      { src: "/projects/behance/social-media-hamburgueria-10.webp", alt: "Peça 10 da identidade visual Social Media — Hamburgueria" },
-      { src: "/projects/behance/social-media-hamburgueria-11.webp", alt: "Peça 11 da identidade visual Social Media — Hamburgueria" },
-    ],
+
 
   },
 
