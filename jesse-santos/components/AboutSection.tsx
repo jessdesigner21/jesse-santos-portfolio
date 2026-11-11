@@ -23,16 +23,127 @@ const handwritten = {
   fontStyle: "normal" as const,
 };
 
-const bars = Array.from({ length: 44 }, (_, i) =>
-  12 + Math.abs(Math.sin(i * 1.71) * Math.cos(i * 0.43)) * 78
+const bars = Array.from(
+  { length: 44 },
+  (_, i) =>
+    12 +
+    Math.abs(Math.sin(i * 1.71) * Math.cos(i * 0.43)) * 78
 );
 
 function formatTime(seconds: number) {
   if (!Number.isFinite(seconds)) return "0:00";
+
   const minutes = Math.floor(seconds / 60);
   const secs = Math.floor(seconds % 60);
+
   return `${minutes}:${String(secs).padStart(2, "0")}`;
 }
+
+/* ==============================================
+   MOLDURA ORGÂNICA DESENHADA À MÃO
+============================================== */
+
+function HandDrawnFrame() {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 720 520"
+      preserveAspectRatio="none"
+      className="
+        pointer-events-none
+        absolute inset-0
+        h-full w-full
+        overflow-visible
+      "
+    >
+      {/* Papel com bordas irregulares */}
+
+      <path
+        d="
+          M24 19
+          C125 8 229 23 355 15
+          S596 11 692 23
+          C706 91 690 165 699 260
+          S708 424 690 495
+          C576 508 460 490 355 502
+          S130 509 24 495
+          C13 407 28 320 18 253
+          S17 89 24 19
+          Z
+        "
+        fill="#EDE5D4"
+      />
+
+      {/* Primeiro traço desenhado à mão */}
+
+      <motion.path
+        d="
+          M24 19
+          C125 8 229 23 355 15
+          S596 11 692 23
+          C706 91 690 165 699 260
+          S708 424 690 495
+          C576 508 460 490 355 502
+          S130 509 24 495
+          C13 407 28 320 18 253
+          S17 89 24 19
+          Z
+        "
+        fill="none"
+        stroke="#A88735"
+        strokeWidth="2.3"
+        vectorEffect="non-scaling-stroke"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        initial={
+          reduceMotion ? false : { pathLength: 0 }
+        }
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true }}
+        transition={{
+          duration: 1.6,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Segundo traço irregular, como caneta */}
+
+      <motion.path
+        d="
+          M32 13
+          C142 5 251 17 370 10
+          M701 48
+          C710 121 702 180 705 238
+          M670 501
+          C551 512 439 499 320 508
+          M17 460
+          C10 372 24 307 12 215
+        "
+        fill="none"
+        stroke="#B89B63"
+        strokeWidth="1.3"
+        opacity="0.65"
+        vectorEffect="non-scaling-stroke"
+        strokeLinecap="round"
+        initial={
+          reduceMotion ? false : { pathLength: 0 }
+        }
+        whileInView={{ pathLength: 1 }}
+        viewport={{ once: true }}
+        transition={{
+          delay: 0.45,
+          duration: 1.3,
+        }}
+      />
+    </svg>
+  );
+}
+
+/* ==============================================
+   PLAYER DE ÁUDIO AUTORAL
+============================================== */
 
 function AudioStory() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -63,8 +174,8 @@ function AudioStory() {
 
   function seek(value: number) {
     const audio = audioRef.current;
-    if (!audio || !Number.isFinite(duration) || duration <= 0)
-      return;
+
+    if (!audio || duration <= 0) return;
 
     audio.currentTime = value;
     setCurrentTime(value);
@@ -93,12 +204,17 @@ function AudioStory() {
         }
         onLoadedMetadata={(event) => {
           const value = event.currentTarget.duration;
-          setDuration(Number.isFinite(value) ? value : 0);
+
+          setDuration(
+            Number.isFinite(value) ? value : 0
+          );
         }}
         onError={() => setError(true)}
       />
 
       <div className="grid gap-10 md:grid-cols-12">
+
+        {/* Texto à esquerda */}
 
         <div className="md:col-span-5">
           <p className="editorial-num uppercase text-black/50">
@@ -117,6 +233,7 @@ function AudioStory() {
             <br />
             precisam ser
             <br />
+
             <span
               style={handwritten}
               className="text-[#A88735]"
@@ -137,190 +254,296 @@ function AudioStory() {
           </p>
         </div>
 
+        {/* NOVO PLAYER DESENHADO À MÃO */}
+
         <div className="md:col-span-6 md:col-start-7">
-          <div
+
+          <motion.div
+            initial={
+              reduceMotion
+                ? false
+                : { opacity: 0, y: 25, rotate: -0.7 }
+            }
+            whileInView={{
+              opacity: 1,
+              y: 0,
+              rotate: -0.7,
+            }}
+            whileHover={
+              reduceMotion
+                ? undefined
+                : { rotate: 0, y: -4 }
+            }
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.8,
+              ease: [0.16, 1, 0.3, 1],
+            }}
             className="
-              relative bg-[#EDE5D4]
-              border border-[#D8CCB8]
-              p-6 md:p-9
+              relative isolate
+              p-8 md:p-11
+              transition-[filter]
+              duration-500
+              hover:drop-shadow-[0_14px_20px_rgba(90,70,30,0.08)]
             "
           >
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="editorial-num uppercase text-black/45">
-                  Gravação pessoal / 2026
-                </p>
+            <HandDrawnFrame />
 
-                <p
-                  className="
-                    mt-3 font-grotesk
-                    text-xl font-medium
-                    tracking-[-0.035em]
-                    md:text-2xl
-                  "
-                >
-                  Sobre mim, por mim.
-                </p>
-              </div>
+            <div className="relative z-10">
 
-              <motion.span
-                aria-hidden="true"
-                style={handwritten}
-                className="text-4xl text-[#A88735]"
-                animate={
-                  playing && !reduceMotion
-                    ? { rotate: [-5, 8, -5] }
-                    : { rotate: -5 }
-                }
-                transition={{
-                  duration: 2.5,
-                  repeat: playing && !reduceMotion ? Infinity : 0,
-                  ease: "easeInOut",
-                }}
-              >
-                *
-              </motion.span>
-            </div>
+              {/* Cabeçalho */}
 
-            {/* Ondas visuais que se animam durante o áudio */}
-
-            <div
-              aria-hidden="true"
-              className="
-                mt-10 flex h-28
-                items-center justify-between
-                gap-[2px] overflow-hidden
-              "
-            >
-              {bars.map((height, index) => (
-                <motion.span
-                  key={index}
-                  className="
-                    block min-w-0 flex-1
-                    rounded-full bg-[#A88735]
-                  "
-                  style={{
-                    height: `${height}%`,
-                    transformOrigin: "center",
-                  }}
-                  animate={
-                    playing && !reduceMotion
-                      ? { scaleY: [0.55, 1.12, 0.7, 1] }
-                      : { scaleY: 1 }
-                  }
-                  transition={{
-                    duration: 0.65 + (index % 6) * 0.14,
-                    repeat:
-                      playing && !reduceMotion ? Infinity : 0,
-                    ease: "easeInOut",
-                    delay: (index % 7) * 0.06,
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Controles */}
-
-            <div className="mt-8 flex items-center gap-5">
-              <button
-                type="button"
-                onClick={toggleAudio}
-                disabled={error}
-                aria-label={playing ? "Pausar áudio" : "Reproduzir áudio"}
-                aria-pressed={playing}
+              <div
                 className="
-                  flex h-14 w-14 shrink-0
-                  items-center justify-center
-                  rounded-full
-                  bg-[#A88735] text-white
-                  transition-transform duration-300
-                  hover:scale-105
-                  focus-visible:outline
-                  focus-visible:outline-2
-                  focus-visible:outline-offset-4
-                  focus-visible:outline-[#A88735]
-                  disabled:cursor-not-allowed
-                  disabled:opacity-50
+                  flex items-start
+                  justify-between gap-4
                 "
               >
-                {playing ? (
-                  <svg
-                    width="19"
-                    height="22"
-                    viewBox="0 0 19 22"
-                    fill="currentColor"
-                    aria-hidden="true"
+                <div>
+                  <p
+                    className="
+                      editorial-num uppercase
+                      text-black/45
+                    "
                   >
-                    <rect x="2" y="2" width="5" height="18" />
-                    <rect x="12" y="2" width="5" height="18" />
-                  </svg>
-                ) : (
-                  <svg
-                    width="21"
-                    height="22"
-                    viewBox="0 0 21 22"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M3 1.5 L20 11 L3 20.5 Z" />
-                  </svg>
-                )}
-              </button>
+                    Gravação pessoal / 2026
+                  </p>
 
-              <div className="min-w-0 flex-1">
-                <div className="flex justify-between gap-3">
-                  <span className="editorial-num uppercase">
-                    {playing ? "Reproduzindo" : "Ouvir relato"}
-                  </span>
-                  <span className="editorial-num">
-                    {formatTime(currentTime)} / {formatTime(duration)}
-                  </span>
+                  <p
+                    className="
+                      mt-3 font-grotesk
+                      text-xl font-medium
+                      tracking-[-0.035em]
+                      md:text-2xl
+                    "
+                  >
+                    Sobre mim, por mim.
+                  </p>
                 </div>
 
-                <input
-                  type="range"
-                  min={0}
-                  max={duration > 0 ? duration : 1}
-                  step={0.1}
-                  value={Math.min(currentTime, duration || 1)}
-                  disabled={!duration || error}
-                  onChange={(event) =>
-                    seek(Number(event.target.value))
+                <motion.span
+                  aria-hidden="true"
+                  style={handwritten}
+                  className="text-4xl text-[#A88735]"
+                  animate={
+                    playing && !reduceMotion
+                      ? { rotate: [-5, 8, -5] }
+                      : { rotate: -5 }
                   }
-                  aria-label="Posição da gravação"
-                  className="mt-3 w-full cursor-pointer"
-                  style={{ accentColor: "#A88735" }}
-                />
+                  transition={{
+                    duration: 2.5,
+                    repeat:
+                      playing && !reduceMotion
+                        ? Infinity
+                        : 0,
+                    ease: "easeInOut",
+                  }}
+                >
+                  *
+                </motion.span>
+              </div>
+
+              {/* Ondas sonoras */}
+
+              <div
+                aria-hidden="true"
+                className="
+                  mt-10 flex h-28
+                  items-center justify-between
+                  gap-[2px] overflow-hidden
+                "
+              >
+                {bars.map((height, index) => (
+                  <motion.span
+                    key={index}
+                    className="
+                      block min-w-0 flex-1
+                      rounded-full bg-[#A88735]
+                    "
+                    style={{
+                      height: `${height}%`,
+                      transformOrigin: "center",
+                    }}
+                    animate={
+                      playing && !reduceMotion
+                        ? {
+                            scaleY: [
+                              0.55,
+                              1.12,
+                              0.7,
+                              1,
+                            ],
+                          }
+                        : { scaleY: 1 }
+                    }
+                    transition={{
+                      duration:
+                        0.65 + (index % 6) * 0.14,
+                      repeat:
+                        playing && !reduceMotion
+                          ? Infinity
+                          : 0,
+                      ease: "easeInOut",
+                      delay: (index % 7) * 0.06,
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Controles de reprodução */}
+
+              <div className="mt-8 flex items-center gap-5">
+                <button
+                  type="button"
+                  onClick={toggleAudio}
+                  disabled={error}
+                  aria-label={
+                    playing
+                      ? "Pausar áudio"
+                      : "Reproduzir áudio"
+                  }
+                  aria-pressed={playing}
+                  className="
+                    flex h-14 w-14 shrink-0
+                    items-center justify-center
+                    rounded-full
+                    bg-[#A88735] text-white
+                    transition-transform duration-300
+                    hover:scale-105
+                    focus-visible:outline
+                    focus-visible:outline-2
+                    focus-visible:outline-offset-4
+                    focus-visible:outline-[#A88735]
+                    disabled:cursor-not-allowed
+                    disabled:opacity-50
+                  "
+                >
+                  {playing ? (
+                    <svg
+                      width="19"
+                      height="22"
+                      viewBox="0 0 19 22"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <rect
+                        x="2"
+                        y="2"
+                        width="5"
+                        height="18"
+                      />
+                      <rect
+                        x="12"
+                        y="2"
+                        width="5"
+                        height="18"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      width="21"
+                      height="22"
+                      viewBox="0 0 21 22"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path d="M3 1.5 L20 11 L3 20.5 Z" />
+                    </svg>
+                  )}
+                </button>
+
+                <div className="min-w-0 flex-1">
+                  <div
+                    className="
+                      flex justify-between gap-3
+                    "
+                  >
+                    <span className="editorial-num uppercase">
+                      {playing
+                        ? "Reproduzindo"
+                        : "Ouvir relato"}
+                    </span>
+
+                    <span className="editorial-num">
+                      {formatTime(currentTime)} /{" "}
+                      {formatTime(duration)}
+                    </span>
+                  </div>
+
+                  <input
+                    type="range"
+                    min={0}
+                    max={duration > 0 ? duration : 1}
+                    step={0.1}
+                    value={Math.min(
+                      currentTime,
+                      duration || 1
+                    )}
+                    disabled={!duration || error}
+                    onChange={(event) =>
+                      seek(Number(event.target.value))
+                    }
+                    aria-label="Posição da gravação"
+                    className="
+                      mt-3 w-full cursor-pointer
+                    "
+                    style={{
+                      accentColor: "#A88735",
+                    }}
+                  />
+                </div>
+              </div>
+
+              {error && (
+                <p
+                  role="alert"
+                  className="
+                    mt-4 text-sm text-[#8B3E37]
+                  "
+                >
+                  Não foi possível reproduzir este formato
+                  de áudio neste navegador.
+                </p>
+              )}
+
+              {/* Rodapé do player */}
+
+              <div
+                className="
+                  mt-8 flex justify-between
+                  gap-4
+                  border-t border-black/15 pt-4
+                "
+              >
+                <span
+                  className="
+                    editorial-num uppercase
+                    text-black/45
+                  "
+                >
+                  Sem filtros. Sem pressa.
+                </span>
+
+                <span
+                  className="
+                    editorial-num uppercase
+                    text-black/45
+                  "
+                >
+                  Uma vida com textura
+                </span>
               </div>
             </div>
-
-            {error && (
-              <p role="alert" className="mt-4 text-sm text-[#8B3E37]">
-                Não foi possível reproduzir este formato de áudio
-                neste navegador.
-              </p>
-            )}
-
-            <div
-              className="
-                mt-8 flex justify-between
-                gap-4 border-t border-black/15 pt-4
-              "
-            >
-              <span className="editorial-num uppercase text-black/45">
-                Sem filtros. Sem pressa.
-              </span>
-
-              <span className="editorial-num uppercase text-black/45">
-                Uma vida com textura
-              </span>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
   );
 }
+
+/* ==============================================
+   SEÇÃO SOBRE MIM
+============================================== */
 
 export default function AboutSection() {
   const reduceMotion = useReducedMotion();
@@ -349,9 +572,13 @@ export default function AboutSection() {
       "
     >
       {/* Textura de papel */}
+
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-20"
+        className="
+          pointer-events-none
+          absolute inset-0 opacity-20
+        "
         style={{
           backgroundImage:
             "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(92,78,59,0.045) 4px)",
@@ -360,7 +587,7 @@ export default function AboutSection() {
 
       <div className="relative mx-auto max-w-[1440px]">
 
-        {/* Identificação */}
+        {/* Identificação da seção */}
 
         <div
           className="
@@ -392,7 +619,11 @@ export default function AboutSection() {
             initial={
               reduceMotion
                 ? false
-                : { opacity: 0, rotate: -25, scale: 0.7 }
+                : {
+                    opacity: 0,
+                    rotate: -25,
+                    scale: 0.7,
+                  }
             }
             whileInView={{
               opacity: 1,
@@ -400,7 +631,10 @@ export default function AboutSection() {
               scale: 1,
             }}
             viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            transition={{
+              duration: 1.2,
+              ease: "easeOut",
+            }}
           >
             <path
               d="M60 8 L61 111 M10 59 L111 62 M25 24 L97 99 M98 20 L22 99"
@@ -417,7 +651,8 @@ export default function AboutSection() {
                 relative max-w-[1150px]
                 font-grotesk font-bold
                 text-[clamp(3rem,6.5vw,7.6rem)]
-                leading-[0.98] tracking-[-0.065em]
+                leading-[0.98]
+                tracking-[-0.065em]
               "
             >
               <span className="block">
@@ -426,14 +661,17 @@ export default function AboutSection() {
 
               <span className="block mt-3 md:mt-5">
                 ser{" "}
+
                 <span
                   className="
                     relative inline-block
-                    text-[#A88735] tracking-normal
+                    text-[#A88735]
+                    tracking-normal
                   "
                   style={handwritten}
                 >
                   liso
+
                   <motion.svg
                     aria-hidden="true"
                     viewBox="0 0 270 35"
@@ -457,7 +695,10 @@ export default function AboutSection() {
                       }
                       whileInView={{ pathLength: 1 }}
                       viewport={{ once: true }}
-                      transition={{ delay: 0.5, duration: 1.1 }}
+                      transition={{
+                        delay: 0.5,
+                        duration: 1.1,
+                      }}
                     />
                   </motion.svg>
                 </span>
@@ -469,7 +710,9 @@ export default function AboutSection() {
 
               <span className="block mt-3 md:mt-5">
                 sentido
-                <span className="text-[#B795C5]">.</span>
+                <span className="text-[#B795C5]">
+                  .
+                </span>
               </span>
             </h2>
           </motion.div>
@@ -479,7 +722,8 @@ export default function AboutSection() {
             className="
               mt-10 max-w-xs
               font-serif italic text-lg
-              md:ml-auto md:mr-[9%] md:text-2xl
+              md:ml-auto md:mr-[9%]
+              md:text-2xl
               text-[#74665B]
             "
           >
@@ -501,7 +745,12 @@ export default function AboutSection() {
             {...reveal(0)}
             className="md:col-span-4"
           >
-            <p className="editorial-num mb-5 uppercase text-black/50">
+            <p
+              className="
+                editorial-num mb-5
+                uppercase text-black/50
+              "
+            >
               Um pouco sobre meu olhar
             </p>
 
@@ -509,7 +758,8 @@ export default function AboutSection() {
               className="
                 max-w-sm font-serif italic
                 text-3xl leading-[1.12]
-                tracking-[-0.04em] md:text-5xl
+                tracking-[-0.04em]
+                md:text-5xl
               "
             >
               Entre o que vivo e o que crio.
@@ -525,8 +775,10 @@ export default function AboutSection() {
           >
             <p
               className="
-                font-grotesk text-xl leading-[1.6]
-                md:text-[1.65rem] md:leading-[1.5]
+                font-grotesk text-xl
+                leading-[1.6]
+                md:text-[1.65rem]
+                md:leading-[1.5]
               "
             >
               Entre experiências, referências, erros e
@@ -560,7 +812,8 @@ export default function AboutSection() {
           </motion.div>
         </div>
 
-        {/* Seu relato em áudio */}
+        {/* Áudio com moldura artesanal */}
+
         <AudioStory />
 
         {/* Palavra gráfica */}
@@ -580,7 +833,8 @@ export default function AboutSection() {
               select-none whitespace-nowrap
               text-center
               text-[clamp(3.5rem,13vw,13rem)]
-              leading-[1.1] tracking-[-0.04em]
+              leading-[1.1]
+              tracking-[-0.04em]
               text-[#C9A84A]
             "
           >
@@ -611,7 +865,12 @@ export default function AboutSection() {
             {...reveal(0)}
             className="md:col-span-4"
           >
-            <p className="editorial-num uppercase text-black/50">
+            <p
+              className="
+                editorial-num uppercase
+                text-black/50
+              "
+            >
               O que faço
             </p>
 
@@ -629,8 +888,9 @@ export default function AboutSection() {
           <motion.div
             {...reveal(0.15)}
             className="
-              flex flex-wrap content-start gap-2
-              md:col-span-7 md:col-start-6
+              flex flex-wrap content-start
+              gap-2 md:col-span-7
+              md:col-start-6
             "
           >
             {skills.map((skill, index) => (
