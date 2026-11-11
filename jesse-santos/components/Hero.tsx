@@ -14,6 +14,14 @@ import {
 const COVER_IMAGE =
   "/Sem%20Ti%CC%81tulo-1Prancheta%201.jpg";
 
+// Assinatura visual da capa
+const SIGNATURE_STYLE = {
+  fontFamily: '"hey-eloise", cursive',
+  fontStyle: "normal" as const,
+  fontWeight: 400,
+  color: "#A88735",
+};
+
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
@@ -157,7 +165,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Linha inferior mais baixa */}
+          {/* Linha inferior */}
 
           <div
             className="
@@ -183,6 +191,8 @@ export default function Hero() {
               ↓ Explorar trabalhos
             </Link>
 
+            {/* ASSINATURA HEY ELOISE */}
+
             <motion.p
               initial={
                 reduceMotion
@@ -195,11 +205,13 @@ export default function Hero() {
                 duration: 1,
                 ease: [0.16, 1, 0.3, 1],
               }}
+              style={SIGNATURE_STYLE}
               className="
-                font-serif italic
+                max-w-[58%]
+                text-right
                 text-[clamp(1.7rem,2.8vw,3.5rem)]
-                leading-none
-                tracking-[-0.04em]
+                leading-[1.05]
+                tracking-normal
               "
             >
               uma vida com textura.
@@ -303,7 +315,7 @@ export default function Hero() {
           </span>
         </motion.h1>
 
-        {/* Assinatura */}
+        {/* ASSINATURA MOBILE HEY ELOISE */}
 
         <motion.p
           initial={
@@ -316,11 +328,12 @@ export default function Hero() {
             delay: 0.4,
             duration: 0.9,
           }}
+          style={SIGNATURE_STYLE}
           className="
             mt-6
-            font-serif italic
             text-[clamp(1.8rem,8vw,3rem)]
-            leading-tight
+            leading-[1.15]
+            tracking-normal
           "
         >
           uma vida com textura.
