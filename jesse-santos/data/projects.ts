@@ -232,7 +232,73 @@ export const projects: Project[] = [
     cover: "/projects/behance/social-media-hamburgueria-capa.webp",
     coverRatio: "800 / 626",
     behanceUrl: "https://www.behance.net/gallery/204358135/SOCIAL-MEDIA-HAMBURGUERIA",
+    images: [
+      { src: "/projects/owner/hamburgueria/01.jpg", alt: "Hambúrguer trufado e personagens ilustrados" },
+      { src: "/projects/owner/hamburgueria/02.jpg", alt: "Onion rings e lettering amarelo sobre verde" },
+      { src: "/projects/owner/hamburgueria/03.jpg", alt: "Monte seu lanche — composição tipográfica" },
+      { src: "/projects/owner/hamburgueria/04.jpg", alt: "Pedido chegou — campanha de delivery" },
+      { src: "/projects/owner/hamburgueria/05.jpg", alt: "Porção de batatas e molhos" },
+      { src: "/projects/owner/hamburgueria/10.jpg", alt: "Cardápio dos queridinhos da galera" },
+      { src: "/projects/owner/hamburgueria/11.jpg", alt: "Hamburgão em cartaz vertical" },
+      { src: "/projects/owner/hamburgueria/12.jpg", alt: "Jogo da velha com produtos do delivery" },
+      { src: "/projects/owner/hamburgueria/13.jpg", alt: "Depoimento ilustrado sobre a hamburgueria" },
+      { src: "/projects/owner/hamburgueria/14.jpg", alt: "Batatas fritas e ilustração sorridente" },
+    ],
 
+
+  },
+
+  /* =========================================================
+     FLOS — EMBALAGENS E IDENTIDADE DE SABORES
+  ========================================================= */
+  {
+    title: "FLOS — Embalagens",
+    slug: "flos-embalagens",
+    client: "FLOS",
+    discipline: ["Identidade Visual", "Design Gráfico", "Direção Visual"],
+    role: "Design de embalagens, identidade e mockups",
+    description:
+      "Uma coleção de latas que transforma sabores em um sistema visual. Menta, mirtilo, laranja, morango e abacaxi ganham cores próprias, imagens de frutas e tipografia vertical, enquanto o desenho das embalagens mantém toda a linha conectada.",
+    challenge:
+      "Dar personalidade a cada sabor sem perder a unidade da marca — um encontro entre cor, produto e comunicação.",
+    cover: "/projects/owner/flos/capa.jpg",
+    coverRatio: "16/9",
+    images: [
+      { src: "/projects/owner/flos/menta-card.jpg", alt: "FLOS — embalagem verde de menta" },
+      { src: "/projects/owner/flos/mirtilo-card.jpg", alt: "FLOS — embalagem azul de mirtilo" },
+      { src: "/projects/owner/flos/laranja-card.jpg", alt: "FLOS — embalagem laranja" },
+      { src: "/projects/owner/flos/morango-card.jpg", alt: "FLOS — embalagem rosa de morango" },
+      { src: "/projects/owner/flos/abacaxi-card.jpg", alt: "FLOS — embalagem clara de abacaxi" },
+    ],
+    accentColor: "#9AC6A5",
+    layout: "gallery",
+    coverTreatment: "grotesk",
+  },
+
+  /* =========================================================
+     MONKEY CAFÉ — IDENTIDADE E APLICAÇÕES
+  ========================================================= */
+  {
+    title: "Monkey Café",
+    slug: "monkey-cafe",
+    client: "Monkey Café",
+    discipline: ["Identidade Visual", "Design Gráfico", "Direção Visual"],
+    role: "Identidade visual, direção de arte e embalagens",
+    description:
+      "Uma marca de café com personalidade e humor. A identidade combina tipografia expressiva, ilustrações de macacos e uma paleta de amarelo, azul profundo e preto, aplicada em cardápios, embalagens e vestuário.",
+    challenge:
+      "Criar um universo gráfico reconhecível que conecte o ritual do café a uma experiência leve, afetiva e cheia de caráter.",
+    cover: "/projects/owner/monkey-cafe/capa.jpg",
+    coverRatio: "16/9",
+    images: [
+      { src: "/projects/owner/monkey-cafe/menu.jpg", alt: "Cardápio Monkey Café em moldura, apoiado na bancada de madeira" },
+      { src: "/projects/owner/monkey-cafe/camiseta.jpg", alt: "Camiseta branca com ilustrações e identidade Monkey Café" },
+      { src: "/projects/owner/monkey-cafe/caixas.jpg", alt: "Embalagens e sacolas personalizadas Monkey Café" },
+      { src: "/projects/owner/monkey-cafe/graos.jpg", alt: "Pacotes de café com ilustração da marca sobre fundo amarelo" },
+    ],
+    accentColor: "#F0D310",
+    layout: "gallery",
+    coverTreatment: "grotesk",
   },
 
   /* =========================================================
@@ -559,7 +625,7 @@ export const selectedProjects = selectedSlugs.flatMap((slug) => {
   return project ? [project] : [];
 });
 
-export const additionalProjects = projects.filter((project) => project.cover && project.behanceUrl && !selectedSlugs.includes(project.slug));
+export const additionalProjects = projects.filter((project) => project.cover && !selectedSlugs.includes(project.slug));
 export const publishedProjects = [...selectedProjects, ...additionalProjects];
 
 /* =========================================================

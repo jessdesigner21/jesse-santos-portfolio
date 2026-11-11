@@ -23,10 +23,12 @@ export default function ProjectGallery({
   images,
   presentation = false,
   compactPresentation = false,
+  mosaic = false,
 }: {
   images: MediaItem[];
   presentation?: boolean;
   compactPresentation?: boolean;
+  mosaic?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
 
@@ -56,6 +58,45 @@ export default function ProjectGallery({
               />
             </a>
           ))}
+        </div>
+      </section>
+    );
+  }
+
+  if (mosaic) {
+    return (
+      <section aria-label="Coleção de artes do projeto" className="mt-12 px-5 md:mt-20 md:px-8">
+        <div className="mx-auto max-w-[980px]">
+          <div className="mb-7 flex items-end justify-between gap-4 border-b border-black/20 pb-4">
+            <p className="editorial-num text-[#756D62]">Identidade em aplicações / peças originais</p>
+            <span className="editorial-num text-[#756D62]">{String(images.length).padStart(2, "0")} artes</span>
+          </div>
+          <div className="grid grid-cols-1 items-start gap-x-5 gap-y-10 sm:grid-cols-2 md:gap-y-12">
+            {images.map((item, index) => (
+              <figure key={item.src + index} className="min-w-0">
+                <a
+                  href={item.src}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group block overflow-hidden bg-[#F3EEE3] p-2 md:p-3"
+                  aria-label={`Abrir arte ${index + 1} em resolução original: ${item.alt}`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.015]"
+                  />
+                </a>
+                <figcaption className="mt-2 flex justify-between gap-3 editorial-num text-[#756D62]">
+                  <span>{item.alt}</span>
+                  <span className="shrink-0">{String(index + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </section>
     );

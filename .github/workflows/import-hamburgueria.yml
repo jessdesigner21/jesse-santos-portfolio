@@ -1,0 +1,40 @@
+name: Importar imagens originais do portfólio # validar FLOS
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/import-hamburgueria.cjs"
+      - ".github/workflows/import-hamburgueria.yml"
+permissions:
+  contents: write
+jobs:
+  import-assets:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Importar arquivos originais enviados pelo criador
+        run: node scripts/import-hamburgueria.cjs
+      - name: Gerar apresentações das latas FLOS
+        run: |
+          python3 -m pip install --break-system-packages pillow
+          python3 scripts/generate-flos-gallery.py
+      - name: Verificar build Next.js
+        working-directory: jesse-santos
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+      - name: Commit de imagens
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add jesse-santos/public/projects/owner/
+          git diff --cached --quiet && exit 0
+          git commit -m "Adicionar artes originais de hamburgueria e Monkey Café"
+          git push

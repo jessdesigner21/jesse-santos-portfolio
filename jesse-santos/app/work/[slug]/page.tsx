@@ -42,7 +42,9 @@ export default async function ProjectPage({
   const isPride = project.slug === "falas-de-orgulho";
   const isArchive = project.slug === archiveSlug;
   const isBurgerCase = project.slug === "social-media-hamburgueria";
-  const isContinuousCase = Boolean(project.images?.length) && (Boolean(project.behanceUrl) || project.layout === "presentation");
+  const isMonkeyCase = project.slug === "monkey-cafe";
+  const isFlosCase = project.slug === "flos-embalagens";
+  const isContinuousCase = !isBurgerCase && Boolean(project.images?.length) && (Boolean(project.behanceUrl) || project.layout === "presentation");
 
   return (
     <article className={`pt-24 md:pt-36 pb-16 md:pb-24 ${isArchive ? "paper-surface bg-[#F7F4EB]" : ""}`}>
@@ -102,6 +104,19 @@ export default async function ProjectPage({
                   className="object-contain"
                 />
               </div>
+            ) : (isMonkeyCase || isFlosCase) && project.cover ? (
+              <div className="mx-auto max-w-[1040px] px-5 md:px-8">
+                <div className="relative overflow-hidden bg-[#211B17]" style={{ aspectRatio: "16/9" }}>
+                  <Image
+                    src={project.cover}
+                    alt={`Capa do projeto ${project.title}`}
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 1040px"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
             ) : project.behanceUrl && project.cover ? (
               <div className={`relative mx-auto ${isBurgerCase ? "max-w-[620px]" : "max-w-4xl"}`} style={{ aspectRatio: project.coverRatio }}>
                 <Image src={project.cover} alt={project.title} fill sizes={isBurgerCase ? "(max-width: 768px) 90vw, 620px" : "(max-width: 768px) 90vw, 896px"} className="object-contain" />
@@ -116,48 +131,6 @@ export default async function ProjectPage({
           </div>
         )}
   
-        {/* Prévia oficial da publicação de Jesse Santos no Behance.
-            Não substitui os originais locais: disponibiliza acesso ao
-            projeto completo enquanto as artes não estiverem no repositório. */}
-        {isBurgerCase && project.behanceUrl && (
-          <section
-            aria-labelledby="hamburgueria-projeto-completo"
-            className="mx-auto mt-10 max-w-[680px] px-5 md:mt-14 md:px-8"
-          >
-            <div className="mb-5 flex flex-wrap items-end justify-between gap-3 border-b border-black/15 pb-4">
-              <div>
-                <p className="editorial-num text-[#756D62]">Projeto original / Behance</p>
-                <h2
-                  id="hamburgueria-projeto-completo"
-                  className="mt-2 font-serif text-2xl italic md:text-3xl"
-                >
-                  Todas as peças, na fonte.
-                </h2>
-              </div>
-              <a
-                href={project.behanceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="marker-underline inline-flex min-h-11 items-center text-sm"
-              >
-                Abrir projeto completo ↗
-              </a>
-            </div>
-            <div className="relative aspect-[4/3] overflow-hidden bg-[#F7F4EB]">
-              <iframe
-                title="Prévia oficial do projeto Social Media — Hamburgueria de Jesse Santos no Behance"
-                src="https://www.behance.net/embed/project/204358135?ilo0=1"
-                loading="lazy"
-                className="absolute inset-0 h-full w-full border-0"
-                allowFullScreen
-              />
-            </div>
-            <p className="mt-3 text-sm leading-relaxed text-[#756D62]">
-              Prévia oficial do Behance. Para explorar todas as artes em resolução original,
-              abra a apresentação completa.
-            </p>
-          </section>
-        )}
 
         <div className="px-5 md:px-8 mt-8 md:mt-16 grid md:grid-cols-12 gap-4">
           <p className="md:col-span-6 md:col-start-4 text-lg md:text-xl leading-relaxed">
@@ -173,11 +146,12 @@ export default async function ProjectPage({
             images={project.images}
             presentation={isContinuousCase}
             compactPresentation={Boolean(project.behanceUrl)}
+            mosaic={isBurgerCase || isMonkeyCase || isFlosCase}
           />
         )}
 
         {/* O link externo aparece depois da leitura completa das pranchas. */}
-        {project.behanceUrl && (
+        {project.behanceUrl && !isBurgerCase && (
           <div className="px-5 pt-5 md:px-8">
             <a href={project.behanceUrl} target="_blank" rel="noreferrer" className="marker-underline">
               Ver projeto completo no Behance ↗
