@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import "@fontsource/space-grotesk/400.css";
 import "@fontsource/space-grotesk/500.css";
@@ -7,6 +8,7 @@ import "@fontsource-variable/fraunces/wght-italic.css";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "./globals.css";
+
 import CustomCursor from "@/components/CustomCursor";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
@@ -30,6 +32,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
+      <head>
+        {/* Fonte Hey Eloise — Adobe Fonts */}
+        <link
+          rel="stylesheet"
+          href="https://use.typekit.net/lpy8qcc.css"
+        />
+      </head>
+
       <body className="min-h-full flex flex-col bg-off-white text-ink overflow-x-hidden">
         <a
           href="#conteudo"
@@ -37,11 +47,14 @@ export default function RootLayout({
         >
           Pular para o conteúdo
         </a>
+
         <CustomCursor />
         <SiteNav />
+
         <main id="conteudo" className="flex-1">
           {children}
         </main>
+
         <SiteFooter />
       </body>
     </html>
