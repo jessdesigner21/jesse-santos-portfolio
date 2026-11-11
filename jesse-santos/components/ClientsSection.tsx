@@ -1,77 +1,74 @@
-"use client";
-
-import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { clients } from "@/data/clients";
-import { getProjectBySlug } from "@/data/projects";
-import ProjectCover from "./ProjectCover";
-import { setAccent } from "@/lib/accent";
+import { agency, clients, type Client } from "@/data/clients";
+
+const agencyClients = clients.filter((client) => client.agency);
+const otherClients = clients.filter((client) => !client.agency);
 
 export default function ClientsSection({ showLabel = true }: { showLabel?: boolean }) {
-  const [active, setActive] = useState<string | null>(null);
-  const activeClient = clients.find((c) => c.name === active);
-  const activeProject = activeClient
-    ? getProjectBySlug(activeClient.projectSlugs[0])
-    : null;
-
   return (
-    <section id="clientes-preview" className="relative px-5 md:px-8 py-24 md:py-36">
-      {showLabel && <p className="editorial-num mb-10">Clientes</p>}
+    <section id="clientes-preview" className="paper-surface bg-[#F7F4EB] px-5 py-16 md:px-8 md:py-24">
+      <div className="mx-auto max-w-[1376px]">
+        {showLabel && (
+          <h2 className="archive-collection-title mb-8">
+            <Link href="/clientes">Clientes</Link>
+          </h2>
+        )}
 
-      <div className="flex flex-col border-t border-ink/10">
-        {clients.map((c) => {
-          const project = getProjectBySlug(c.projectSlugs[0]);
+        <div className="clients-agency">
+          <div>
+            <p className="editorial-num text-[#655b4c]">Agência onde trabalho</p>
+            <h2 className="archive-work-title mt-2">{agency.name}</h2>
+            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+              <a href={agency.website} target="_blank" rel="noreferrer" className="marker-underline">Site ↗</a>
+              <a href={agency.instagram} target="_blank" rel="noreferrer" className="marker-underline">Instagram ↗</a>
+            </div>
+          </div>
+          <Image src={agency.logo} width={295} height={52} alt="" className="h-auto w-full max-w-[15rem]" />
+        </div>
+
+        <ClientList title="Trabalhos pela agência" entries={agencyClients} />
+        {!showLabel && <ClientList title="Outras marcas e projetos" entries={otherClients} />}
+        {showLabel && (
+          <Link href="/clientes" className="marker-underline mt-8 inline-block">
+            Ver todas as marcas ↗
+          </Link>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function ClientList({ title, entries }: { title: string; entries: Client[] }) {
+  return (
+    <div className="mt-9 md:mt-14">
+      <h2 className="archive-work-title mb-4">{title}</h2>
+      <ul className="clients-list">
+        {entries.map((client) => {
+          const href = client.workHref ?? (client.projectSlugs[0] ? `/work/${client.projectSlugs[0]}` : undefined);
+          const content = (
+            <>
+              <span className="font-grotesk text-lg font-medium leading-tight md:text-xl">{client.name}</span>
+              {client.services.length > 0 && (
+                <span className="mt-1 block text-sm text-[#655b4c]">{client.services.join(" · ")}</span>
+              )}
+            </>
+          );
+
           return (
-            <button
-              key={c.name}
-              onMouseEnter={() => {
-                setActive(c.name);
-                if (project) setAccent(project.accentColor);
-              }}
-              onMouseLeave={() => {
-                setActive(null);
-                setAccent(null);
-              }}
-              onFocus={() => setActive(c.name)}
-              onBlur={() => setActive(null)}
-              className="group flex items-baseline justify-between border-b border-ink/10 py-4 md:py-6 text-left"
-              data-cursor="ver"
-            >
-              <span className="font-serif italic text-[8vw] md:text-[3.6vw] leading-none group-hover:not-italic group-hover:font-grotesk group-hover:font-bold transition-all">
-                {c.name}
-              </span>
-              <span className="editorial-num text-graphite hidden md:block">
-                {c.services.join(" / ")}
-              </span>
-            </button>
+            <li key={client.name}>
+              {href ? (
+                <Link href={href} className="clients-entry clients-entry-link">
+                  <span>{content}</span>
+                  <span aria-hidden="true">↗</span>
+                </Link>
+              ) : (
+                <div className="clients-entry"><span>{content}</span></div>
+              )}
+            </li>
           );
         })}
-      </div>
-
-      {/* preview flutuante do projeto ao passar o mouse (desktop) */}
-      <div className="hidden md:block pointer-events-none">
-        <AnimatePresence>
-          {activeProject && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
-              className="fixed top-1/2 right-[8vw] -translate-y-1/2 w-[22vw] aspect-[4/5] z-40 shadow-2xl"
-            >
-              <ProjectCover project={activeProject} className="w-full h-full" />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {activeProject && (
-        <Link
-          href={`/work/${activeProject.slug}`}
-          className="sr-only"
-        >{`Ver projeto ${activeProject.title}`}</Link>
-      )}
-    </section>
+      </ul>
+    </div>
   );
 }

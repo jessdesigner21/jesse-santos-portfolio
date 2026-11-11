@@ -7,16 +7,13 @@ export const metadata: Metadata = {
 
 export default function ClientesPage() {
   return (
-    <div className="pt-28 md:pt-36 pb-24">
-      <div className="px-5 md:px-8">
-        <p className="editorial-num mb-4">Marcas e clientes</p>
-        <h1 className="font-serif italic font-light text-5xl md:text-8xl leading-[0.9] mb-8">
-          Quem já confiou
-          <br />
-          no trabalho.
+    <article className="paper-surface bg-[#F7F4EB] pt-28 md:pt-36">
+      <header className="mx-auto max-w-[1440px] px-5 md:px-8">
+        <h1 className="archive-collection-title">
+          Clientes<span className="text-[var(--portfolio-yellow)]">.</span>
         </h1>
-      </div>
+      </header>
       <ClientsSection showLabel={false} />
-    </div>
+    </article>
   );
 }

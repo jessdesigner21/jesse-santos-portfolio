@@ -67,7 +67,7 @@ export default function WorkExplorer() {
           <FilterChip active={!filter} onClick={() => setFilter(null)}>
             Tudo
           </FilterChip>
-          {clients.map((c) => (
+          {clients.filter((c) => c.projectSlugs.length > 0).map((c) => (
             <FilterChip key={c.name} active={filter === c.name} onClick={() => setFilter(c.name)}>
               {c.name}
             </FilterChip>

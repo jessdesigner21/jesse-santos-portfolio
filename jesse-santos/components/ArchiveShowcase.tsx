@@ -170,7 +170,7 @@ export function ArchiveReels({ titleLevel = "h2" }: { titleLevel?: "h2" | "h3" }
     <section aria-label="Séries de Reels">
       <p className="mt-3 text-[#655b4c]">Edição por Jesse Santos · Assista no Instagram</p>
       {reelSeries.map(({ title, account, reels }) => (
-        <div key={account} className="archive-series">
+        <div key={account} id={account} className="archive-series">
           <Title className="archive-work-title">{title}</Title>
           <ul className="archive-reels">
             {reels.map(({ id, title: reelTitle }) => (
