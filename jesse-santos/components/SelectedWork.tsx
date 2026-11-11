@@ -160,35 +160,6 @@ function SketchBorder() {
   );
 }
 
-function WorkCutout({ project }: { project: Project }) {
-  const reduceMotion = useReducedMotion();
-
-  return (
-    <motion.article
-      initial={reduceMotion ? false : { opacity: 0, y: 22 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-      className="work-cutout"
-    >
-      <Link href={`/work/${project.slug}`} data-cursor="ver" className="group block">
-        <div className="work-cutout-paper">
-          <WorkCover project={project} className="w-full aspect-[8/5]" />
-        </div>
-        <div className="work-cutout-label">
-          <div>
-            <h3 style={handwritten} className="text-[clamp(2.15rem,4.4vw,4.5rem)] leading-none">
-              {project.title}
-            </h3>
-            <p className="mt-2 text-sm text-[#655b4c]">{project.discipline.join(" · ")}</p>
-          </div>
-          <span className="archive-index-arrow text-xl" aria-hidden="true">↗</span>
-        </div>
-      </Link>
-    </motion.article>
-  );
-}
-
 function AcervoCard({ project }: { project: Project }) {
   const isPhotography = project.slug === "identidade-fotografica-editorial";
   if (!project.cover) return null;
@@ -227,7 +198,10 @@ export default function SelectedWork() {
     (project) => project.slug === "falas-de-orgulho"
   );
 
-  const illustrated = selectedProjects.filter((project) => project !== featured);
+  const galleryProjects = [
+    ...selectedProjects.filter((project) => project !== featured),
+    ...additionalProjects,
+  ];
 
   return (
     <section
@@ -448,27 +422,22 @@ export default function SelectedWork() {
           </motion.article>
         )}
 
-        <div className="work-cutouts">
-          {illustrated.map((project) => <WorkCutout key={project.slug} project={project} />)}
-        </div>
-
-
-        {/* Capas dos projetos do acervo também aparecem na página principal. */}
-        {additionalProjects.length > 0 && (
-          <section aria-label="Mais projetos do acervo" className="mt-20 md:mt-32">
-            <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-black/20 pb-5 md:mb-12">
+        {/* Um mesmo grid editorial para todo o acervo, sem separar os três destaques. */}
+        {galleryProjects.length > 0 && (
+          <section aria-label="Projetos e acervo" className="mt-12 border-t border-[#A88735]/30 pt-12 md:mt-20 md:pt-20">
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-4 md:mb-12">
               <div>
-                <p className="editorial-num text-[#756D62]">Um arquivo de diferentes linguagens</p>
+                <p className="editorial-num text-[#756D62]">02 / Projetos e experiências</p>
                 <h3 style={handwritten} className="mt-2 text-[clamp(2.8rem,7vw,6.8rem)] leading-[0.95] text-[#A88735]">
                   Outros recortes.
                 </h3>
               </div>
               <p className="max-w-xs font-serif text-base italic leading-relaxed text-[#655B4C] md:text-lg">
-                Identidades, imagens e experimentações. Cada capa é uma porta para o projeto.
+                Identidades, imagens e experimentações. Cada capa abre uma história.
               </p>
             </div>
             <ul className="grid grid-cols-1 gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
-              {additionalProjects.map((project) => (
+              {galleryProjects.map((project) => (
                 <AcervoCard key={project.slug} project={project} />
               ))}
             </ul>
