@@ -695,50 +695,63 @@ body {
   scroll-margin-top: 4.1rem;
 }
 
+/* Mobile: capa com o mesmo tratamento claro do desktop, sem fundo cinza. */
 .mobile-hero {
   position: relative;
   min-height: 100svh;
-  background: #fcfaf3;
+  isolation: isolate;
   color: #202020;
+  background-color: #fcfaf4;
 }
 
 .mobile-hero-content {
-  display: flex;
+  position: relative;
+  display: grid;
   min-height: 100svh;
-  flex-direction: column;
-  gap: clamp(1rem, 2.5svh, 2rem);
-  padding: clamp(5.5rem, 12svh, 7rem) 1.25rem 1.5rem;
+  grid-template-rows: auto auto minmax(18rem, 1fr) auto;
+  gap: clamp(1rem, 2.5svh, 1.75rem);
+  padding: clamp(5.75rem, 12svh, 7rem) 1.25rem 1.5rem;
+}
+
+.mobile-hero-eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.4rem 1.1rem;
+  color: #39362f;
+  font-size: 0.6rem;
 }
 
 .mobile-hero-title {
-  font-family: var(--font-grotesk);
   max-width: 100%;
-  font-size: clamp(3.2rem, 13.5vw, 5.6rem);
+  font-family: var(--font-grotesk), sans-serif;
+  font-size: clamp(3.1rem, 12.9vw, 5.6rem);
   font-weight: 700;
   letter-spacing: -0.075em;
-  line-height: 0.95;
+  line-height: 0.91;
 }
 
 .mobile-hero-title span {
   display: block;
-  margin-top: 0.16em;
+  margin-top: 0.2em;
+  letter-spacing: -0.065em;
 }
 
 .mobile-hero-art {
   position: relative;
-  flex: none;
-  width: 100%;
-  aspect-ratio: 16 / 9;
+  width: calc(100% + 2.5rem);
+  height: 100%;
+  min-height: clamp(18rem, 47svh, 33rem);
+  margin-inline: -1.25rem;
   overflow: hidden;
-  background: #fcfaf3;
+  background-color: #fcfaf4;
 }
 
 .mobile-hero-bottom {
   display: flex;
   align-items: end;
   justify-content: space-between;
-  gap: 1rem;
-  margin-top: auto;
+  gap: 1.25rem;
   border-top: 1px solid #20202040;
   padding-top: 1rem;
 }
@@ -747,15 +760,15 @@ body {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.09em;
 }
 
 .mobile-hero-signature {
-  max-width: 52%;
-  font-size: clamp(1.35rem, 5.5vw, 2rem);
-  line-height: 1.03;
+  max-width: 54%;
+  font-size: clamp(1.55rem, 6vw, 2.4rem);
+  line-height: 0.98;
   text-align: right;
 }
 
@@ -766,14 +779,26 @@ body {
 }
 
 @media (max-width: 47.999rem) {
+  html,
+  body {
+    background-color: #fcf9f1;
+  }
+
+  /* A textura original é uma imagem cinza: no celular ela sujava o creme. */
+  .paper-surface {
+    background-color: #fcf9f1;
+    background-image: none;
+  }
+
   #inicio {
     min-height: 100svh;
-    background: #fcfaf3;
+    background-color: #fcfaf4;
   }
 
   #inicio.hero-grain::after {
     display: none;
   }
+
 
   .work-cutout-paper,
   .work-cutout:nth-child(even) .work-cutout-paper {
