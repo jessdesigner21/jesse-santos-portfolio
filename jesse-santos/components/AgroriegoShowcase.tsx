@@ -1,130 +1,218 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+} from "framer-motion";
 
-const slides = Array.from({ length: 5 }, (_, i) => ({
-  src: `/projects/agroriego/agro-${String(i + 1).padStart(2, "0")}.jpg`,
-  alt: [
-    "Agroriego Tattersall — abertura institucional e agricultura",
-    "Quem somos — atuação e pilares da Agroriego",
-    "Áreas de negócio — estrutura e serviços",
-    "Projeto llave en mano — implementação e operações",
-    "Nossos produtos — sistemas e soluções de irrigação",
-  ][i],
-}));
+/**
+ * Primeiro recorte do Arquivo Vivo.
+ * Mostra somente as cinco páginas de autoria de Jesse.
+ * Novos trabalhos (pendones, vídeos, peças avulsas) poderão ser
+ * adicionados ao Arquivo Vivo como novos recortes independentes.
+ */
+const slides = [
+  {
+    src: "/projects/agroriego/agro-01.jpg",
+    alt: "Capa Agroriego Tattersall: rastreabilidade e sustentabilidade hídrica",
+    label: "Abertura",
+  },
+  {
+    src: "/projects/agroriego/agro-02.jpg",
+    alt: "Quem somos: números, atuação e pilares da Agroriego",
+    label: "Quem somos",
+  },
+  {
+    src: "/projects/agroriego/agro-03.jpg",
+    alt: "Áreas de negócio e serviços",
+    label: "Áreas de negócio",
+  },
+  {
+    src: "/projects/agroriego/agro-04.jpg",
+    alt: "Projeto chave na mão: engenharia, instalação e operações",
+    label: "Projeto integral",
+  },
+  {
+    src: "/projects/agroriego/agro-05.jpg",
+    alt: "Produtos e soluções da Agroriego",
+    label: "Produtos",
+  },
+] as const;
 
 const handwritten = {
   fontFamily: '"hey-eloise", cursive',
   fontWeight: 400,
 };
 
+function Arrow({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      width="21"
+      height="21"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.65"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={direction === "left" ? "rotate-180" : ""}
+    >
+      <path d="M4 12h16M13 5l7 7-7 7" />
+    </svg>
+  );
+}
+
 export default function AgroriegoShowcase() {
   const reduceMotion = useReducedMotion();
-  const entry = (index = 0) =>
-    reduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 34 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, amount: 0.14 },
-          transition: {
-            duration: 0.85,
-            delay: (index % 2) * 0.1,
-            ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-          },
-        };
+  const [active, setActive] = useState(0);
+
+  const next = () => setActive((current) => (current + 1) % slides.length);
+  const previous = () =>
+    setActive((current) => (current - 1 + slides.length) % slides.length);
 
   return (
-    <section aria-label="Recorte autoral da apresentação Agroriego" className="mt-16 md:mt-24 bg-[#F7F4EB] text-[#24221F]">
+    <section
+      aria-labelledby="agroriego-recorte"
+      className="relative mt-14 bg-[#F7F4EB] text-[#24221F] md:mt-20"
+    >
       <div className="mx-auto max-w-[1440px] px-5 md:px-8">
-        <motion.div {...entry()} className="flex flex-wrap items-end justify-between gap-5 border-t border-black/15 pt-6">
-          <p className="editorial-num uppercase tracking-widest text-black/55">
-            01 / 05 — Recorte autoral
-          </p>
-          <span style={handwritten} className="text-2xl md:text-4xl text-[#A88735] -rotate-3">
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-wrap items-end justify-between gap-6 border-t border-black/15 pt-6"
+        >
+          <div>
+            <p className="editorial-num uppercase tracking-widest text-black/50">
+              01 / Recortes do arquivo
+            </p>
+            <h2
+              id="agroriego-recorte"
+              className="mt-4 font-serif italic text-[clamp(2rem,4vw,4.5rem)] leading-[1.05] tracking-[-0.045em]"
+            >
+              Agroriego Tattersall
+            </h2>
+            <p className="mt-3 max-w-xl font-grotesk text-sm leading-relaxed text-[#6B635A] md:text-base">
+              Design de apresentação institucional. Um recorte com as cinco
+              primeiras lâminas que desenvolvi.
+            </p>
+          </div>
+
+          <span
+            style={handwritten}
+            className="text-2xl text-[#A88735] md:text-4xl md:-rotate-3"
+          >
             pensado slide a slide.
           </span>
         </motion.div>
 
-        {/* Mockup editorial da apresentação: não altera a arte original. */}
-        <motion.div {...entry()} className="relative mt-12 md:mt-20 py-8 md:py-14">
-          <p
+        {/* Mantemos o mockup original e a tipografia enorme ao fundo. */}
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.12 }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="relative mt-9 py-10 md:mt-12 md:py-16"
+        >
+          <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 text-center font-grotesk font-bold tracking-[-0.08em] leading-none text-[#D9D0BC] text-[clamp(3.4rem,12vw,11rem)]"
+            className="pointer-events-none absolute inset-x-0 top-0 select-none text-center font-grotesk font-bold text-[clamp(3.4rem,12vw,11rem)] leading-none tracking-[-0.08em] text-[#D9D0BC]"
           >
             AGRORIEGO
-          </p>
+          </span>
+
           <div className="relative z-10 mx-auto max-w-5xl">
             <motion.div
-              whileHover={reduceMotion ? undefined : { rotate: 0, y: -7 }}
+              whileHover={reduceMotion ? undefined : { rotate: 0, y: -5 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="relative rotate-[-1.3deg] rounded-lg border-[7px] md:border-[13px] border-[#2B302A] bg-[#2B302A] shadow-[18px_25px_42px_rgba(43,44,32,0.18)]"
+              className="relative rotate-[-1.3deg] rounded-lg border-[7px] border-[#2B302A] bg-[#2B302A] shadow-[18px_25px_42px_rgba(43,44,32,0.18)] md:border-[13px]"
             >
-              <div className="relative aspect-video overflow-hidden bg-[#EEE8DC]">
-                <Image
-                  src={slides[0].src}
-                  alt={slides[0].alt}
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, 950px"
-                  className="object-contain"
-                />
+              <div
+                className="relative aspect-video overflow-hidden bg-[#EEE8DC]"
+                aria-label="Visualização de cinco lâminas do projeto Agroriego"
+              >
+                <AnimatePresence initial={false} mode="wait">
+                  <motion.div
+                    key={active}
+                    className="absolute inset-0"
+                    initial={
+                      reduceMotion
+                        ? { opacity: 1 }
+                        : { opacity: 0, x: 18 }
+                    }
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={
+                      reduceMotion
+                        ? { opacity: 1 }
+                        : { opacity: 0, x: -18 }
+                    }
+                    transition={{
+                      duration: reduceMotion ? 0 : 0.34,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <Image
+                      src={slides[active].src}
+                      alt={slides[active].alt}
+                      fill
+                      priority={active === 0}
+                      sizes="(max-width: 768px) 100vw, 950px"
+                      className="object-contain"
+                    />
+                  </motion.div>
+                </AnimatePresence>
               </div>
-              <div className="absolute left-1/2 -bottom-3 h-[3px] w-12 -translate-x-1/2 rounded-full bg-white/25" aria-hidden="true" />
+              <span
+                aria-hidden="true"
+                className="absolute -bottom-3 left-1/2 h-[3px] w-12 -translate-x-1/2 rounded-full bg-white/25"
+              />
             </motion.div>
-            <p className="mt-7 text-right editorial-num uppercase text-[#786F60]">
-              Apresentação institucional · design de slides
+
+            {/* Navegação fica fora da arte para não cobrir textos. */}
+            <div className="mt-8 flex flex-wrap items-center justify-between gap-5 md:mt-10">
+              <div className="flex items-center gap-4">
+                <span aria-live="polite" className="editorial-num tabular-nums text-[#756D62]">
+                  {String(active + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+                </span>
+                <span className="hidden h-px w-10 bg-[#BEB5A4] sm:block" aria-hidden="true" />
+                <span className="font-serif italic text-base text-[#756D62] md:text-lg">
+                  {slides[active].label}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3" aria-label="Controles das lâminas">
+                <button
+                  type="button"
+                  onClick={previous}
+                  aria-label="Lâmina anterior"
+                  className="flex h-12 w-12 items-center justify-center rounded-full border border-[#A88735] bg-transparent text-[#A88735] transition-colors duration-300 hover:bg-[#E8DDC3] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#A88735] md:h-14 md:w-14"
+                >
+                  <Arrow direction="left" />
+                </button>
+                <button
+                  type="button"
+                  onClick={next}
+                  aria-label="Próxima lâmina"
+                  className="flex h-12 w-12 items-center justify-center rounded-full border border-[#A88735] bg-[#A88735] text-white transition-transform duration-300 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#A88735] md:h-14 md:w-14"
+                >
+                  <Arrow direction="right" />
+                </button>
+              </div>
+            </div>
+
+            <p className="editorial-num mt-5 text-right uppercase text-[#786F60]">
+              Agroriego Tattersall / Recorte autoral
             </p>
           </div>
         </motion.div>
 
-        <div className="mt-16 md:mt-24 flex flex-wrap items-end justify-between gap-6 border-t border-black/15 pt-6">
-          <p className="editorial-num uppercase text-black/55">Outras páginas do mesmo projeto</p>
-          <p className="font-serif italic text-lg md:text-2xl max-w-sm">
-            Informação, fotografia e ritmo visual.
-          </p>
-        </div>
-
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-12 gap-y-14 md:gap-x-8 md:gap-y-20">
-          {slides.slice(1).map((slide, index) => {
-            const placement = [
-              "md:col-span-7",
-              "md:col-span-5 md:mt-24",
-              "md:col-span-5 md:mt-16",
-              "md:col-span-7",
-            ][index];
-
-            return (
-              <motion.figure key={slide.src} {...entry(index)} className={placement}>
-                <div className="relative bg-[#E9E5DC] p-2 md:p-3 border border-black/10 shadow-[0_12px_30px_rgba(34,34,34,0.06)]">
-                  <div className="relative aspect-video">
-                    <Image
-                      src={slide.src}
-                      alt={slide.alt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 70vw"
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-                <figcaption className="mt-4 flex justify-between gap-4 editorial-num uppercase text-[#756D62]">
-                  <span>{String(index + 2).padStart(2, "0")} / 05</span>
-                  <span>Design de apresentação</span>
-                </figcaption>
-              </motion.figure>
-            );
-          })}
-        </div>
-
-        <motion.div {...entry()} className="mt-20 md:mt-32 border-t border-black/15 py-8 flex flex-wrap items-center justify-between gap-5">
-          <p className="font-serif italic text-xl md:text-3xl">
-            Cinco páginas. Um recorte do processo.
-          </p>
-          <p style={handwritten} className="text-[#A88735] text-2xl md:text-4xl">
-            só o que criei.
-          </p>
-        </motion.div>
+        {/* Próximos recortes do Arquivo Vivo entram abaixo deste módulo.
+            Não há uma galeria duplicada com as quatro páginas restantes. */}
       </div>
     </section>
   );
