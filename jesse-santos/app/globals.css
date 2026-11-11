@@ -106,3 +106,62 @@ body {
     animation: none;
   }
 }
+
+.archive-showcase {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0 3px,
+    rgba(92, 78, 59, 0.045) 4px
+  );
+}
+
+.archive-section {
+  margin-top: clamp(3.75rem, 8vw, 7rem);
+  border-top: 1px solid #d9cfbd;
+  padding-top: clamp(1.25rem, 3vw, 2.5rem);
+  scroll-margin-top: 6rem;
+}
+
+#agroriego-recorte {
+  scroll-margin-top: 7rem;
+}
+
+.archive-heading {
+  margin-top: 0.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 4.3vw, 4.5rem);
+  font-style: italic;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.archive-arrow {
+  display: grid;
+  min-width: 44px;
+  min-height: 44px;
+  place-items: center;
+  border: 1px solid #a88735;
+  border-radius: 50%;
+  color: #5e4514;
+  font-size: 1.25rem;
+  transition: background-color 180ms ease;
+}
+
+.archive-arrow:hover {
+  background-color: #e9dfcd;
+}
+
+.archive-link {
+  border-bottom: 1px solid #a88735;
+  font-size: 0.875rem;
+  padding-bottom: 0.25rem;
+}
+
+.archive-slide {
+  animation: archive-slide-in 350ms ease-out;
+}
+
+@keyframes archive-slide-in {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}
