@@ -28,6 +28,37 @@ export default function ProjectGallery({
 }) {
   const reduceMotion = useReducedMotion();
 
+  // As pranchas exportadas do Behance são partes de uma única narrativa.
+  // Sem cards, legendas, transições ou qualquer espaço entre as peças.
+  if (presentation) {
+    return (
+      <section aria-label="Pranchas completas do projeto" className="mt-10 md:mt-16">
+        <div className="mx-auto w-full max-w-[1000px]">
+          {images.map((item, index) => (
+            <a
+              key={item.src + index}
+              href={item.src}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Ampliar prancha ${index + 1} de ${images.length}: ${item.alt}`}
+              title="Abrir imagem em tamanho original"
+              className="block w-full"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.src}
+                alt={item.alt}
+                loading={index === 0 ? "eager" : "lazy"}
+                decoding="async"
+                className="block w-full h-auto m-0 p-0"
+              />
+            </a>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       aria-label="Imagens do projeto"
