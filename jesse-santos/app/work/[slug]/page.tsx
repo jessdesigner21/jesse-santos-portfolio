@@ -106,19 +106,19 @@ export default async function ProjectPage({
               </div>
             ) : (isMonkeyCase || isFlosCase) && project.cover ? (
               <div className="mx-auto max-w-[1040px] px-5 md:px-8">
-                <div className="relative overflow-hidden bg-[#211B17]" style={{ aspectRatio: "16/9" }}>
+                <div className={`relative overflow-hidden bg-[#211B17] brand-motion-cover ${isFlosCase ? "brand-motion-cover--flos" : "brand-motion-cover--monkey"}`} style={{ aspectRatio: "16/9" }}>
                   <Image
                     src={project.cover}
                     alt={`Capa do projeto ${project.title}`}
                     fill
                     priority
                     sizes="(max-width: 768px) 100vw, 1040px"
-                    className="object-contain"
+                    className="object-contain brand-motion-cover-image"
                   />
                 </div>
               </div>
             ) : project.behanceUrl && project.cover ? (
-              <div className={`relative mx-auto ${isBurgerCase ? "max-w-[620px]" : "max-w-4xl"}`} style={{ aspectRatio: project.coverRatio }}>
+              <div className={`relative mx-auto ${isBurgerCase ? "max-w-[620px] brand-motion-cover brand-motion-cover--burger" : "max-w-4xl"}`} style={{ aspectRatio: project.coverRatio }}>
                 <Image src={project.cover} alt={project.title} fill sizes={isBurgerCase ? "(max-width: 768px) 90vw, 620px" : "(max-width: 768px) 90vw, 896px"} className="object-contain" />
               </div>
             ) : (

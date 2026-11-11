@@ -161,22 +161,36 @@ function SketchBorder() {
 }
 
 function AcervoCard({ project }: { project: Project }) {
+  const reduceMotion = useReducedMotion();
   const isPhotography = project.slug === "identidade-fotografica-editorial";
+  const isAnimatedCase = ["flos-embalagens", "monkey-cafe", "social-media-hamburgueria"].includes(project.slug);
   if (!project.cover) return null;
+
   return (
-    <li className={isPhotography ? "sm:col-span-2 lg:col-span-2" : ""}>
-      <Link href={`/work/${project.slug}`} className="group block h-full" data-cursor="ver">
+    <motion.li
+      initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.08 }}
+      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+      className={isPhotography ? "sm:col-span-2 lg:col-span-2" : ""}
+    >
+      <Link
+        href={`/work/${project.slug}`}
+        className={`group block h-full portfolio-card ${isAnimatedCase ? "portfolio-card--motion" : ""}`}
+        data-cursor="ver"
+      >
         <div className="border-t border-[#A88735]/35 pt-3">
-          <div className="relative overflow-hidden bg-[#FCF9F1] p-2 md:p-3">
+          <div className="relative overflow-hidden bg-[#FCF9F1] p-2 md:p-3 portfolio-card-art">
             <div className={`relative w-full overflow-hidden ${isPhotography ? "aspect-[16/9]" : "aspect-[800/626]"}`}>
               <Image
                 src={project.cover}
                 alt={`Capa de ${project.title}`}
                 fill
                 sizes={isPhotography ? "(max-width: 768px) 100vw, 65vw" : "(max-width: 640px) 100vw, 33vw"}
-                className="object-contain transition-transform duration-700 group-hover:scale-[1.025]"
+                className="object-contain portfolio-card-image"
               />
             </div>
+            {isAnimatedCase && <span aria-hidden="true" className="portfolio-card-glint" />}
           </div>
           <div className="mt-3 flex items-start justify-between gap-3">
             <div>
@@ -187,7 +201,7 @@ function AcervoCard({ project }: { project: Project }) {
           </div>
         </div>
       </Link>
-    </li>
+    </motion.li>
   );
 }
 
