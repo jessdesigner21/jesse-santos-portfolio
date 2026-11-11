@@ -12,6 +12,7 @@ const reelSeries = [
     account: "centroluminus",
     reels: [
       { id: "DZNcmiZkSBU", title: "Quando a mente não para" },
+      { id: "DY724_CEquI", title: "Reel de Centro Luminus" },
       { id: "DWHtNLACdC-", title: "Quando considerar a terapia de casal" },
       { id: "DSm0yquky--", title: "Uma mensagem de fim de ano" },
     ],
@@ -175,20 +176,30 @@ export function ArchiveReels({ titleLevel = "h2" }: { titleLevel?: "h2" | "h3" }
             {reels.map(({ id, title: reelTitle }) => (
               <li key={id}>
                 <a
-                  href={`https://www.instagram.com/${account}/reel/${id}/`}
+                  href={`https://www.instagram.com/reel/${id}/`}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${reelTitle} · Assistir no Instagram (nova aba)`}
                   className="archive-reel"
                 >
                   <span className="archive-reel-cover">
-                    <Image
-                      src={`${media}/reel-${id}.webp`}
-                      alt=""
-                      fill
-                      sizes="(max-width: 640px) 44vw, (max-width: 1000px) 30vw, 22vw"
-                      className="object-cover"
-                    />
+                    {id === "DY724_CEquI" ? (
+                      <span className="absolute inset-0 flex flex-col justify-between bg-[#E6D8B5] p-5 text-[#302B20]">
+                        <span className="editorial-num border-b border-black/20 pb-3">Centro Luminus / Reels</span>
+                        <span className="font-serif text-3xl italic leading-tight md:text-4xl">
+                          Vídeo com intenção.
+                        </span>
+                        <span className="editorial-num">Assistir no Instagram ↗</span>
+                      </span>
+                    ) : (
+                      <Image
+                        src={`${media}/reel-${id}.webp`}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 44vw, (max-width: 1000px) 30vw, 22vw"
+                        className="object-cover"
+                      />
+                    )}
                   </span>
                   <span className="mt-2 block font-serif text-base italic leading-snug md:text-lg">
                     {reelTitle} <span aria-hidden="true">↗</span>
