@@ -43,6 +43,7 @@ export default async function ProjectPage({
   const isArchive = project.slug === archiveSlug;
   const isBurgerCase = project.slug === "social-media-hamburgueria";
   const isMonkeyCase = project.slug === "monkey-cafe";
+  const isFlosCase = project.slug === "flos-embalagens";
   const isContinuousCase = !isBurgerCase && Boolean(project.images?.length) && (Boolean(project.behanceUrl) || project.layout === "presentation");
 
   return (
@@ -103,12 +104,12 @@ export default async function ProjectPage({
                   className="object-contain"
                 />
               </div>
-            ) : isMonkeyCase && project.cover ? (
+            ) : (isMonkeyCase || isFlosCase) && project.cover ? (
               <div className="mx-auto max-w-[1040px] px-5 md:px-8">
                 <div className="relative overflow-hidden bg-[#211B17]" style={{ aspectRatio: "16/9" }}>
                   <Image
                     src={project.cover}
-                    alt="Monkey Café — identidade em lettering amarelo sobre grãos de café"
+                    alt={`Capa do projeto ${project.title}`}
                     fill
                     priority
                     sizes="(max-width: 768px) 100vw, 1040px"
@@ -145,7 +146,7 @@ export default async function ProjectPage({
             images={project.images}
             presentation={isContinuousCase}
             compactPresentation={Boolean(project.behanceUrl)}
-            mosaic={isBurgerCase || isMonkeyCase}
+            mosaic={isBurgerCase || isMonkeyCase || isFlosCase}
           />
         )}
 
