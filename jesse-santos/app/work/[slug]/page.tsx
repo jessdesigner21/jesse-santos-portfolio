@@ -128,6 +128,7 @@ export default async function ProjectPage({
           <ProjectGallery
             images={project.images}
             presentation={isContinuousCase}
+            compactPresentation={Boolean(project.behanceUrl)}
           />
         )}
 
