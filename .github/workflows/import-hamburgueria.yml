@@ -21,6 +21,11 @@ jobs:
           node-version: "22"
       - name: Importar arquivos originais enviados pelo criador
         run: node scripts/import-hamburgueria.cjs
+      - name: Verificar build Next.js
+        working-directory: jesse-santos
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
       - name: Commit de imagens
         run: |
           git config user.email "github-actions[bot]@users.noreply.github.com"
