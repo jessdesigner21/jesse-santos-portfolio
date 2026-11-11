@@ -115,13 +115,14 @@ export function ArchiveCollection({ collection }: { collection: Collection }) {
     case "pecas-graficas":
       return <Prints />;
     case "videos":
-      return <Videos />;
+      return <ArchiveVideos />;
     case "reels":
-      return <Reels />;
+      return <ArchiveReels />;
   }
 }
 
-function Videos() {
+export function ArchiveVideos({ titleLevel = "h2" }: { titleLevel?: "h2" | "h3" }) {
+  const Title = titleLevel;
   return (
     <section aria-label="Vídeos do Arquivo Vivo">
       <div className="archive-videos">
@@ -129,7 +130,7 @@ function Videos() {
           <figure key={slug} className={landscape ? "archive-video-lead" : "archive-video-portrait"}>
             <ArchiveVideo title={title} category={category} src={`${media}/${slug}.mp4`} landscape={landscape} />
             <figcaption className="mt-4">
-              <h2 className="archive-work-title">{title}</h2>
+              <Title className="archive-work-title">{title}</Title>
               <p className="mt-1 text-sm text-[#655b4c]">{caption}</p>
             </figcaption>
           </figure>
@@ -163,13 +164,14 @@ function Prints() {
   );
 }
 
-function Reels() {
+export function ArchiveReels({ titleLevel = "h2" }: { titleLevel?: "h2" | "h3" }) {
+  const Title = titleLevel;
   return (
     <section aria-label="Séries de Reels">
       <p className="mt-3 text-[#655b4c]">Edição por Jesse Santos · Assista no Instagram</p>
       {reelSeries.map(({ title, account, reels }) => (
         <div key={account} className="archive-series">
-          <h2 className="archive-work-title">{title}</h2>
+          <Title className="archive-work-title">{title}</Title>
           <ul className="archive-reels">
             {reels.map(({ id, title: reelTitle }) => (
               <li key={id}>

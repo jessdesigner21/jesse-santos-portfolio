@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { motionPieces } from "@/data/videos";
+import { ArchiveReels, ArchiveVideos } from "@/components/ArchiveShowcase";
+import MotionReveal from "@/components/MotionReveal";
 import VideoPlayer from "@/components/VideoPlayer";
 
 export const metadata: Metadata = {
@@ -9,32 +10,41 @@ export const metadata: Metadata = {
 
 export default function MovimentoPage() {
   return (
-    <div className="pt-28 md:pt-36 px-5 md:px-8 pb-24 min-h-[60vh]">
-      <p className="editorial-num mb-4">Vídeo / Motion / Edição</p>
-      <h1 className="font-serif italic font-light text-5xl md:text-8xl leading-[0.9] mb-16">
-        Em movimento.
-      </h1>
+    <article className="paper-surface bg-[#F7F4EB] px-5 pb-24 pt-28 md:px-8 md:pt-36">
+      <div className="motion-program mx-auto max-w-[1376px]">
+        <header className="motion-program-header">
+          <h1 className="archive-collection-title">Em movimento<span className="text-[var(--portfolio-yellow)]">.</span></h1>
+          <nav aria-label="Seções de Movimento" className="flex flex-wrap gap-5">
+            <a href="#videos" className="marker-underline">Vídeos ↓</a>
+            <a href="#reels" className="marker-underline">Reels ↓</a>
+          </nav>
+        </header>
 
-      {motionPieces.length === 0 ? (
-        <p className="font-serif italic text-2xl text-graphite max-w-lg">
-          Os trabalhos audiovisuais de Jesse estão sendo organizados para
-          esta seção — enquanto isso, explore o{" "}
-          <Link href="/work" className="border-b border-ink">
-            trabalho selecionado
-          </Link>
-          .
-        </p>
-      ) : (
-        <div className="grid md:grid-cols-2 gap-6">
-          {motionPieces.map((v) => (
-            <VideoPlayer
-              key={v.slug}
-              piece={v}
-              className={`w-full ${v.format === "9:16" ? "aspect-[9/16] md:w-[60%]" : "aspect-video"}`}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+        <section id="videos" className="motion-program-section" aria-labelledby="motion-videos-title">
+          <MotionReveal>
+            <h2 id="motion-videos-title" className="archive-work-title">Vídeos</h2>
+            <ArchiveVideos titleLevel="h3" />
+            {motionPieces.length > 0 && (
+              <div className="mt-10 grid gap-6 md:grid-cols-2">
+                {motionPieces.map((piece) => (
+                  <VideoPlayer
+                    key={piece.slug}
+                    piece={piece}
+                    className={`w-full ${piece.format === "9:16" ? "aspect-[9/16]" : piece.format === "1:1" ? "aspect-square" : "aspect-video"}`}
+                  />
+                ))}
+              </div>
+            )}
+          </MotionReveal>
+        </section>
+
+        <section id="reels" className="motion-program-section" aria-labelledby="motion-reels-title">
+          <MotionReveal>
+            <h2 id="motion-reels-title" className="archive-work-title">Reels</h2>
+            <ArchiveReels titleLevel="h3" />
+          </MotionReveal>
+        </section>
+      </div>
+    </article>
   );
 }
