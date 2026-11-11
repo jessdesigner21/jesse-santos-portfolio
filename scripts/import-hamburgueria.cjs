@@ -67,7 +67,7 @@ const outputDir=path.join(process.cwd(),"jesse-santos/public/projects/owner");
 async function main(){
   for(const file of files){
     const res=await fetch(file.url,{headers:{"User-Agent":"JessePortfolioAssetImporter/1.0"}});
-    if(!res.ok())throw new Error("Image "+file.path+" download failed with "+res.status);
+    if(!res.ok)throw new Error("Image "+file.path+" download failed with "+res.status);
     const type=res.headers.get("content-type")||"";
     if(!type.startsWith("image/"))throw new Error("Unexpected response content-type "+type);
     const bytes=Buffer.from(await res.arrayBuffer());
