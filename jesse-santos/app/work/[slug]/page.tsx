@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { projects, getProjectBySlug } from "@/data/projects";
 import ProjectCover from "@/components/ProjectCover";
 import ProjectAccentSetter from "@/components/ProjectAccentSetter";
+import ProjectGallery from "@/components/ProjectGallery";
 import VideoPlayer from "@/components/VideoPlayer";
 
 export function generateStaticParams() {
@@ -35,6 +37,7 @@ export default async function ProjectPage({
 
   const index = projects.findIndex((p) => p.slug === project.slug);
   const next = projects[(index + 1) % projects.length];
+  const isPride = project.slug === "falas-de-orgulho";
 
   return (
     <article className="pt-28 md:pt-36 pb-24">
@@ -44,7 +47,14 @@ export default async function ProjectPage({
         <p className="editorial-num text-graphite mb-4">
           {String(index + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
         </p>
-        <h1 className="font-serif italic font-light leading-[0.88] text-[13vw] md:text-[7vw]">
+        <h1
+          style={isPride ? { fontFamily: '"hey-eloise", cursive' } : undefined}
+          className={
+            isPride
+              ? "text-[#AC871C] font-normal leading-[1] tracking-normal text-[clamp(3.4rem,9vw,9rem)]"
+              : "font-serif italic font-light leading-[0.88] text-[13vw] md:text-[7vw]"
+          }
+        >
           {project.title}
         </h1>
 
@@ -62,12 +72,25 @@ export default async function ProjectPage({
         )}
       </header>
 
-      <div className="mt-16 -mx-0">
-        <ProjectCover
-          project={project}
-          priority
-          className="w-full aspect-[16/10] md:aspect-[21/9]"
-        />
+      <div className={isPride ? "mt-16 px-5 md:px-8" : "mt-16"}>
+        {isPride && project.cover ? (
+          <div className="relative mx-auto max-w-[1440px] aspect-[16/9] bg-[#EEE8DC]">
+            <Image
+              src={project.cover}
+              alt={`Imagem de abertura do projeto ${project.title}`}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 95vw"
+              className="object-contain"
+            />
+          </div>
+        ) : (
+          <ProjectCover
+            project={project}
+            priority
+            className="w-full aspect-[16/10] md:aspect-[21/9]"
+          />
+        )}
       </div>
 
       <div className="px-5 md:px-8 mt-16 grid md:grid-cols-12 gap-8">
@@ -76,16 +99,12 @@ export default async function ProjectPage({
         </p>
       </div>
 
-      {/* galeria de imagens adicionais — aparece automaticamente quando `images` for preenchido */}
+      {/* Galeria editorial: formatos reais, sem recortes e com movimento suave */}
       {project.images && project.images.length > 0 && (
-        <div className="px-5 md:px-8 mt-20 grid md:grid-cols-2 gap-6">
-          {project.images.map((img) => (
-            <div key={img.src} className="relative w-full aspect-[4/5] overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
-            </div>
-          ))}
-        </div>
+        <ProjectGallery
+          images={project.images}
+          presentation={project.layout === "presentation"}
+        />
       )}
 
       {/* vídeos do case — aparece automaticamente quando `videos` for preenchido */}
