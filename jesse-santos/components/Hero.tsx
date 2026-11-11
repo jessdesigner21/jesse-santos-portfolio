@@ -220,26 +220,35 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Mesma capa autoral em desktop e celular: apenas a composição responde à tela. */}
       <div className="mobile-hero md:hidden">
-        <h1 className="mobile-hero-title">
-          Portfólio <span className="font-serif font-normal italic">do Jess</span>
-        </h1>
-        <div className="mobile-hero-art">
+        <div className="mobile-hero-art" aria-hidden="true">
           <Image
             src={COVER_IMAGE}
-            alt="Retrato de Jesse Santos com o letreiro amarelo Designer Gráfico"
+            alt=""
             fill
-            loading="eager"
-            sizes="(max-width: 767px) 85vw, 1px"
-            className="object-cover"
+            priority
+            unoptimized
+            sizes="100vw"
+            className="object-cover object-center"
           />
         </div>
-        <p style={SIGNATURE_STYLE} className="text-[clamp(1.6rem,7vw,2.4rem)] leading-none">
-          uma vida com textura.
-        </p>
-        <Link href="#trabalho" className="mobile-hero-link marker-underline">
-          Explorar trabalhos ↓
-        </Link>
+        <div className="mobile-hero-content">
+          <p className="editorial-num uppercase tracking-widest">
+            Jesse Santos — Graphic Designer
+          </p>
+          <h1 className="mobile-hero-title">
+            Portfólio <span className="font-serif font-normal italic">do Jess</span>
+          </h1>
+          <div className="mobile-hero-bottom">
+            <Link href="#trabalho" className="mobile-hero-link marker-underline">
+              ↓ Explorar trabalhos
+            </Link>
+            <p style={SIGNATURE_STYLE} className="mobile-hero-signature">
+              uma vida com textura.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
