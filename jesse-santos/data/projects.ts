@@ -126,34 +126,26 @@ export const projects: Project[] = [
   },
 
   /* =========================================================
-     02 — GRUPO TATTERSALL
+     02 — AGRORIEGO TATTERSALL | APRESENTAÇÃO INSTITUCIONAL
+     Somente páginas 1–5 são de autoria de Jesse.
   ========================================================= */
 
   {
-    title: "Apresentação de Vendas",
+    title: "Agroriego — Apresentação Institucional",
     slug: "grupo-tattersall",
-
-    client: "Grupo Tattersall",
-
+    client: "Agroriego Tattersall",
     discipline: ["Apresentações", "Direção Visual"],
-
-    role: "Design de apresentação",
-
+    role: "Design e diagramação das páginas 1 a 5",
     description:
-      "Sistema visual para apresentação comercial — hierarquia clara, ritmo de slide e identidade aplicada a um material de vendas.",
-
+      "Recorte autoral de cinco páginas de uma apresentação institucional sobre soluções de irrigação, engenharia e sustentabilidade hídrica. Organização de conteúdo, hierarquia tipográfica, fotografia e comunicação visual corporativa.",
     challenge:
-      "Traduzir um discurso comercial denso em uma sequência visual que sustenta atenção slide após slide.",
-
-    accentColor: "#2D6BFF",
-
+      "Organizar informações técnicas e institucionais em slides claros, com unidade visual e leitura fluida. Neste portfólio, apresento exclusivamente as cinco primeiras páginas que desenvolvi.",
+    cover: "/projects/agroriego/agro-01.jpg",
+    coverRatio: "16/9",
+    accentColor: "#A88735",
     featured: true,
-
     layout: "presentation",
-
     coverTreatment: "grotesk",
-
-    behanceUrl: "https://www.behance.net/jessesantos1",
   },
 
   /* =========================================================
