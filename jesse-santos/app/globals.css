@@ -813,3 +813,117 @@ body {
     overflow-wrap: anywhere;
   }
 }
+
+
+/* Movimento editorial: sem vídeos, sem créditos e sem alterar os originais. */
+.portfolio-card,
+.portfolio-card-image,
+.mosaic-art-image,
+.brand-motion-cover-image {
+  transition:
+    transform 650ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 650ms ease;
+}
+
+.portfolio-card-art,
+.brand-motion-cover {
+  isolation: isolate;
+}
+
+.portfolio-card-glint {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-120%);
+  background: linear-gradient(
+    110deg,
+    transparent 28%,
+    rgb(255 255 255 / 16%) 49%,
+    transparent 70%
+  );
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .portfolio-card:hover,
+  .portfolio-card:focus-visible {
+    transform: translateY(-3px);
+  }
+
+  .portfolio-card:hover .portfolio-card-image,
+  .portfolio-card:focus-visible .portfolio-card-image {
+    transform: scale(1.025);
+  }
+
+  .portfolio-card--motion:hover .portfolio-card-glint,
+  .portfolio-card--motion:focus-visible .portfolio-card-glint {
+    animation: portfolio-glint 1100ms ease-out both;
+  }
+
+  .mosaic-art-link:hover .mosaic-art-image,
+  .mosaic-art-link:focus-visible .mosaic-art-image {
+    transform: scale(1.02);
+  }
+
+  .brand-motion-cover--burger:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes portfolio-glint {
+  0% { transform: translateX(-120%); opacity: 0; }
+  18% { opacity: 1; }
+  82% { opacity: 1; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+
+@keyframes brand-light-pass {
+  0%, 18% { transform: translateX(-120%); opacity: 0; }
+  24% { opacity: 0.6; }
+  37% { opacity: 0.6; }
+  45%, 100% { transform: translateX(120%); opacity: 0; }
+}
+
+@keyframes brand-soft-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+
+@media (min-width: 48rem) and (prefers-reduced-motion: no-preference) {
+  /* Reflexo de luz na coleção FLOS, sem deformar rótulos ou latas. */
+  .brand-motion-cover--flos::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-120%);
+    background: linear-gradient(
+      102deg,
+      transparent 30%,
+      rgb(255 255 255 / 10%) 49%,
+      transparent 70%
+    );
+    animation: brand-light-pass 11s ease-in-out infinite;
+  }
+
+  /* Monkey Café: respiração visual quase imperceptível. */
+  .brand-motion-cover--monkey .brand-motion-cover-image {
+    animation: brand-soft-breathe 12s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-card,
+  .portfolio-card-image,
+  .mosaic-art-image,
+  .brand-motion-cover-image,
+  .brand-motion-cover--flos::after,
+  .portfolio-card-glint {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
