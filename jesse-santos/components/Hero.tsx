@@ -220,26 +220,33 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Mesma arte do desktop, sem recorte extremo nem sobreposição no mobile. */}
+      {/* Capa mobile com a MESMA arte e a mesma paleta do desktop.
+          A imagem 16:9 original ocupa uma área editorial vertical para
+          o lettering ser legível, sem barras cinzas ou compressão. */}
       <div className="mobile-hero md:hidden">
         <div className="mobile-hero-content">
-          <p className="editorial-num uppercase tracking-widest">
-            Jesse Santos — Graphic Designer
-          </p>
+          <div className="mobile-hero-eyebrow editorial-num">
+            <span>Jesse Santos — Graphic Designer</span>
+            <span>Portfolio / 2026</span>
+          </div>
+
           <h1 className="mobile-hero-title">
-            Portfólio <span className="font-serif font-normal italic">do Jess</span>
+            Portfólio
+            <span className="font-serif font-normal italic">do Jess</span>
           </h1>
+
           <div className="mobile-hero-art">
             <Image
               src={COVER_IMAGE}
-              alt="Capa autoral de Jesse Santos, com retrato e lettering amarelo"
+              alt="Capa autoral do portfólio de Jesse Santos, com retrato e lettering amarelo"
               fill
               priority
               unoptimized
               sizes="100vw"
-              className="object-contain object-center"
+              className="object-cover object-center"
             />
           </div>
+
           <div className="mobile-hero-bottom">
             <Link href="#trabalho" className="mobile-hero-link marker-underline">
               ↓ Explorar trabalhos
