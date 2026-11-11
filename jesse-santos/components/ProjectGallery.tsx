@@ -73,12 +73,23 @@ export default function ProjectGallery({
           </div>
           <div className="grid grid-cols-1 items-start gap-x-5 gap-y-10 sm:grid-cols-2 md:gap-y-12">
             {images.map((item, index) => (
-              <figure key={item.src + index} className="min-w-0">
+              <motion.figure
+                key={item.src + index}
+                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.12 }}
+                transition={{
+                  duration: 0.6,
+                  delay: (index % 2) * 0.08,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="min-w-0"
+              >
                 <a
                   href={item.src}
                   target="_blank"
                   rel="noreferrer"
-                  className="group block overflow-hidden bg-[#F3EEE3] p-2 md:p-3"
+                  className="group block overflow-hidden bg-[#F3EEE3] p-2 md:p-3 mosaic-art-link"
                   aria-label={`Abrir arte ${index + 1} em resolução original: ${item.alt}`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -87,14 +98,14 @@ export default function ProjectGallery({
                     alt={item.alt}
                     loading="lazy"
                     decoding="async"
-                    className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.015]"
+                    className="block h-auto w-full mosaic-art-image"
                   />
                 </a>
                 <figcaption className="mt-2 flex justify-between gap-3 editorial-num text-[#756D62]">
                   <span>{item.alt}</span>
                   <span className="shrink-0">{String(index + 1).padStart(2, "0")} / {String(images.length).padStart(2, "0")}</span>
                 </figcaption>
-              </figure>
+              </motion.figure>
             ))}
           </div>
         </div>
