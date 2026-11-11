@@ -41,6 +41,7 @@ export default async function ProjectPage({
   const next = publishedProjects[(index + 1) % publishedProjects.length];
   const isPride = project.slug === "falas-de-orgulho";
   const isArchive = project.slug === archiveSlug;
+  const isPhotography = project.slug === "identidade-fotografica-editorial";
 
   return (
     <article className={`pt-24 md:pt-36 pb-16 md:pb-24 ${isArchive ? "paper-surface bg-[#F7F4EB]" : ""}`}>
@@ -83,6 +84,81 @@ export default async function ProjectPage({
 
       {isArchive && project.cover ? (
         <ArchiveShowcase cover={project.cover} />
+      ) : isPhotography && project.cover ? (
+        <section aria-label="Caderno fotográfico editorial" className="mx-auto mt-12 max-w-[1440px] px-5 md:mt-20 md:px-8">
+          <div className="grid items-start gap-7 md:grid-cols-12 md:gap-10">
+            <figure className="md:col-span-8">
+              <div className="relative aspect-[800/626] bg-[#FCF9F1] p-3 md:p-7">
+                <div className="relative h-full w-full">
+                  <Image
+                    src={project.cover}
+                    alt={`Abertura do ensaio ${project.title}`}
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 65vw"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+              <figcaption className="editorial-num mt-3 text-[#756D62]">
+                01 / Seleção fotográfica · direção de arte
+              </figcaption>
+            </figure>
+            <div className="flex h-full flex-col justify-between border-t border-[#A88735]/40 pt-5 md:col-span-4">
+              <span className="editorial-num text-[#756D62]">Olhar autoral / Caderno de imagens</span>
+              <div className="my-12 md:my-16">
+                <p style={{ fontFamily: '"hey-eloise", cursive' }}
+                  className="text-[clamp(3.4rem,7vw,6.5rem)] leading-[0.9] text-[#A88735]">
+                  Imagens com textura.
+                </p>
+                <p className="mt-7 max-w-md font-serif text-xl italic leading-relaxed md:text-2xl">
+                  {project.description}
+                </p>
+              </div>
+              <p className="editorial-num text-[#756D62]">
+                Fotografia · composição · narrativa visual
+              </p>
+            </div>
+          </div>
+
+          {project.images && project.images.length > 0 && (
+            <div className="mt-12 grid items-start gap-10 md:mt-24 md:grid-cols-12">
+              <div className="md:col-span-3">
+                <span className="editorial-num text-[#756D62]">02 / Páginas do ensaio</span>
+                <p className="mt-4 font-serif text-2xl italic leading-snug">
+                  Entre enquadramentos, pausas e detalhes.
+                </p>
+              </div>
+              <div className="grid gap-12 md:col-span-9">
+                {project.images.map((photo, index) => (
+                  <figure key={photo.src} className={index % 2 ? "md:ml-[15%]" : "md:mr-[9%]"}>
+                    <div className="relative aspect-[4/5] bg-[#FCF9F1] p-3 md:p-7">
+                      <div className="relative h-full w-full">
+                        <Image
+                          src={photo.src}
+                          alt={photo.alt}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 70vw"
+                          className="object-contain"
+                        />
+                      </div>
+                    </div>
+                    <figcaption className="editorial-num mt-3 flex justify-between gap-4 text-[#756D62]">
+                      <span>{photo.alt}</span>
+                      <span>{String(index + 2).padStart(2, "0")}</span>
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
+          {project.behanceUrl && (
+            <a href={project.behanceUrl} target="_blank" rel="noreferrer"
+              className="marker-underline mt-14 inline-flex min-h-11 items-center text-sm">
+              Ver ensaio completo no Behance ↗
+            </a>
+          )}
+        </section>
       ) : (
         <>
         <div className={isPride || project.behanceUrl ? "mt-8 px-5 md:mt-16 md:px-8" : "mt-8 md:mt-16"}>
