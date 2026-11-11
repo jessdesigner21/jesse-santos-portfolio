@@ -697,33 +697,68 @@ body {
 
 .mobile-hero {
   position: relative;
-  display: grid;
-  justify-items: start;
-  gap: 1rem;
-  padding: 5.15rem 1.25rem 1.65rem;
-  background: #fcf9f1;
-}
-
-.mobile-hero-title {
-  font-size: clamp(2.35rem, 10vw, 4rem);
-  font-weight: 700;
-  letter-spacing: -0.065em;
-  line-height: 0.98;
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  overflow: hidden;
+  isolation: isolate;
+  background: #fff9c7;
 }
 
 .mobile-hero-art {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mobile-hero-content {
   position: relative;
-  width: min(100%, 25rem);
-  height: clamp(14.5rem, 48svh, 21rem);
-  justify-self: center;
-  overflow: hidden;
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: clamp(6rem, 15vh, 8rem) 1.25rem 1.75rem;
+}
+
+.mobile-hero-title {
+  max-width: 90%;
+  font-size: clamp(3.25rem, 13.8vw, 6.2rem);
+  font-weight: 700;
+  letter-spacing: -0.075em;
+  line-height: 0.92;
+}
+
+.mobile-hero-title span {
+  display: block;
+  margin-top: 0.4em;
+}
+
+.mobile-hero-bottom {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid #20202040;
+  padding-top: 1rem;
 }
 
 .mobile-hero-link {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
-  font-size: 0.95rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.mobile-hero-signature {
+  max-width: 55%;
+  font-size: clamp(1.4rem, 6vw, 2rem);
+  line-height: 0.98;
+  text-align: right;
 }
 
 @media (min-width: 48rem) {
@@ -734,7 +769,7 @@ body {
 
 @media (max-width: 47.999rem) {
   #inicio {
-    min-height: auto;
+    min-height: 100svh;
   }
 
   .work-cutout-paper,
