@@ -4,7 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { selectedProjects, type Project } from "@/data/projects";
+import { selectedProjects, additionalProjects, type Project } from "@/data/projects";
 import ProjectCover from "./ProjectCover";
 import { setAccent } from "@/lib/accent";
 
@@ -186,6 +186,37 @@ function WorkCutout({ project }: { project: Project }) {
         </div>
       </Link>
     </motion.article>
+  );
+}
+
+function AcervoCard({ project }: { project: Project }) {
+  const isPhotography = project.slug === "identidade-fotografica-editorial";
+  if (!project.cover) return null;
+  return (
+    <li className={isPhotography ? "sm:col-span-2 lg:col-span-2" : ""}>
+      <Link href={`/work/${project.slug}`} className="group block h-full" data-cursor="ver">
+        <div className="border-t border-[#A88735]/35 pt-3">
+          <div className="relative overflow-hidden bg-[#FCF9F1] p-2 md:p-3">
+            <div className={`relative w-full overflow-hidden ${isPhotography ? "aspect-[16/9]" : "aspect-[800/626]"}`}>
+              <Image
+                src={project.cover}
+                alt={`Capa de ${project.title}`}
+                fill
+                sizes={isPhotography ? "(max-width: 768px) 100vw, 65vw" : "(max-width: 640px) 100vw, 33vw"}
+                className="object-contain transition-transform duration-700 group-hover:scale-[1.025]"
+              />
+            </div>
+          </div>
+          <div className="mt-3 flex items-start justify-between gap-3">
+            <div>
+              <h4 className="font-serif text-xl italic leading-tight md:text-2xl">{project.title}</h4>
+              <p className="mt-1 editorial-num text-[#756D62]">{project.discipline.join(" / ")}</p>
+            </div>
+            <span className="archive-index-arrow shrink-0" aria-hidden="true">↗</span>
+          </div>
+        </div>
+      </Link>
+    </li>
   );
 }
 
@@ -421,6 +452,28 @@ export default function SelectedWork() {
           {illustrated.map((project) => <WorkCutout key={project.slug} project={project} />)}
         </div>
 
+
+        {/* Capas dos projetos do acervo também aparecem na página principal. */}
+        {additionalProjects.length > 0 && (
+          <section aria-label="Mais projetos do acervo" className="mt-20 md:mt-32">
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-black/20 pb-5 md:mb-12">
+              <div>
+                <p className="editorial-num text-[#756D62]">Um arquivo de diferentes linguagens</p>
+                <h3 style={handwritten} className="mt-2 text-[clamp(2.8rem,7vw,6.8rem)] leading-[0.95] text-[#A88735]">
+                  Outros recortes.
+                </h3>
+              </div>
+              <p className="max-w-xs font-serif text-base italic leading-relaxed text-[#655B4C] md:text-lg">
+                Identidades, imagens e experimentações. Cada capa é uma porta para o projeto.
+              </p>
+            </div>
+            <ul className="grid grid-cols-1 gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8">
+              {additionalProjects.map((project) => (
+                <AcervoCard key={project.slug} project={project} />
+              ))}
+            </ul>
+          </section>
+        )}
 
         <div className="mt-8 border-t border-black/15 pt-5 md:mt-14">
           <Link href="/work" className="marker-underline inline-flex min-h-11 items-center">
