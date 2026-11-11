@@ -88,12 +88,9 @@ export default function AgroriegoShowcase() {
           className="flex flex-wrap items-end justify-between gap-6 border-t border-black/15 pt-6"
         >
           <div>
-            <p className="editorial-num uppercase tracking-widest text-black/50">
-              01 / Recortes do arquivo
-            </p>
             <h2
               id="agroriego-recorte"
-              className="mt-4 font-serif italic text-[clamp(2rem,4vw,4.5rem)] leading-[1.05] tracking-[-0.045em]"
+              className="archive-heading"
             >
               Agroriego Tattersall
             </h2>

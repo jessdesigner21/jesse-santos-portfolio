@@ -6,7 +6,7 @@ import { projects, getProjectBySlug } from "@/data/projects";
 import ProjectCover from "@/components/ProjectCover";
 import ProjectAccentSetter from "@/components/ProjectAccentSetter";
 import ProjectGallery from "@/components/ProjectGallery";
-import ArchiveShowcase from "@/components/ArchiveShowcase";
+import ArchiveShowcase, { archiveSlug } from "@/components/ArchiveShowcase";
 import VideoPlayer from "@/components/VideoPlayer";
 
 export function generateStaticParams() {
@@ -39,16 +39,18 @@ export default async function ProjectPage({
   const index = projects.findIndex((p) => p.slug === project.slug);
   const next = projects[(index + 1) % projects.length];
   const isPride = project.slug === "falas-de-orgulho";
-  const isArchive = project.slug === "grupo-tattersall";
+  const isArchive = project.slug === archiveSlug;
 
   return (
     <article className="pt-28 md:pt-36 pb-24">
       <ProjectAccentSetter color={project.accentColor} />
 
-      <header className="px-5 md:px-8">
-        <p className="editorial-num text-graphite mb-4">
-          {String(index + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
-        </p>
+      <header className={isArchive ? "mx-auto max-w-[1440px] px-5 md:px-8" : "px-5 md:px-8"}>
+        {!isArchive && (
+          <p className="editorial-num text-graphite mb-4">
+            {String(index + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+          </p>
+        )}
         <h1
           style={isPride || isArchive ? { fontFamily: '"hey-eloise", cursive' } : undefined}
           className={
@@ -60,12 +62,16 @@ export default async function ProjectPage({
           {project.title}
         </h1>
 
-        <div className="flex flex-wrap gap-x-8 gap-y-2 mt-6 editorial-num text-graphite">
-          {project.client && <span>Cliente — {project.client}</span>}
-          {project.year && <span>Ano — {project.year}</span>}
-          <span>Disciplina — {project.discipline.join(", ")}</span>
-          {project.role && <span>Papel — {project.role}</span>}
-        </div>
+        {isArchive ? (
+          <p className="mt-4 max-w-xl font-serif text-xl italic leading-snug">{project.description}</p>
+        ) : (
+          <div className="flex flex-wrap gap-x-8 gap-y-2 mt-6 editorial-num text-graphite">
+            {project.client && <span>Cliente — {project.client}</span>}
+            {project.year && <span>Ano — {project.year}</span>}
+            <span>Disciplina — {project.discipline.join(", ")}</span>
+            {project.role && <span>Papel — {project.role}</span>}
+          </div>
+        )}
 
         {project.challenge && (
           <p className="font-serif italic text-2xl md:text-3xl max-w-2xl mt-10">
@@ -75,7 +81,7 @@ export default async function ProjectPage({
       </header>
 
       {isArchive && project.cover ? (
-        <ArchiveShowcase cover={project.cover} description={project.description} />
+        <ArchiveShowcase cover={project.cover} />
       ) : (
         <>
         <div className={isPride ? "mt-16 px-5 md:px-8" : "mt-16"}>
