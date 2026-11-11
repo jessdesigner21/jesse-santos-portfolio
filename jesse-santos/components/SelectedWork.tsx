@@ -33,7 +33,7 @@ const PROJECT_COVERS: Record<string, string> = {
 
 const PROJECT_WORDS: Record<string, string> = {
   "falas-de-orgulho": "AFETO",
-  "grupo-tattersall": "CLAREZA",
+  "grupo-tattersall": "RECORTES",
   "social-media-beleza": "BELEZA",
   "glow-beauty": "BRILHO",
   "social-media-hamburgueria": "SABOR",
