@@ -68,7 +68,7 @@ const SIGNATURE_STYLE = {
   fontFamily: '"hey-eloise", cursive',
   fontStyle: "normal" as const,
   fontWeight: 400,
-  color: "#A88735",
+  color: "#566B43",
 };
 
 export default function Hero() {
