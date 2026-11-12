@@ -381,7 +381,7 @@ export default function SelectedWork() {
                   <p
                     style={handwritten}
                     className="
-                      mb-5 hidden text-[#A88735] md:block
+                      mb-5 hidden text-[#566B43] md:block
                       text-3xl md:text-5xl
                       -rotate-3
                     "
