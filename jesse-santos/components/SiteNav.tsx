@@ -51,7 +51,7 @@ export default function SiteNav() {
               href={l.href}
               className="nav-marker"
             >
-              {l.label} <span aria-hidden="true" className="text-[#7E8E39]">↗</span>
+              {l.label}
             </Link>
           ))}
         </nav>
@@ -70,7 +70,7 @@ export default function SiteNav() {
         </button>
       </div>
 
-      {!open && (
+      {isHome && !open && !scrolled && (
         <div className="nav-menu-hint pointer-events-none absolute right-5 top-[calc(100%+5px)] flex items-center gap-2 rounded-sm bg-[#FFE009] px-3 py-2 text-[#22271C] shadow-sm md:right-8" aria-hidden="true">
           <span className="font-serif text-sm italic">tem mais por aqui</span>
           <svg viewBox="0 0 24 20" width="26" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
@@ -92,6 +92,7 @@ export default function SiteNav() {
               className="nav-mobile-link font-serif italic text-2xl min-h-11 flex items-center justify-between border-b border-[#A88735]/20 pb-2"
             >
               {l.label}
+              <span aria-hidden="true" className="text-[#5A642E] text-lg">↗</span>
             </Link>
           ))}
         </nav>
