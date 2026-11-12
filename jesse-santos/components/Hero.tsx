@@ -14,6 +14,13 @@ import {
 const COVER_IMAGE =
   "/Sem%20Ti%CC%81tulo-1Prancheta%201.jpg";
 
+const creativeTools = [
+  { short: "Ps", name: "Photoshop" },
+  { short: "Ai", name: "Illustrator" },
+  { short: "Ae", name: "After Effects" },
+  { short: "✳", name: "IA & experimentação" },
+];
+
 // Assinatura visual da capa
 const SIGNATURE_STYLE = {
   fontFamily: '"hey-eloise", cursive',
@@ -165,6 +172,25 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
+          {/* Pequena assinatura técnica, preservando a capa autoral. */}
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 13 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.65 }}
+            className="hero-toolkit"
+            aria-label="Ferramentas que fazem parte do meu processo criativo"
+          >
+            <p className="editorial-num hero-toolkit-label">minha caixa de ferramentas <span aria-hidden="true">↗</span></p>
+            <div className="hero-toolkit-list">
+              {creativeTools.map((tool, index) => (
+                <span key={tool.short} className="hero-toolkit-chip" style={{ animationDelay: `${index * 130}ms` }}>
+                  <span className="hero-toolkit-symbol">{tool.short}</span>
+                  <span>{tool.name}</span>
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
           {/* Linha inferior */}
 
           <div
@@ -254,6 +280,17 @@ export default function Hero() {
             <p style={SIGNATURE_STYLE} className="mobile-hero-signature">
               uma vida com textura.
             </p>
+          </div>
+        </div>
+        <div className="hero-toolkit-mobile" aria-label="Ferramentas que fazem parte do meu processo criativo">
+          <span className="editorial-num hero-toolkit-mobile-label">crio com</span>
+          <div className="hero-toolkit-mobile-scroll">
+            {creativeTools.map((tool) => (
+              <span key={tool.short} className="hero-toolkit-chip hero-toolkit-chip--mobile">
+                <span className="hero-toolkit-symbol">{tool.short}</span>
+                <span>{tool.name}</span>
+              </span>
+            ))}
           </div>
         </div>
       </div>
