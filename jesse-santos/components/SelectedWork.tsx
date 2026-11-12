@@ -458,11 +458,39 @@ export default function SelectedWork() {
           </section>
         )}
 
-        <div className="mt-8 border-t border-black/15 pt-5 md:mt-14">
-          <Link href="/work" className="marker-underline inline-flex min-h-11 items-center">
-            Mais trabalhos ↗
-          </Link>
-        </div>
+        {/* Convite editorial flutuante ao acervo completo, após todos os cases da home. */}
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 26 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.18 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-16 border-t border-[#45432F]/20 pt-14 md:mt-24 md:pt-20"
+        >
+          <div className="archive-invitation mx-auto max-w-[980px]">
+            <span aria-hidden="true" className="archive-invitation-scribble">✳</span>
+            <div className="relative grid gap-7 md:grid-cols-[1.3fr_1fr] md:items-end md:gap-12">
+              <div>
+                <p className="editorial-num mb-5 text-[#626845]">03 / Para continuar explorando</p>
+                <h3 className="font-grotesk text-[clamp(2.6rem,5.2vw,5.1rem)] font-bold leading-[0.98] tracking-[-0.065em] text-[#26281D]">
+                  Isso aqui é só
+                  <span className="mt-1 block font-serif font-normal italic text-[#596336]">um recorte.</span>
+                </h3>
+                <p className="mt-5 max-w-md font-serif text-lg italic leading-relaxed text-[#525444]">
+                  Tem outras histórias, processos e imagens esperando pelo seu olhar.
+                </p>
+              </div>
+              <div className="flex flex-col items-start gap-5 md:items-end">
+                <Link href="/work" data-cursor="abrir" className="archive-invitation-button group inline-flex min-h-14 items-center gap-6 px-6 py-4 font-mono text-[0.7rem] font-medium uppercase tracking-[0.12em]">
+                  Ver todos os trabalhos
+                  <span className="archive-invitation-arrow text-2xl" aria-hidden="true">↗</span>
+                </Link>
+                <Link href="/movimento" className="marker-underline editorial-num inline-flex min-h-11 items-center text-[#596336]">
+                  E os trabalhos em movimento ↗
+                </Link>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
