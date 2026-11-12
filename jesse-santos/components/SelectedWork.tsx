@@ -265,7 +265,7 @@ export default function SelectedWork() {
             <div className="min-w-0">
               <h2
                 id="trabalhos-titulo"
-                className="font-grotesk font-bold uppercase text-[clamp(3rem,7.2vw,8.4rem)] leading-[0.94] tracking-[-0.075em]"
+                className="font-grotesk font-bold uppercase text-[clamp(2.15rem,9.8vw,3.35rem)] leading-[1] tracking-[-0.072em] md:text-[clamp(3rem,7.2vw,8.4rem)] md:leading-[0.94]"
               >
                 Trabalhos<span className="text-[var(--portfolio-yellow)]">.</span>
               </h2>
