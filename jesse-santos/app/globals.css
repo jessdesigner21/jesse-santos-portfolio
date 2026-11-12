@@ -1723,3 +1723,62 @@ body {
   .editorial-catalog-link:hover .editorial-catalog-image,
   .archive-invitation-option:hover { transform: none !important; }
 }
+
+
+/* Vídeos, reels e colaborações compartilham a mesma escala leve do acervo. */
+.editorial-media-title {
+  font-family: "Fraunces Variable", Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(1.7rem, 3.1vw, 3.2rem);
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  color: #465b3c;
+}
+.clients-sector > .editorial-media-title {
+  font-size: clamp(1.5rem, 2.4vw, 2.4rem);
+}
+.archive-video-cover-kind {
+  color: #49613f;
+  border-color: rgb(70 91 60 / 33%);
+}
+.archive-video-cover-play { color: #344630; }
+.archive-video-cover-play > span {
+  border-color: rgb(70 91 60 / 35%);
+  background: #ffe009;
+}
+.archive-video-cover:hover .archive-video-cover-play > span,
+.archive-video-cover:focus-visible .archive-video-cover-play > span {
+  background: #b9d1ae;
+}
+.archive-reel .archive-reel-cover {
+  background: #f3e9c4;
+}
+.archive-reel > span:last-child {
+  font-family: "Fraunces Variable", Georgia, serif;
+  font-weight: 300;
+  font-size: clamp(1.05rem, 1.6vw, 1.4rem);
+  color: #304332;
+}
+.clients-agency,
+.clients-sector {
+  border-color: rgb(70 91 60 / 25%);
+}
+.clients-entry {
+  border-color: rgb(70 91 60 / 21%);
+  transition: transform 350ms ease, border-color 350ms ease;
+}
+.clients-entry-link:hover,
+.clients-entry-link:focus-visible {
+  border-color: #758e61;
+  transform: translateY(-3px);
+}
+.contact-atelier .contact-editorial-title {
+  font-size: clamp(3.05rem, 5.3vw, 5.8rem);
+}
+.contact-atelier .contact-editorial-script {
+  font-size: clamp(2.7rem, 4.5vw, 4.7rem);
+}
+@media (max-width: 47.999rem) {
+  .contact-atelier .contact-editorial-title { font-size: clamp(2.7rem, 9.5vw, 4.2rem); }
+  .contact-atelier .contact-editorial-script { font-size: clamp(2.5rem, 9vw, 4rem); }
+}
