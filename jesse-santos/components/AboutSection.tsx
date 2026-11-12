@@ -82,7 +82,7 @@ function HandDrawnFrame() {
           Z
         "
         fill="none"
-        stroke="#A88735"
+        stroke="#60754C"
         strokeWidth="2.3"
         vectorEffect="non-scaling-stroke"
         strokeLinecap="round"
@@ -112,7 +112,7 @@ function HandDrawnFrame() {
           C10 372 24 307 12 215
         "
         fill="none"
-        stroke="#B89B63"
+        stroke="#7B9360"
         strokeWidth="1.3"
         opacity="0.65"
         vectorEffect="non-scaling-stroke"
@@ -226,7 +226,7 @@ function AudioStory() {
 
             <span
               style={handwritten}
-              className="text-[#A88735]"
+              className="text-[#60754C]"
             >
               ouvidas.
             </span>
@@ -314,7 +314,7 @@ function AudioStory() {
                 <motion.span
                   aria-hidden="true"
                   style={handwritten}
-                  className="text-4xl text-[#A88735]"
+                  className="text-4xl text-[#60754C]"
                   animate={
                     playing && !reduceMotion
                       ? { rotate: [-5, 8, -5] }
@@ -348,7 +348,7 @@ function AudioStory() {
                     key={index}
                     className="
                       block min-w-0 flex-1
-                      rounded-full bg-[#A88735]
+                      rounded-full bg-[#60754C]
                     "
                     style={{
                       height: `${height}%`,
@@ -397,13 +397,13 @@ function AudioStory() {
                     flex h-14 w-14 shrink-0
                     items-center justify-center
                     rounded-full
-                    bg-[#A88735] text-white
+                    bg-[#60754C] text-white
                     transition-transform duration-300
                     hover:scale-105
                     focus-visible:outline
                     focus-visible:outline-2
                     focus-visible:outline-offset-4
-                    focus-visible:outline-[#A88735]
+                    focus-visible:outline-[#60754C]
                     disabled:cursor-not-allowed
                     disabled:opacity-50
                   "
@@ -478,7 +478,7 @@ function AudioStory() {
                       mt-3 w-full cursor-pointer
                     "
                     style={{
-                      accentColor: "#A88735",
+                      accentColor: "#60754C",
                     }}
                   />
                 </div>
@@ -655,7 +655,7 @@ export default function AboutSection() {
                 <span
                   className="
                     relative inline-block
-                    text-[#A88735]
+                    text-[#60754C]
                     tracking-normal
                   "
                   style={handwritten}

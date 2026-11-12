@@ -130,7 +130,7 @@ export function ArchiveVideos({ titleLevel = "h2" }: { titleLevel?: "h2" | "h3" 
           <figure key={slug} className={landscape ? "archive-video-lead" : "archive-video-portrait"}>
             <ArchiveVideo title={title} category={category} src={`${media}/${slug}.mp4`} landscape={landscape} />
             <figcaption className="mt-4">
-              <Title className="archive-work-title">{title}</Title>
+              <Title className="editorial-media-title">{title}</Title>
               <p className="mt-1 text-sm text-[#655b4c]">{caption}</p>
             </figcaption>
           </figure>
@@ -171,7 +171,7 @@ export function ArchiveReels({ titleLevel = "h2" }: { titleLevel?: "h2" | "h3" }
       <p className="mt-3 text-[#655b4c]">Edição por Jesse Santos · Assista no Instagram</p>
       {reelSeries.map(({ title, account, reels }) => (
         <div key={account} id={account} className="archive-series">
-          <Title className="archive-work-title">{title}</Title>
+          <Title className="editorial-media-title">{title}</Title>
           <ul className="archive-reels">
             {reels.map(({ id, title: reelTitle }) => (
               <li key={id}>
