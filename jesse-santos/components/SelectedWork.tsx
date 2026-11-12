@@ -127,7 +127,7 @@ function SketchBorder() {
           Z
         "
         fill="none"
-        stroke="#A88735"
+        stroke="#5D713F"
         strokeWidth="2"
         vectorEffect="non-scaling-stroke"
         strokeLinecap="round"
@@ -179,7 +179,7 @@ function AcervoCard({ project }: { project: Project }) {
         className={`group block h-full portfolio-card ${isAnimatedCase ? "portfolio-card--motion" : ""}`}
         data-cursor="ver"
       >
-        <div className="border-t border-[#A88735]/35 pt-3">
+        <div className="border-t border-[#465B3C]/35 pt-3">
           <div className="relative overflow-hidden bg-[#FCF9F1] p-2 md:p-3 portfolio-card-art">
             <div className={`relative w-full overflow-hidden ${isPhotography ? "aspect-[16/9]" : "aspect-[800/626]"}`}>
               <Image
@@ -275,7 +275,7 @@ export default function SelectedWork() {
             </div>
             <p
               style={handwritten}
-              className="hidden text-[#A88735] text-2xl md:block md:mb-2 md:shrink-0 md:text-4xl md:-rotate-3"
+              className="hidden text-[#465B3C] text-2xl md:block md:mb-2 md:shrink-0 md:text-4xl md:-rotate-3"
             >
               com textura.
             </p>
@@ -438,11 +438,11 @@ export default function SelectedWork() {
 
         {/* Um mesmo grid editorial para todo o acervo, sem separar os três destaques. */}
         {galleryProjects.length > 0 && (
-          <section aria-label="Projetos e acervo" className="mt-12 border-t border-[#A88735]/30 pt-12 md:mt-20 md:pt-20">
+          <section aria-label="Projetos e acervo" className="mt-12 border-t border-[#465B3C]/30 pt-12 md:mt-20 md:pt-20">
             <div className="mb-8 flex flex-wrap items-end justify-between gap-4 md:mb-12">
               <div>
                 <p className="editorial-num text-[#756D62]">02 / Projetos e experiências</p>
-                <h3 style={handwritten} className="mt-2 text-[clamp(2.8rem,7vw,6.8rem)] leading-[0.95] text-[#A88735]">
+                <h3 style={handwritten} className="mt-2 text-[clamp(2.8rem,6.3vw,6.4rem)] leading-[0.95] text-[#465B3C]">
                   Outros recortes.
                 </h3>
               </div>
@@ -471,21 +471,36 @@ export default function SelectedWork() {
             <div className="relative grid gap-7 md:grid-cols-[1.3fr_1fr] md:items-end md:gap-12">
               <div>
                 <p className="editorial-num mb-5 text-[#626845]">03 / Para continuar explorando</p>
-                <h3 className="font-grotesk text-[clamp(2.6rem,5.2vw,5.1rem)] font-bold leading-[0.98] tracking-[-0.065em] text-[#26281D]">
+                <h3 className="editorial-light-display text-[clamp(2.8rem,5.3vw,5.6rem)] text-[#26281D]">
                   Isso aqui é só
-                  <span className="mt-1 block font-serif font-normal italic text-[#596336]">um recorte.</span>
+                  <span className="mt-2 block handwritten-accent text-[1.18em] text-[#596336]">um recorte.</span>
                 </h3>
                 <p className="mt-5 max-w-md font-serif text-lg italic leading-relaxed text-[#525444]">
                   Tem outras histórias, processos e imagens esperando pelo seu olhar.
                 </p>
               </div>
-              <div className="flex flex-col items-start gap-5 md:items-end">
-                <Link href="/work" data-cursor="abrir" className="archive-invitation-button group inline-flex min-h-14 items-center gap-6 px-6 py-4 font-mono text-[0.7rem] font-medium uppercase tracking-[0.12em]">
-                  Ver todos os trabalhos
-                  <span className="archive-invitation-arrow text-2xl" aria-hidden="true">↗</span>
+              <div className="grid grid-cols-2 gap-3 self-stretch">
+                <Link
+                  href="/work"
+                  data-cursor="abrir"
+                  className="archive-invitation-option group flex min-h-[154px] flex-col justify-between gap-5 p-4 md:min-h-[184px]"
+                >
+                  <span className="editorial-num text-[0.57rem]">01 / Estáticos</span>
+                  <span className="block">
+                    <span className="block font-serif text-[clamp(1.15rem,1.8vw,1.7rem)] font-light italic leading-[1.1]">Design & imagem</span>
+                    <span className="mt-3 flex items-center justify-between gap-2 font-mono text-[0.59rem] uppercase tracking-[0.04em]">Explorar <span aria-hidden="true" className="archive-invitation-arrow text-xl">↗</span></span>
+                  </span>
                 </Link>
-                <Link href="/movimento" className="marker-underline editorial-num inline-flex min-h-11 items-center text-[#596336]">
-                  E os trabalhos em movimento ↗
+                <Link
+                  href="/movimento"
+                  data-cursor="abrir"
+                  className="archive-invitation-option archive-invitation-option--motion group flex min-h-[154px] flex-col justify-between gap-5 p-4 md:min-h-[184px]"
+                >
+                  <span className="editorial-num text-[0.57rem]">02 / Movimento</span>
+                  <span className="block">
+                    <span className="block font-serif text-[clamp(1.15rem,1.8vw,1.7rem)] font-light italic leading-[1.1]">Vídeo & motion</span>
+                    <span className="mt-3 flex items-center justify-between gap-2 font-mono text-[0.59rem] uppercase tracking-[0.04em]">Explorar <span aria-hidden="true" className="archive-invitation-arrow text-xl">↗</span></span>
+                  </span>
                 </Link>
               </div>
             </div>
