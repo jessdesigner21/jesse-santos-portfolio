@@ -21,7 +21,7 @@ export default function ClientsSection() {
         <div className="clients-agency">
           <div>
             <p className="editorial-num text-[#655b4c]">Agência onde trabalho</p>
-            <h2 className="archive-work-title mt-2">{agency.name}</h2>
+            <h2 className="editorial-media-title mt-2">{agency.name}</h2>
             <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
               <a href={agency.website} target="_blank" rel="noreferrer" className="marker-underline">Site ↗</a>
               <a href={agency.instagram} target="_blank" rel="noreferrer" className="marker-underline">Instagram ↗</a>
@@ -30,16 +30,16 @@ export default function ClientsSection() {
           <Image src={agency.logo} width={295} height={52} alt="" className="h-auto w-full max-w-[15rem]" />
         </div>
 
-        <h2 className="archive-work-title mt-12 md:mt-16">Marcas atendidas no Chile</h2>
+        <h2 className="editorial-media-title mt-12 md:mt-16">Marcas atendidas no Chile</h2>
         {sectors.map((sector) => (
           <div key={sector} className="clients-sector">
-            <h3 className="archive-work-title">{sector}</h3>
+            <h3 className="editorial-media-title">{sector}</h3>
             <ClientList entries={agencyClients.filter((client) => client.industry === sector)} />
           </div>
         ))}
 
         <div className="clients-sector">
-          <h2 className="archive-work-title">Outras marcas e projetos</h2>
+          <h2 className="editorial-media-title">Outras marcas e projetos</h2>
           <ClientList entries={otherClients} />
         </div>
       </div>
