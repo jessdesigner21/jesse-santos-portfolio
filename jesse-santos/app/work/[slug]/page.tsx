@@ -186,7 +186,7 @@ export default async function ProjectPage({
       )}
 
       <div className="px-5 md:px-8 mt-14 pt-6 border-t border-ink/10 flex flex-wrap items-center justify-between gap-5 md:mt-24 md:pt-10">
-        <Link href={project.behanceUrl ? "/work" : "/#trabalho"} className="editorial-num border-b border-ink/40 pb-1">
+        <Link href="/work" className="editorial-num border-b border-ink/40 pb-1">
           ← Trabalhos
         </Link>
         <Link
