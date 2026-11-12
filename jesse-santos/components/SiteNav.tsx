@@ -35,7 +35,7 @@ export default function SiteNav() {
             : "bg-[#FCF9F1]/95 md:bg-transparent"
       }`}
     >
-      <div className="flex items-center justify-between px-5 md:px-8 py-4">
+      <div className="flex items-center justify-between px-5 py-3.5 md:px-8 md:py-4">
         <Link
           href="/"
           className="font-grotesk font-bold tracking-tight text-sm md:text-base"
@@ -58,38 +58,49 @@ export default function SiteNav() {
 
         <button
           type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="nav-menu-button md:hidden editorial-num inline-flex min-h-11 items-center gap-2 rounded-full border border-[#25251D]/60 bg-[#FFE009] px-4 py-2.5 font-semibold text-[#25251D]"
+          onClick={() => setOpen((value) => !value)}
+          className="nav-menu-button inline-flex min-h-11 items-center gap-2.5 rounded-full border border-[#29271D]/25 bg-[#FCFAF4]/95 px-4 py-2 font-mono text-[0.68rem] font-medium uppercase tracking-[0.10em] text-[#25251D] transition-colors duration-200 hover:border-[#A88735] hover:bg-[#F5F0E4] md:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Fechar menu de navegação" : "Abrir menu de navegação"}
         >
-          <span aria-hidden="true" className="nav-menu-spark">✳</span>
           <span>{open ? "Fechar" : "Menu"}</span>
-          <span aria-hidden="true" className="nav-menu-arrow">{open ? "×" : "↗"}</span>
+          <svg
+            aria-hidden="true"
+            width="17"
+            height="17"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+          >
+            {open ? (
+              <>
+                <path d="M4 4L16 16" />
+                <path d="M16 4L4 16" />
+              </>
+            ) : (
+              <>
+                <path d="M3 7H17" />
+                <path d="M3 13H17" />
+              </>
+            )}
+          </svg>
         </button>
       </div>
-
-      {isHome && !open && !scrolled && (
-        <div className="nav-menu-hint pointer-events-none absolute right-5 top-[calc(100%+5px)] flex items-center gap-2 rounded-sm bg-[#FFE009] px-3 py-2 text-[#22271C] shadow-sm md:right-8" aria-hidden="true">
-          <span className="font-serif text-sm italic">tem mais por aqui</span>
-          <svg viewBox="0 0 24 20" width="26" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-            <path d="M2 17 Q8 3 21 4 M14 2 L21 4 L18 11" />
-          </svg>
-        </div>
-      )}
 
       {open && (
         <nav
           id="mobile-menu"
-          className="md:hidden bg-[#FCFAF4] border-t border-[#27291F]/15 px-5 py-6 flex flex-col gap-5 shadow-xl"
+          className="md:hidden border-t border-[#27291F]/15 bg-[#FCFAF4]/98 px-5 py-4 flex flex-col gap-2 shadow-[0_14px_24px_rgba(32,30,23,0.08)]"
         >
           {links.map((l) => (
             <Link
               key={l.label}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="nav-mobile-link font-serif italic text-2xl min-h-11 flex items-center justify-between border-b border-[#A88735]/20 pb-2"
+              className="nav-mobile-link font-serif italic text-[1.35rem] min-h-12 flex items-center justify-between border-b border-[#A88735]/20 py-2"
             >
               {l.label}
               <span aria-hidden="true" className="text-[#5A642E] text-lg">↗</span>
