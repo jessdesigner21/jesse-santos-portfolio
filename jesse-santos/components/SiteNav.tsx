@@ -59,7 +59,7 @@ export default function SiteNav() {
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}
-          className="nav-menu-button inline-flex min-h-11 items-center gap-2.5 rounded-full border border-[#29271D]/25 bg-[#FCFAF4]/95 px-4 py-2 font-mono text-[0.68rem] font-medium uppercase tracking-[0.10em] text-[#25251D] transition-colors duration-200 hover:border-[#A88735] hover:bg-[#F5F0E4] md:hidden"
+          className="nav-menu-button inline-flex min-h-11 items-center gap-2.5 rounded-full border border-[#52693E]/65 bg-[#FFF2B6]/95 px-4 py-2 font-mono text-[0.68rem] font-medium uppercase tracking-[0.10em] text-[#25251D] transition-colors duration-200 hover:border-[#52693E] hover:bg-[#FFE982] md:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Fechar menu de navegação" : "Abrir menu de navegação"}
