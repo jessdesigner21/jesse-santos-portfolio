@@ -6,7 +6,7 @@
   --ink: #0b0b0a;
   --graphite: #2a2a28;
   --skin: #b98d6f;
-  --accent: #2d6bff; /* default, sobrescrito por --project-accent quando um projeto está em foco */
+  --accent: #52693e; /* verde editorial, sobrescrito por --project-accent nos projetos */
   --project-accent: var(--accent);
 }
 
@@ -51,8 +51,12 @@ body {
 }
 
 ::selection {
-  background: var(--project-accent);
-  color: var(--ink);
+  background: var(--portfolio-yellow);
+  color: #26342c;
+}
+
+.contact-atelier :focus-visible {
+  outline-color: var(--portfolio-yellow);
 }
 
 /* cursor customizado — desligado automaticamente em touch via JS (ver CustomCursor.tsx) */
