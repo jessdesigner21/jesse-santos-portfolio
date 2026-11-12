@@ -75,20 +75,21 @@ export default function ContactSection() {
               whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="max-w-[830px] font-grotesk text-[clamp(2.8rem,6.4vw,6.7rem)] font-bold leading-[0.99] tracking-[-0.07em]"
+              className="contact-editorial-title"
             >
-              Toda ideia começa em algum lugar.
-              <span className="mt-4 block font-serif font-normal italic leading-[1.04] tracking-[-0.055em] text-[#FFE009]">
+              Toda ideia começa
+              <span className="block">em algum lugar.</span>
+              <span className="contact-editorial-script">
                 Que seja numa conversa.
               </span>
             </motion.h2>
-            <p className="mt-9 max-w-md font-serif text-lg italic leading-[1.65] text-[#F7F3E5]/75 md:text-xl">
+            <p className="contact-editorial-copy mt-9 max-w-md font-serif italic text-[#F7F3E5]/75">
               Trabalho bom tem troca, curiosidade e encontro. Se alguma coisa aqui conversou com você, me escreve.
             </p>
-            <span className="mt-10 block w-fit -rotate-3 font-serif text-4xl italic text-[#FFE009] md:text-5xl" aria-hidden="true">a gente se fala ↗</span>
+            <span className="mt-10 block w-fit -rotate-3 font-serif text-2xl font-light italic text-[#FFE009] md:text-3xl" aria-hidden="true">a gente se fala ↗</span>
           </div>
           <div className="self-center">
-            <p className="editorial-num mb-4 text-[#F7F3E5]/60">Escolha por onde a conversa começa</p>
+            <p className="font-serif mb-5 text-sm font-light italic text-[#F7F3E5]/70 md:text-base">Escolha por onde a conversa começa</p>
             <div className="grid gap-3 sm:grid-cols-2">
               {channels.filter((c) => c.href).map((channel, index) => (
                 <motion.a
@@ -101,15 +102,15 @@ export default function ContactSection() {
                   whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.18 }}
                   transition={{ duration: 0.55, delay: index * 0.07 }}
-                  className="contact-link group flex min-h-[172px] flex-col items-start justify-between gap-4 p-5 md:min-h-[205px]"
+                  className="contact-link group flex min-h-[166px] flex-col items-start justify-between gap-3 p-5 md:min-h-[195px]"
                 >
                   <div className="flex w-full items-start justify-between">
                     <DoodleIcon kind={channel.kind} />
                     <span aria-hidden="true" className="contact-link-arrow font-serif text-2xl italic">↗</span>
                   </div>
                   <div>
-                    <span className="block font-serif text-2xl italic leading-none md:text-[1.75rem]">{channel.title}</span>
-                    <span className="mt-2 block text-[0.71rem] leading-relaxed tracking-wide text-[#F7F3E5]/70">{channel.detail}</span>
+                    <span className="contact-link-title block">{channel.title}</span>
+                    <span className="contact-link-detail">{channel.detail}</span>
                   </div>
                 </motion.a>
               ))}
@@ -121,7 +122,7 @@ export default function ContactSection() {
         </div>
         <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-[#F7F3E5]/25 pt-6 md:mt-24">
           <p className="editorial-num text-[#F7F3E5]/65">Design, histórias e encontros.</p>
-          <p className="font-serif text-lg italic text-[#FFE009]">uma vida com textura.</p>
+          <p className="handwritten-accent text-2xl text-[#FFE009] md:text-3xl">uma vida com textura.</p>
         </div>
       </div>
     </section>
