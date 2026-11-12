@@ -18,7 +18,7 @@ const creativeTools = [
   { short: "Ps", name: "Photoshop" },
   { short: "Ai", name: "Illustrator" },
   { short: "Ae", name: "After Effects" },
-  { short: "✳", name: "IA & experimentação" },
+  { short: "IA", name: "IA & experimentação" },
 ];
 
 // Assinatura visual da capa
